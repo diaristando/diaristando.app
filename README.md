@@ -1,5 +1,7 @@
 # Diaristando - App React Native com Expo
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5d990840c9ee423f96b2f12b8e0fd538)](https://app.codacy.com/gh/diaristando/diaristando.app?utm_source=github.com&utm_medium=referral&utm_content=diaristando/diaristando.app&utm_campaign=Badge_Grade)
+
 Este repositório contém o aplicativo do projeto Diaristando. O projeto está localizado na pasta `Diaristando` na raiz do repositório.
 
 ## Pré-requisitos
