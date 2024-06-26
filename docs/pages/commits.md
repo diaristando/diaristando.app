@@ -8,7 +8,7 @@ A política de commits adotada neste projeto segue o padrão [Conventional Commi
 
 Abaixo estão os tipos de commits que devem ser usados, conforme definido pelo Conventional Commits, junto com a imagem explicativa:
 
-<img src="/assets/commits.webp" alt="Tipos de Commits" width="600" height="400" />
+<img src="https://diaristando.github.io/diaristando.app/assets/commits.webp" alt="Tipos de Commits" width="600" height="400" />
 
 ### `feat`
 
