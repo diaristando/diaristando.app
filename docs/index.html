@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diaristando - Wiki</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <style>
+    .cover {
+      background: #f0f0f0;
+      text-align: center;
+      padding: 50px 0;
+    }
+    .cover h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    .cover p {
+      font-size: 0.75em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'Diaristando',
+      repo: 'https://github.com/diaristando/diaristando.app',
+      coverpage: true,
+      loadSidebar: true,
+      subMaxLevel: 2,
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+</body>
+</html>
