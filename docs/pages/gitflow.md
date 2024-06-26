@@ -2,7 +2,7 @@
 ## Visão Geral
 Nossa política de branches segue o modelo GitFlow, que organiza o fluxo de trabalho de desenvolvimento em diferentes tipos de branches. Esse modelo ajuda a manter a estrutura organizada, facilitando o desenvolvimento, a manutenção e a implementação de novas funcionalidades. Abaixo está uma descrição detalhada de cada tipo de branch usado no nosso repositório.
 
-<img src="../assets/flow.svg" alt="Tipos de Commits" width="600" height="400" />
+<img src="/assets/flow.svg" alt="Tipos de Commits" width="600" height="400" />
 
 ## Tipos de Branches
 **1. Branch main**
@@ -29,7 +29,7 @@ Devem ser mesclados na main e na develop após a conclusão.
 - **Regras**: Devem ser baseados na branch main.
 Devem ser mesclados na main e na develop após a conclusão.
 
-<img src="../assets/flow2.svg" alt="Tipos de Commits" width="600" height="400" />
+<img src="/assets/flow2.svg" alt="Tipos de Commits" width="600" height="400" />
 
 ## Fluxo de Trabalho
 ### Desenvolvimento de Funcionalidades
