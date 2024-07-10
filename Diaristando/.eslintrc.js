@@ -2,7 +2,7 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['expo', 'prettier', 'eslint:recommended'],
+  extends: ['universe/native', 'prettier'],
   plugins: ['prettier'],
   rules: {
     'prettier/prettier': 'error',

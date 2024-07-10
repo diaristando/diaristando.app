@@ -30,8 +30,8 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
     "eslint": "^8.57.0",
-    "eslint-config-expo": "^7.1.2",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-config-universe": "^13.0.0",
     "eslint-plugin-prettier": "^5.1.3",
     "prettier": "^3.3.2",
     "typescript": "^5.1.3"
@@ -39,6 +39,6 @@
   "private": true,
   
   "eslintConfig": {
-    "extends": ["expo", "eslint:recommended"]
+    "extends": "universe/native"
   }
 }
