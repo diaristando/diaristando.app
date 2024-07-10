@@ -1,7 +1,7 @@
 import '../styles/global.css';
+import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View } from 'react-native';
-import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 
 export function Inicio() {
   const [fontsLoaded] = useFonts({
