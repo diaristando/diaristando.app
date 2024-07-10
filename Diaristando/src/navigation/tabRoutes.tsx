@@ -1,5 +1,6 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { Inicio } from '../screens/Inicio';
 import { PageTwo } from '../screens/PageTwo';
 
