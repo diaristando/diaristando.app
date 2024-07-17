@@ -1,10 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import './config/translator';
+import { useTranslation } from 'react-i18next';
 
 export default function App() {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text>Diaristando App!</Text>
+      <Text>{t('hello-world')}</Text>
       <StatusBar style="auto" />
     </View>
   );
