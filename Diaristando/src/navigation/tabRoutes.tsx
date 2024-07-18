@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Inicio } from '../screens/Inicio';
 import { PageTwo } from '../screens/PageTwo';
+import { SocialLogin } from '../screens/SocialLogin';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +24,14 @@ export function TabRoutes() {
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="book" size={size} color={color} />,
           tabBarLabel: 'Página 2',
+        }}
+      />
+      <Tab.Screen
+        name="social-login"
+        component={SocialLogin}
+        options={{
+          tabBarIcon: ({ color, size }) => <Feather name="globe" size={size} color={color} />,
+          tabBarLabel: 'Login Social',
         }}
       />
     </Tab.Navigator>
