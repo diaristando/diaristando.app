@@ -2,6 +2,8 @@ import '../styles/global.css';
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { Text, View } from 'react-native';
 
+import { Separator } from '../components/Separator';
+
 export function Home() {
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
@@ -24,5 +26,3 @@ export function Home() {
     </View>
   );
 }
-
-const Separator = () => <View className="border-b-2 border-primaryLight rounded-full" />;
