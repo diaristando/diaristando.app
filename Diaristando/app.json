@@ -18,7 +18,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "diaristando.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -28,7 +29,7 @@
       [
         "@react-native-google-signin/google-signin",
         {
-          "iosUrlScheme": "com.googleusercontent.apps.1085724072484-v7ah450nl276s2ukvt5c9c442651q4ad"
+          "iosUrlScheme": "com.googleusercontent.apps.1085724072484-d00qou7kfabk9b8nkd3tkeds2e35g1qh"
         }
       ]
     ]

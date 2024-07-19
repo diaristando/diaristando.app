@@ -1,16 +1,26 @@
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useState } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Alert, Image, Pressable, Text, View } from 'react-native';
 
 export function SocialLogin() {
   const [isPressed, setIsPressed] = useState(false);
-  const handlePress = () => {
-    console.log('Botão pressionado!');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const handleSignIn = async () => {
+    try {
+      const response = await GoogleSignin.signIn();
+      console.log(response);
+      setIsAuthenticated(true);
+    } catch (error) {
+      setIsAuthenticated(false);
+      console.log(error);
+      Alert.alert('Entrar', 'Não foi possível realizar o login com o Google');
+    }
   };
 
   GoogleSignin.configure({
     scopes: ['email', 'profile'],
-    webClientId: '1085724072484-d00qou7kfabk9b8nkd3tkeds2e35g1qh.apps.googleusercontent.com',
+    webClientId: '1085724072484-jq9pfj0er889u6imdh8ihhnj1unbj363.apps.googleusercontent.com',
+    iosClientId: '1085724072484-v7ah450nl276s2ukvt5c9c442651q4ad.apps.googleusercontent.com',
   });
 
   return (
@@ -29,7 +39,7 @@ export function SocialLogin() {
         </Text>
         <View className="mt-16">
           <Pressable
-            onPress={handlePress}
+            onPress={handleSignIn}
             onPressIn={() => setIsPressed(true)}
             onPressOut={() => setIsPressed(false)}
             className={`bg-[#CB3F24] flex flex-row items-center p-[2px] rounded ${isPressed ? 'opacity-80' : 'opacity-100'}`}
