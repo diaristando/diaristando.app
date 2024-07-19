@@ -1,4 +1,3 @@
-import { GOOGLE_ID } from '@env';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useState } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
@@ -11,7 +10,7 @@ export function SocialLogin() {
 
   GoogleSignin.configure({
     scopes: ['email', 'profile'],
-    webClientId: GOOGLE_ID,
+    webClientId: '1085724072484-d00qou7kfabk9b8nkd3tkeds2e35g1qh.apps.googleusercontent.com',
   });
 
   return (
