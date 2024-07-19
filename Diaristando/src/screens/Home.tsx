@@ -1,9 +1,9 @@
-import '../styles/global.css';
-import '../../config/translator';
+import '@/styles/global.css';
+import '@/../config/translator';
 import { useTranslation } from 'react-i18next';
 import { Text, View } from 'react-native';
 
-import { Separator } from '../components/Separator';
+import { Separator } from '@/components/Separator';
 
 export function Home() {
   const { t } = useTranslation();
