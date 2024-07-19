@@ -2,7 +2,6 @@ import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Home } from '../screens/Home';
-import { PageTwo } from '../screens/PageTwo';
 import { SocialLogin } from '../screens/SocialLogin';
 
 const Tab = createBottomTabNavigator();
@@ -16,14 +15,6 @@ export function TabRoutes() {
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
           tabBarLabel: 'Início',
-        }}
-      />
-      <Tab.Screen
-        name="page-two"
-        component={PageTwo}
-        options={{
-          tabBarIcon: ({ color, size }) => <Feather name="book" size={size} color={color} />,
-          tabBarLabel: 'Página 2',
         }}
       />
       <Tab.Screen
