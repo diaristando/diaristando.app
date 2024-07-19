@@ -1,3 +1,5 @@
+import { GOOGLE_ID } from '@env';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useState } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 
@@ -6,6 +8,11 @@ export function SocialLogin() {
   const handlePress = () => {
     console.log('Botão pressionado!');
   };
+
+  GoogleSignin.configure({
+    scopes: ['email', 'profile'],
+    webClientId: GOOGLE_ID,
+  });
 
   return (
     <View className="flex-1 bg-primaryLight">
