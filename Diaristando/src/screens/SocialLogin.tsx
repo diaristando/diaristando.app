@@ -3,6 +3,18 @@ import { useState } from 'react';
 import { Alert, Image, Pressable, Text, View } from 'react-native';
 
 export function SocialLogin() {
+  const webKey = process.env.EXPO_PUBLIC_WEB_ID;
+  const androidKey = process.env.EXPO_PUBLIC_ANDROID_ID;
+  const iosKey = process.env.EXPO_PUBLIC_IOS_ID;
+  GoogleSignin.configure({
+    scopes: ['email', 'profile'],
+    webClientId: webKey,
+    iosClientId: iosKey,
+    offlineAccess: true,
+    forceCodeForRefreshToken: true,
+    profileImageSize: 120,
+  });
+
   const [isPressed, setIsPressed] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleSignIn = async () => {
@@ -16,12 +28,6 @@ export function SocialLogin() {
       Alert.alert('Entrar', 'Não foi possível realizar o login com o Google');
     }
   };
-
-  GoogleSignin.configure({
-    scopes: ['email', 'profile'],
-    webClientId: '1085724072484-jq9pfj0er889u6imdh8ihhnj1unbj363.apps.googleusercontent.com',
-    iosClientId: '1085724072484-v7ah450nl276s2ukvt5c9c442651q4ad.apps.googleusercontent.com',
-  });
 
   return (
     <View className="flex-1 bg-primaryLight">
