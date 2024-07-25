@@ -1,17 +1,44 @@
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { useState } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { useAuth, useOAuth, useUser } from '@clerk/clerk-expo';
+import * as Link from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
+import { useEffect, useState } from 'react';
+import { Image, Text, View } from 'react-native';
+
+import { SocialLoginButton } from '@/components/SocialLoginButton';
+
+WebBrowser.maybeCompleteAuthSession();
 
 export function SocialLogin() {
-  const [isPressed, setIsPressed] = useState(false);
-  const handlePress = () => {
-    console.log('Botão pressionado!');
+  const { user } = useUser();
+  const { isSignedIn, signOut } = useAuth();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const googleOAuth = useOAuth({ strategy: 'oauth_google' });
+
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      const redirectUrl = Link.createURL('/');
+      const oAuthFlow = await googleOAuth.startOAuthFlow({ redirectUrl });
+
+      if (oAuthFlow.authSessionResult?.type === 'success') {
+        if (oAuthFlow.setActive) {
+          await oAuthFlow.setActive({ session: oAuthFlow.createdSessionId });
+        }
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
   };
 
-  GoogleSignin.configure({
-    scopes: ['email', 'profile'],
-    webClientId: '1085724072484-d00qou7kfabk9b8nkd3tkeds2e35g1qh.apps.googleusercontent.com',
-  });
+  useEffect(() => {
+    WebBrowser.warmUpAsync();
+    return () => {
+      WebBrowser.coolDownAsync();
+    };
+  }, []);
 
   return (
     <View className="flex-1 bg-primaryLight">
@@ -27,21 +54,30 @@ export function SocialLogin() {
         <Text className="text-h6 text-primaryDark text-center">
           Te ajudando a conquistar sua independência!
         </Text>
+
         <View className="mt-16">
-          <Pressable
-            onPress={handlePress}
-            onPressIn={() => setIsPressed(true)}
-            onPressOut={() => setIsPressed(false)}
-            className={`bg-[#CB3F24] flex flex-row items-center p-[2px] rounded ${isPressed ? 'opacity-80' : 'opacity-100'}`}
-          >
-            <View className="bg-primaryLight p-2 mr-[38] rounded-tl rounded-bl">
-              <Image
-                className="w-[26] h-[26] "
-                source={require('../assets/images/google-icon.png')}
-              />
+          {isSignedIn && (
+            <View className="my-4 ">
+              <Text className="text-sm text-primaryDark text-center">
+                Olá, {user?.fullName} - {user?.emailAddresses[0].emailAddress}
+              </Text>
             </View>
-            <Text className="text-small text-light">Continuar com Google</Text>
-          </Pressable>
+          )}
+          {isSignedIn ? (
+            <SocialLoginButton
+              description="Sair"
+              onPress={signOut}
+              type="google"
+              isLoading={isLoading}
+            />
+          ) : (
+            <SocialLoginButton
+              description="Continuar com Google"
+              onPress={handleGoogleLogin}
+              type="google"
+              isLoading={isLoading}
+            />
+          )}
         </View>
       </View>
     </View>
