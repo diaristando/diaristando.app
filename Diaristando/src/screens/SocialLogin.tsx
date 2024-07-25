@@ -6,6 +6,8 @@ import { Image, Text, View } from 'react-native';
 
 import { SocialLoginButton } from '@/components/SocialLoginButton';
 
+const loginSocialImage = require('../assets/images/diaristando-image-login-social.png');
+
 WebBrowser.maybeCompleteAuthSession();
 
 export function SocialLogin() {
@@ -44,11 +46,7 @@ export function SocialLogin() {
     <View className="flex-1 bg-primaryLight">
       <View className="mx-6 py-12 ">
         <View className="flex items-center justify-center">
-          <Image
-            className="w-[100] h-[100]"
-            source={require('../assets/images/diaristando-image-login-social.png')}
-            resizeMode="cover"
-          />
+          <Image className="w-[100] h-[100]" source={loginSocialImage} resizeMode="cover" />
           <Text className="text-[57px] font-bold text-primary">Diaristando</Text>
         </View>
         <Text className="text-h6 text-primaryDark text-center">
