@@ -2,6 +2,8 @@
   "name": "diaristando",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
+  "eas-build-post-install": "npx tailwindcss -i ./src/styles/global.css -o ./node_modules/.cache/nativewind/global.css.native.css",
+  "postinstall": "npx tailwindcss -i ./src/styles/global.css -o ./node_modules/.cache/nativewind/global.css.native.css",
   "scripts": {
     "start": "expo start",
     "start:wsl": "REACT_NATIVE_PACKAGER_HOSTNAME=$(node get_network_local_ip.js) expo start -c",
