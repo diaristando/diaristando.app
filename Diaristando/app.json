@@ -1,8 +1,7 @@
 {
   "expo": {
     "name": "Diaristando",
-    "slug": "Diaristando",
-    "scheme": "diaristando",
+    "slug": "diaristando",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,14 +20,19 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "diaristando.app"
+      "package": "com.diaristando.diaristando"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font",
-      "expo-secure-store"
-    ]
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "de6d6ec2-00a1-483a-a6e0-7386f866cf1f"
+      }
+    },
+    "owner": "diaristando"
   }
 }
