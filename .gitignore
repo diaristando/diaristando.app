@@ -27,6 +27,7 @@ yarn-error.*
 .DS_Store
 *.pem
 
+
 # Local env files
 .env*.local
 
@@ -39,3 +40,7 @@ yarn-error.*
 # Vsode 
 .vscode
 Diaristando/get_network_local_ip.js
+
+android
+ios
+.env

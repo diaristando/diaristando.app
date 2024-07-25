@@ -1,5 +1,5 @@
-import '../styles/global.css';
-import '../../config/translator';
+import '@/styles/global.css';
+import '@/../config/translator';
 import { useTranslation } from 'react-i18next';
 import { Text, View } from 'react-native';
 
