@@ -69,6 +69,7 @@ export function SocialLogin() {
               onPress={signOut}
               type="google"
               isLoading={isLoading}
+              hasIcon={false}
             />
           ) : (
             <SocialLoginButton
