@@ -20,7 +20,7 @@ export function Home() {
       </View>
       <Separator />
       <View className="flex gap-2 py-3">
-        <Text className="text-base leading-[18.75px] font-bold text-black">
+        <Text className="text-[16px] leading-[18.75px] font-bold text-black">
           {t('h2-como-funciona')}
         </Text>
         <Text className="text-small leading-[18.2px] text-black">{t('p-como-funciona')}</Text>
