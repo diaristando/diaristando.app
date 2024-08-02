@@ -8,7 +8,12 @@ const Tab = createBottomTabNavigator();
 
 export function TabRoutes() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      sceneContainerStyle={{ backgroundColor: 'white' }}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={Home}
