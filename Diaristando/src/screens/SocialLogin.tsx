@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Image, Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
 import { SocialLoginButton } from '@/components/SocialLoginButton';
 
@@ -67,7 +68,8 @@ export function SocialLogin() {
 
   return (
     <>
-      <View className="flex-1 px-6 bg-primaryLight">
+      <View className="flex-1 px-6 pt-10 bg-primaryLight">
+        <FocusAwareStatusBar barStyle="light-content" backgroundColor="#DBEAFE" />
         <CustomModal
           isOpen={isModalVisible}
           onClose={() => {
@@ -89,7 +91,7 @@ export function SocialLogin() {
             <Text style={{ fontSize: RFValue(16, 800) }}>Login realizado com sucesso!</Text>
           </View>
         </CustomModal>
-        <View className="mt-12">
+        <View>
           <View className="flex items-center justify-center">
             <Image className="w-[100] h-[100]" source={loginSocialImage} resizeMode="cover" />
             <Text style={{ fontSize: RFValue(57, 800) }} className="font-bold text-primary">

@@ -6,10 +6,13 @@ import { Text, View } from 'react-native';
 import { Separator } from '../components/Separator';
 import { StepComoFunciona } from '../components/StepComoFunciona';
 
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
+
 export function Home() {
   const { t } = useTranslation();
   return (
-    <View className="flex-1 py-[40px] mx-6">
+    <View className="flex-1 mx-6">
+      <FocusAwareStatusBar backgroundColor="#ffffff" />
       <View className="flex gap-2 pb-3">
         <Text className="text-h4 leading-[26.7px] font-bold text-primary">
           {t('h1-boas-vindas')}
