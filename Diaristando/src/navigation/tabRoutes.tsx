@@ -28,6 +28,7 @@ export function TabRoutes() {
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="globe" size={size} color={color} />,
           tabBarLabel: 'Login Social',
+          tabBarStyle: { display: 'none' },
         }}
       />
     </Tab.Navigator>

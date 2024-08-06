@@ -1,33 +1,56 @@
 import { useAuth, useOAuth, useUser } from '@clerk/clerk-expo';
 import * as Link from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-import { useEffect, useState } from 'react';
+import LottieView from 'lottie-react-native';
+import { useEffect, useRef, useState } from 'react';
 import { Image, Text, View } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
+import { CustomModal } from '@/components/Modal';
 import { SocialLoginButton } from '@/components/SocialLoginButton';
 
+const successLogin = require('../assets/animations/success.json');
 const loginSocialImage = require('../assets/images/diaristando-image-login-social.png');
 
 WebBrowser.maybeCompleteAuthSession();
 
+const currentYear = new Date().getFullYear();
+
 export function SocialLogin() {
+  const animation = useRef<LottieView>(null);
   const { user } = useUser();
   const { isSignedIn, signOut } = useAuth();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [errorLogin, setErrorLogin] = useState<boolean>(false);
   const googleOAuth = useOAuth({ strategy: 'oauth_google' });
 
   const handleGoogleLogin = async () => {
     try {
+      setErrorLogin(false);
       setIsLoading(true);
       const redirectUrl = Link.createURL('/');
       const oAuthFlow = await googleOAuth.startOAuthFlow({ redirectUrl });
 
-      if (oAuthFlow.authSessionResult?.type === 'success') {
+      if (oAuthFlow.authSessionResult?.type === 'success' && !!oAuthFlow.createdSessionId) {
         if (oAuthFlow.setActive) {
           await oAuthFlow.setActive({ session: oAuthFlow.createdSessionId });
+          setIsModalVisible(true);
         }
       }
+      setIsLoading(false);
+    } catch (error) {
+      setErrorLogin(true);
+      console.error(error);
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignout = async () => {
+    try {
+      setIsLoading(true);
+      await signOut();
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -43,31 +66,50 @@ export function SocialLogin() {
   }, []);
 
   return (
-    <View className="flex-1 bg-primaryLight">
-      <View className="mx-6 py-12 ">
-        <View className="flex items-center justify-center">
-          <Image className="w-[100] h-[100]" source={loginSocialImage} resizeMode="cover" />
-          <Text className="text-[57px] font-bold text-primary">Diaristando</Text>
+    <>
+      <View className="flex-1 px-6 bg-primaryLight">
+        <CustomModal
+          isOpen={isModalVisible}
+          onClose={() => {
+            setIsModalVisible(false);
+          }}
+          duration={3000}
+        >
+          <View className="flex items-center justify-center w-full h-full gap-4 p-2">
+            <LottieView
+              autoPlay
+              ref={animation}
+              style={{
+                width: 149,
+                height: 133,
+              }}
+              source={successLogin}
+              loop={false}
+            />
+            <Text style={{ fontSize: RFValue(16, 800) }}>Login realizado com sucesso!</Text>
+          </View>
+        </CustomModal>
+        <View className="mt-12">
+          <View className="flex items-center justify-center">
+            <Image className="w-[100] h-[100]" source={loginSocialImage} resizeMode="cover" />
+            <Text style={{ fontSize: RFValue(57, 800) }} className="font-bold text-primary">
+              Diaristando
+            </Text>
+          </View>
+          <Text
+            style={{ fontSize: RFValue(18, 800) }}
+            className="px-8 text-center text-primaryDark"
+          >
+            Te ajudando a conquistar sua independência!
+          </Text>
         </View>
-        <Text className="text-h6 text-primaryDark text-center">
-          Te ajudando a conquistar sua independência!
-        </Text>
-
         <View className="mt-16">
-          {isSignedIn && (
-            <View className="my-4 ">
-              <Text className="text-sm text-primaryDark text-center">
-                Olá, {user?.fullName} - {user?.emailAddresses[0].emailAddress}
-              </Text>
-            </View>
-          )}
           {isSignedIn ? (
             <SocialLoginButton
-              description="Sair"
-              onPress={signOut}
+              description={`Sair - ${user?.emailAddresses[0].emailAddress}`}
+              onPress={handleSignout}
               type="google"
               isLoading={isLoading}
-              hasIcon={false}
             />
           ) : (
             <SocialLoginButton
@@ -77,8 +119,20 @@ export function SocialLogin() {
               isLoading={isLoading}
             />
           )}
+          {errorLogin && (
+            <Text style={{ fontSize: RFValue(14, 800) }} className="text-tertiaryDanger">
+              Falha ao realizar login. Tente novamente.
+            </Text>
+          )}
         </View>
       </View>
-    </View>
+      <View className="absolute bottom-0 flex items-center justify-center w-full p-2 h-[52px] border-t-[1px] border-[#BEBDBD]">
+        <Text className="text-center text-[#8E8E8E]" style={{ fontSize: RFValue(14, 800) }}>
+          Diaristando {currentYear}
+          {'\n'}
+          Todos os direitos reservados. v 0.0.1
+        </Text>
+      </View>
+    </>
   );
 }
