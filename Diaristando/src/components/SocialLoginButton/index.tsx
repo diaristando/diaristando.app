@@ -35,21 +35,21 @@ export function SocialLoginButton({
 }: SocialLoginButtonProps) {
   return (
     <TouchableHighlight disabled={isLoading} onPress={onPress} {...rest}>
-      <View className="bg-[#CB3F24] flex flex-row items-center p-0.5 rounded h-10 w-full">
+      <View className="bg-[#CB3F24] flex flex-row items-center p-0.5 rounded h-[40px] w-full">
         {isLoading ? (
-          <View className="flex-1 items-center">
+          <View className="items-center flex-1">
             <ActivityIndicator size="small" color="#fff" />
           </View>
         ) : (
-          <View className="flex-1 flex-row items-center relative">
+          <View className="relative flex-row items-center flex-1">
             {hasIcon && (
-              <View className="bg-primaryLight rounded-tl rounded-bl h-full w-10 items-center flex justify-center absolute">
+              <View className="absolute flex items-center justify-center w-10 h-full rounded-tl rounded-bl bg-primaryLight">
                 <Image className="w-[26] h-[26]" source={iconsMap[type]} />
               </View>
             )}
 
-            <View className="flex-1 justify-center">
-              <Text className="text-small text-light text-center">{description}</Text>
+            <View className="justify-center flex-1">
+              <Text className="text-center text-small text-light">{description}</Text>
             </View>
           </View>
         )}
