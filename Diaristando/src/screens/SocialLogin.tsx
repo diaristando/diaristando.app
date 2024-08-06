@@ -1,10 +1,10 @@
 import { useAuth, useOAuth, useUser } from '@clerk/clerk-expo';
 import * as Link from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
+import LottieView from 'lottie-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Image, Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import LottieView from 'lottie-react-native';
 
 import { CustomModal } from '@/components/Modal';
 import { SocialLoginButton } from '@/components/SocialLoginButton';
