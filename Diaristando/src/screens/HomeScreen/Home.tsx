@@ -3,8 +3,8 @@ import '@/../config/translator';
 import { useTranslation } from 'react-i18next';
 import { Text, View } from 'react-native';
 
-import { Separator } from '../components/Separator';
-import { StepComoFunciona } from '../components/StepComoFunciona';
+import { Separator } from '@/components/Separator';
+import { StepComoFunciona } from '@/components/StepComoFunciona';
 
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 
