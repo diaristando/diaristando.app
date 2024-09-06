@@ -1,12 +1,11 @@
 import '@/styles/global.css';
-import '@/../config/translator';
+import '../../../config/translator';
 import { useTranslation } from 'react-i18next';
 import { Text, View } from 'react-native';
 
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { Separator } from '@/components/Separator';
 import { StepComoFunciona } from '@/components/StepComoFunciona';
-
-import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 
 export function Home() {
   const { t } = useTranslation();
