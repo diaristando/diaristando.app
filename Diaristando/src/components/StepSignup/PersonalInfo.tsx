@@ -2,7 +2,15 @@ import { Picker } from '@react-native-picker/picker';
 import { useNavigation, useRoute } from '@react-navigation/native'; // useRoute para pegar parâmetros de navegação
 import { Formik } from 'formik';
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import * as Yup from 'yup';
 
 export function PersonalInfo() {
@@ -20,7 +28,6 @@ export function PersonalInfo() {
   const route = useRoute();
 
   const { email, nomeCompleto } = route.params || { email: '', nomeCompleto: '' };
-
 
   return (
     <Formik
