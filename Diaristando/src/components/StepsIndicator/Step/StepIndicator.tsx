@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export class StepIndicator extends React.Component<{ currentStep: any, totalSteps: any }> {
+export class StepIndicator extends React.Component<{ currentStep: any; totalSteps: any }> {
   render() {
-    let { currentStep, totalSteps } = this.props;
     const steps = Array.from({ length: totalSteps }, (_, index) => index + 1);
+    let { currentStep, totalSteps } = this.props;
 
     return (
       <View className="flex-row justify-between items-center mb-4 text-small p-3">
