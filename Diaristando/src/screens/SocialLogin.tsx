@@ -1,7 +1,7 @@
 import { useAuth, useOAuth, useUser } from '@clerk/clerk-expo';
+import { useNavigation } from '@react-navigation/native';
 import * as Link from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Image, Text, View } from 'react-native';
