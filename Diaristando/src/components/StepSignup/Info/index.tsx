@@ -1,4 +1,3 @@
-
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
