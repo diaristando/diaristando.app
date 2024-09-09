@@ -28,7 +28,6 @@ export function Signup() {
 
       {/* Exibe o componente de Informações Pessoais ou Dados Bancários */}
       {currentStep === 1 && <PersonalInfo onNext={handleNextStep} />}
-
     </View>
   );
 }
