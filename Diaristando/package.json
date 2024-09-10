@@ -2,8 +2,8 @@
   "name": "diaristando",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
+  "type": "module",
   "scripts": {
-    "type": "module",
     "start": "npx expo start",
     "start:wsl": "REACT_NATIVE_PACKAGER_HOSTNAME=$(node get_network_local_ip.js) expo start -c",
     "android": "expo run:android",
