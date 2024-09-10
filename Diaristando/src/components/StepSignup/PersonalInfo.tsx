@@ -1,5 +1,6 @@
+import { RootStackParamList } from '@/navigation/appNavigation';
 import { Picker } from '@react-native-picker/picker';
-import { useNavigation, useRoute } from '@react-navigation/native'; // useRoute para pegar parâmetros de navegação
+import { useNavigation, useRoute, RouteProp, NavigationProp } from '@react-navigation/native';
 import { Formik } from 'formik';
 import React from 'react';
 import {
@@ -13,6 +14,9 @@ import {
 } from 'react-native';
 import * as Yup from 'yup';
 
+type PersonalInfoRouteProp = RouteProp<RootStackParamList, 'PersonalInfo'>;
+type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'SignedOff'>;
+
 export function PersonalInfo() {
   const validationSchema = Yup.object().shape({
     nomeCompleto: Yup.string().required('*Este campo é obrigatório'),
@@ -24,8 +28,8 @@ export function PersonalInfo() {
     nomeOpcional: Yup.string().optional(),
   });
 
-  const navigation = useNavigation();
-  const route = useRoute();
+  const navigation = useNavigation<SocialLoginNavigationProp>();
+  const route = useRoute<PersonalInfoRouteProp>();
 
   const { email, nomeCompleto } = route.params || { email: '', nomeCompleto: '' };
 
@@ -43,25 +47,25 @@ export function PersonalInfo() {
       validationSchema={validationSchema}
       onSubmit={(values) => {
         console.log('Formulário submetido com sucesso!', values);
-        navigation.navigate(Home);
+        navigation.navigate('SignedOff', { screen: 'Home' });
         console.log('Complete!');
       }}
     >
       {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          setFieldValue,
-          values,
-          errors,
-          touched,
-          isValid,
-          dirty,
-        }) => (
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        setFieldValue,
+        values,
+        errors,
+        touched,
+        isValid,
+        dirty,
+      }) => (
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={100} // Ajuste a altura conforme necessário
+          keyboardVerticalOffset={100}
         >
           <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
             <View className="flex-1 mx-6">
@@ -71,9 +75,7 @@ export function PersonalInfo() {
                 </Text>
               </View>
 
-              {/* Formulário */}
               <View className="flex gap-4 py-3 pt-2">
-                {/* Nome Completo */}
                 <Text className="text-paragraph">Nome Completo</Text>
                 <TextInput
                   placeholder="Nome Completo"
@@ -81,14 +83,13 @@ export function PersonalInfo() {
                   onBlur={handleBlur('nomeCompleto')}
                   value={values.nomeCompleto}
                   className={`border ${touched.nomeCompleto && errors.nomeCompleto ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
-                  editable={false} // Desabilitado para edição
+                  editable={false}
                 />
                 {touched.nomeCompleto && errors.nomeCompleto && (
-                  <Text className="text-red-500 text-sm">{errors.nomeCompleto}</Text>
+                  <Text className="text-sm text-red-500">{errors.nomeCompleto}</Text>
                 )}
 
-                {/* Email */}
-                <Text className="text-paragraph pt-2">E-mail</Text>
+                <Text className="pt-2 text-paragraph">E-mail</Text>
                 <TextInput
                   placeholder="email@email.com.br"
                   onChangeText={handleChange('email')}
@@ -96,14 +97,13 @@ export function PersonalInfo() {
                   value={values.email}
                   keyboardType="email-address"
                   className={`border ${touched.email && errors.email ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
-                  editable={false} // Desabilitado para edição
+                  editable={false}
                 />
                 {touched.email && errors.email && (
-                  <Text className="text-red-500 text-sm">{errors.email}</Text>
+                  <Text className="text-sm text-red-500">{errors.email}</Text>
                 )}
 
-                {/* Telefone */}
-                <Text className="text-paragraph pt-2">Telefone*</Text>
+                <Text className="pt-2 text-paragraph">Telefone*</Text>
                 <TextInput
                   placeholder="9 XXXX-XXXX"
                   onChangeText={handleChange('telefone')}
@@ -113,11 +113,10 @@ export function PersonalInfo() {
                   className={`border ${touched.telefone && errors.telefone ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
                 />
                 {touched.telefone && errors.telefone && (
-                  <Text className="text-red-500 text-sm">{errors.telefone}</Text>
+                  <Text className="text-sm text-red-500">{errors.telefone}</Text>
                 )}
 
-                {/* Data de Nascimento */}
-                <Text className="text-paragraph pt-2">Data de nascimento*</Text>
+                <Text className="pt-2 text-paragraph">Data de nascimento*</Text>
                 <TextInput
                   placeholder="DD/MM/AAAA"
                   onChangeText={handleChange('dataNascimento')}
@@ -126,11 +125,10 @@ export function PersonalInfo() {
                   className={`border ${touched.dataNascimento && errors.dataNascimento ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
                 />
                 {touched.dataNascimento && errors.dataNascimento && (
-                  <Text className="text-red-500 text-sm">{errors.dataNascimento}</Text>
+                  <Text className="text-sm text-red-500">{errors.dataNascimento}</Text>
                 )}
 
-                {/* CEP */}
-                <Text className="text-paragraph pt-2">CEP*</Text>
+                <Text className="pt-2 text-paragraph">CEP*</Text>
                 <TextInput
                   placeholder="XXXXX-XXX"
                   onChangeText={handleChange('cep')}
@@ -139,11 +137,10 @@ export function PersonalInfo() {
                   className={`border ${touched.cep && errors.cep ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
                 />
                 {touched.cep && errors.cep && (
-                  <Text className="text-red-500 text-sm">{errors.cep}</Text>
+                  <Text className="text-sm text-red-500">{errors.cep}</Text>
                 )}
 
-                {/* Gênero */}
-                <Text className="text-paragraph pt-2">Qual seu gênero?*</Text>
+                <Text className="pt-2 text-paragraph">Qual seu gênero?*</Text>
                 <View
                   className={`border ${touched.genero && errors.genero ? 'border-gray-500' : 'border-gray-300'} rounded-md`}
                 >
@@ -159,31 +156,29 @@ export function PersonalInfo() {
                   </Picker>
                 </View>
                 {touched.genero && errors.genero && (
-                  <Text className="text-tertiaryDanger text-sm">{errors.genero}</Text>
+                  <Text className="text-sm text-tertiaryDanger">{errors.genero}</Text>
                 )}
 
-                {/* Nome Opcional */}
-                <Text className="text-paragraph pt-2">Como podemos te chamar? (Opcional)</Text>
+                <Text className="pt-2 text-paragraph">Como podemos te chamar? (Opcional)</Text>
                 <TextInput
                   placeholder="Esse nome ficará visível para os clientes"
                   onChangeText={handleChange('nomeOpcional')}
                   onBlur={handleBlur('nomeOpcional')}
                   value={values.nomeOpcional}
-                  className="border border-gray-300 rounded-md p-2"
+                  className="p-2 border border-gray-300 rounded-md"
                 />
               </View>
 
-              {/* Botões de Ação */}
-              <View className="flex-row justify-between mt-4 pb-10">
+              <View className="flex-row justify-between pb-10 mt-4">
                 <TouchableOpacity
                   onPress={() => navigation.goBack()}
                   className="w-[146px] h-[43px] bg-light border border-primary rounded-md flex items-center justify-center"
                 >
-                  <Text className="text-primary text-center">Voltar</Text>
+                  <Text className="text-center text-primary">Voltar</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  onPress={handleSubmit}
+                  onPress={() => handleSubmit()}
                   className={`w-[146px] h-[43px] rounded-md flex items-center justify-center ${isValid && dirty ? 'bg-light border border-primary' : 'bg-light border border-gray-300'}`}
                   disabled={!(isValid && dirty)}
                 >

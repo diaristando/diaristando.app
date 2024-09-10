@@ -1,5 +1,5 @@
 import { useAuth, useOAuth, useUser } from '@clerk/clerk-expo';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import * as Link from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import LottieView from 'lottie-react-native';
@@ -10,6 +10,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
 import { SocialLoginButton } from '@/components/SocialLoginButton';
+import { RootStackParamList } from '@/navigation/appNavigation';
 
 const successLogin = require('../assets/animations/success.json');
 const loginSocialImage = require('../assets/images/diaristando-image-login-social.png');
@@ -18,15 +19,19 @@ WebBrowser.maybeCompleteAuthSession();
 
 const currentYear = new Date().getFullYear();
 
+type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'SocialLogin'>;
+
 export function SocialLogin() {
   const animation = useRef<LottieView>(null);
   const { user } = useUser();
   const { isSignedIn, signOut } = useAuth();
-  const navigation = useNavigation();
+  const navigation = useNavigation<SocialLoginNavigationProp>();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [errorLogin, setErrorLogin] = useState<boolean>(false);
+  const [tempTrigger, setTempTrigger] = useState<boolean>(false);
+
   const googleOAuth = useOAuth({ strategy: 'oauth_google' });
 
   const handleGoogleLogin = async () => {
@@ -44,11 +49,8 @@ export function SocialLogin() {
         await oAuthFlow.setActive({ session: oAuthFlow.createdSessionId });
         setIsModalVisible(true);
         console.log('Login realizado com sucesso!');
+        setTempTrigger(true);
         animation.current?.play();
-        setTimeout(() => {
-          setIsModalVisible(false);
-          navigation.navigate('Home');
-        }, 3000);
       }
       setIsLoading(false);
     } catch (error) {
@@ -75,6 +77,17 @@ export function SocialLogin() {
       WebBrowser.coolDownAsync();
     };
   }, []);
+
+  useEffect(() => {
+    if (!user || !tempTrigger) return;
+    setTimeout(() => {
+      setIsModalVisible(false);
+      navigation.navigate('PersonalInfo', {
+        email: user.emailAddresses[0].emailAddress,
+        nomeCompleto: user.fullName || '',
+      });
+    }, 3000);
+  }, [user, tempTrigger]);
 
   return (
     <>

@@ -3,17 +3,15 @@ import { View, Text } from 'react-native';
 
 export class StepIndicator extends React.Component<{ currentStep: any; totalSteps: any }> {
   render() {
-    const steps = Array.from({ length: totalSteps }, (_, index) => index + 1);
     let { currentStep, totalSteps } = this.props;
+    const steps = Array.from({ length: totalSteps }, (_, index) => index + 1);
 
     return (
-      <View className="flex-row justify-between items-center mb-4 text-small p-3">
+      <View className="flex-row items-center justify-between p-3 mb-4 text-small">
         {steps.map((step) => (
-          <View key={step} className="flex-1 items-center">
+          <View key={step} className="items-center flex-1">
             <Text
-              className={`text-lg font-bold ${
-                currentStep === step ? 'text-primary' : 'text-gray'
-              }`}
+              className={`text-lg font-bold ${currentStep === step ? 'text-primary' : 'text-gray'}`}
             >
               {`Etapa ${step}`}
             </Text>
