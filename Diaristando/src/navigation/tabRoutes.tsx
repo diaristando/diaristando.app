@@ -2,6 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Home } from '@/screens/HomeScreen/Home';
+import Signup from '@/screens/LoginScreen/Signup';
 import { SocialLogin } from '@/screens/SocialLogin';
 
 const Tab = createBottomTabNavigator();
@@ -28,6 +29,15 @@ export function TabRoutes() {
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="globe" size={size} color={color} />,
           tabBarLabel: 'Login Social',
+          tabBarStyle: { display: 'none' },
+        }}
+      />
+      <Tab.Screen
+        name="Cadastro"
+        component={Signup}
+        options={{
+          tabBarIcon: ({ color, size }) => <Feather name="globe" size={size} color={color} />,
+          tabBarLabel: 'Cadastro',
           tabBarStyle: { display: 'none' },
         }}
       />
