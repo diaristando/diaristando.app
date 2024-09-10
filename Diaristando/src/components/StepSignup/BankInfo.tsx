@@ -18,7 +18,7 @@ export default function BankInfo() {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={100} // Ajuste a altura conforme necessário
+      keyboardVerticalOffset={100}
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
         <View className="flex-1 mx-6">
