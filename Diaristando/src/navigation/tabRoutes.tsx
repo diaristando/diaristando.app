@@ -23,7 +23,7 @@ export function TabRoutes() {
         }}
       />
       <Tab.Screen
-        name="social-login"
+        name="SocialLogin"
         component={SocialLogin}
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="globe" size={size} color={color} />,

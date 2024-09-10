@@ -1,7 +1,7 @@
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 
-import { Routes } from '@/navigation/routes';
+import AppNavigation from '@/navigation/appNavigation';
 import tokenCache from '@/storage/token';
 
 import './config/translator';
@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <Routes />
+      <AppNavigation />
     </ClerkProvider>
   );
 }
