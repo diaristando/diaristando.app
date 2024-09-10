@@ -1,4 +1,3 @@
-import { RootStackParamList } from '@/navigation/appNavigation';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation, useRoute, RouteProp, NavigationProp } from '@react-navigation/native';
 import { Formik } from 'formik';
@@ -13,6 +12,8 @@ import {
   Platform,
 } from 'react-native';
 import * as Yup from 'yup';
+
+import { RootStackParamList } from '@/navigation/appNavigation';
 
 type PersonalInfoRouteProp = RouteProp<RootStackParamList, 'PersonalInfo'>;
 type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'SignedOff'>;
