@@ -1,33 +1,36 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React from 'react';
+import { ScrollView } from 'react-native';
 
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { PersonalInfo } from '@/components/StepSignup/PersonalInfo';
 import { StepIndicator } from '@/components/StepsIndicator/Step/StepIndicator';
 import { RootStackParamList } from '@/navigation/appNavigation';
 
-type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'SignedOff'>;
+type SignupRouterProp = RouteProp<RootStackParamList, 'Signup'>;
+
+const renderStep = (currentStep: number, props: { email: string; fullName: string }) => {
+  switch (currentStep) {
+    case 1:
+      return <PersonalInfo email={props.email} fullName={props.fullName} />;
+    default:
+      return null;
+  }
+};
 
 export function Signup() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const navigation = useNavigation<SocialLoginNavigationProp>();
-
-  const handleNextStep = () => {
-    if (currentStep === 1) {
-      setCurrentStep(2);
-    } else {
-      navigation.navigate('SignedOff', { screen: 'Home' });
-      console.log('Complete!');
-    }
-  };
+  const route = useRoute<SignupRouterProp>();
+  const { email, fullName } = route.params || { email: '', fullName: '' };
 
   return (
-    <View className="flex-1">
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      showsVerticalScrollIndicator={false}
+      className="bg-light"
+    >
       <FocusAwareStatusBar backgroundColor="#ffffff" />
-      <StepIndicator currentStep={currentStep} totalSteps={1} />
-
-      {currentStep === 1 && <PersonalInfo onNext={handleNextStep} />}
-    </View>
+      <StepIndicator currentStep={1} totalSteps={1} />
+      {renderStep(1, { email, fullName })}
+    </ScrollView>
   );
 }
