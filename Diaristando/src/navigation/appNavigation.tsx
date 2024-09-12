@@ -4,14 +4,11 @@ import React from 'react';
 
 import { TabRoutes } from './tabRoutes';
 
-import { PersonalInfo } from '@/components/StepSignup/PersonalInfo';
 import { Signup } from '@/screens/LoginScreen/Signup';
 
 export type RootStackParamList = {
   SignedOff: { screen: 'Home' | 'SocialLogin' };
-  Signup: undefined;
-  SocialLogin: undefined;
-  PersonalInfo: { email: string; nomeCompleto: string };
+  Signup: { email: string; fullName: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -26,7 +23,6 @@ export default function AppNavigation() {
       >
         <Stack.Screen name="SignedOff" component={TabRoutes} options={{ headerShown: false }} />
         <Stack.Screen name="Signup" component={Signup} />
-        <Stack.Screen name="PersonalInfo" component={PersonalInfo} />
       </Stack.Navigator>
     </NavigationContainer>
   );
