@@ -19,7 +19,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 const currentYear = new Date().getFullYear();
 
-type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'SocialLogin'>;
+type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'Signup'>;
 
 export function SocialLogin() {
   const animation = useRef<LottieView>(null);
@@ -82,9 +82,9 @@ export function SocialLogin() {
     if (!user || !tempTrigger) return;
     setTimeout(() => {
       setIsModalVisible(false);
-      navigation.navigate('PersonalInfo', {
+      navigation.navigate('Signup', {
         email: user.emailAddresses[0].emailAddress,
-        nomeCompleto: user.fullName || '',
+        fullName: user.fullName || '',
       });
     }, 3000);
   }, [user, tempTrigger]);
