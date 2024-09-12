@@ -1,55 +1,81 @@
-import { Picker } from '@react-native-picker/picker';
-import { useNavigation, useRoute, RouteProp, NavigationProp } from '@react-navigation/native';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Feather from '@expo/vector-icons/Feather';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   KeyboardAvoidingView,
   Platform,
+  TouchableWithoutFeedback,
 } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
 import * as Yup from 'yup';
 
-import { RootStackParamList } from '@/navigation/appNavigation';
+import dddsBr from '../../../assets/ddd-br.json';
 
-type PersonalInfoRouteProp = RouteProp<RootStackParamList, 'PersonalInfo'>;
+import { RootStackParamList } from '@/navigation/appNavigation';
+import { applyCepMask, applyPhoneMask } from '@/utils/masks';
+
 type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'SignedOff'>;
 
-export function PersonalInfo() {
-  const validationSchema = Yup.object().shape({
-    nomeCompleto: Yup.string().required('*Este campo é obrigatório'),
-    email: Yup.string().email('*E-mail inválido').required('*Por favor, digite seu e-mail'),
-    telefone: Yup.string().required('*Telefone é inválido'),
-    dataNascimento: Yup.string().required('*Por favor, digite sua data de nascimento'),
-    cep: Yup.string().required('*CEP inválido'),
-    genero: Yup.string().required('*Por favor, selecione um gênero'),
-    nomeOpcional: Yup.string().optional(),
-  });
+type PersonalInfoProps = {
+  email: string;
+  fullName: string;
+};
 
+const validationSchema = Yup.object().shape({
+  nome: Yup.string().required('*Este campo é obrigatório'),
+  email: Yup.string().email('*E-mail inválido').required('*Por favor, digite seu e-mail'),
+  telefone: Yup.string()
+    .required('*Telefone inválido')
+    .matches(/^\d{9}$/, '*Telefone inválido'),
+  ddd: Yup.string()
+    .required('*Por favor, selecione o DDD')
+    .matches(/^\d{2}$/, '*DDD inválido'),
+  dataNascimento: Yup.string().required('*Por favor, informe sua data de nascimento'),
+  cep: Yup.string()
+    .required('*CEP inválido')
+    .matches(/^\d{8}$/, '*CEP inválido'),
+  genero: Yup.string().optional(),
+  nomeSocial: Yup.string()
+    .optional()
+    .matches(/^[a-zA-Z0-9 ]*$/, '*Este campo não aceita caracteres especiais'),
+});
+
+export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
   const navigation = useNavigation<SocialLoginNavigationProp>();
-  const route = useRoute<PersonalInfoRouteProp>();
-
-  const { email, nomeCompleto } = route.params || { email: '', nomeCompleto: '' };
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
 
   return (
     <Formik
       initialValues={{
-        nomeCompleto: nomeCompleto || '',
-        email: email || '',
+        nome: fullName,
+        email,
         telefone: '',
         dataNascimento: '',
         cep: '',
-        genero: '',
-        nomeOpcional: '',
+        genero: null,
+        nomeSocial: '',
+        ddd: '',
       }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        console.log('Formulário submetido com sucesso!', values);
-        navigation.navigate('SignedOff', { screen: 'Home' });
+        const { ddd, telefone, ...rest } = values;
+        const phoneWithDdd = `${values.ddd}${values.telefone}`;
+        const payload = {
+          ...rest,
+          telefone: phoneWithDdd,
+        };
+        console.log('Formulário submetido com sucesso!', payload);
         console.log('Complete!');
+        navigation.navigate('SignedOff', { screen: 'Home' });
       }}
     >
       {({
@@ -68,130 +94,211 @@ export function PersonalInfo() {
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
           keyboardVerticalOffset={100}
         >
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-            <View className="flex-1 mx-6">
-              <View className="items-center gap-2 pb-3">
-                <Text className="text-h5 pt-8 leading-[20.25px] font-bold text-dark1">
-                  Informações Pessoais
-                </Text>
-              </View>
+          <View className="flex-1 px-6">
+            <Text className="text-h5 leading-[20.25px] font-bold text-primaryDark text-center">
+              Informações Pessoais
+            </Text>
 
-              <View className="flex gap-4 py-3 pt-2">
-                <Text className="text-paragraph">Nome Completo</Text>
+            <View className="flex">
+              <View className="mt-[30px] relative">
+                <Text className="text-base text-disabledGray">Nome Completo</Text>
                 <TextInput
                   placeholder="Nome Completo"
-                  onChangeText={handleChange('nomeCompleto')}
-                  onBlur={handleBlur('nomeCompleto')}
-                  value={values.nomeCompleto}
-                  className={`border ${touched.nomeCompleto && errors.nomeCompleto ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
+                  placeholderTextColor="#909090"
+                  value={values.nome}
+                  className="bg-[#D9D9D9] rounded p-2 h-[40px] text-[14px]"
                   editable={false}
                 />
-                {touched.nomeCompleto && errors.nomeCompleto && (
-                  <Text className="text-sm text-red-500">{errors.nomeCompleto}</Text>
-                )}
+              </View>
 
-                <Text className="pt-2 text-paragraph">E-mail</Text>
+              <View className="mt-[30px] relative">
+                <Text className="text-base text-disabledGray">E-mail</Text>
                 <TextInput
                   placeholder="email@email.com.br"
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
+                  placeholderTextColor="#909090"
                   value={values.email}
                   keyboardType="email-address"
-                  className={`border ${touched.email && errors.email ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
+                  className="bg-[#D9D9D9] text-[#909090] rounded p-2 h-[40px] text-[14px]"
                   editable={false}
+                  maxLength={50}
                 />
-                {touched.email && errors.email && (
-                  <Text className="text-sm text-red-500">{errors.email}</Text>
-                )}
+              </View>
 
-                <Text className="pt-2 text-paragraph">Telefone*</Text>
-                <TextInput
-                  placeholder="9 XXXX-XXXX"
-                  onChangeText={handleChange('telefone')}
-                  onBlur={handleBlur('telefone')}
-                  value={values.telefone}
-                  keyboardType="phone-pad"
-                  className={`border ${touched.telefone && errors.telefone ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
-                />
+              <View className="mt-[30px] relative">
+                <Text className="text-base">Telefone*</Text>
+                <View className="flex flex-row w-full h-[40px] gap-4">
+                  <View className="items-center justify-around border-[1.5px] border-gray rounded p-2 h-[40px] w-[70px] overflow-hidden">
+                    <RNPickerSelect
+                      placeholder={{ label: 'DDD', value: null }}
+                      value={values.ddd}
+                      onValueChange={(itemValue: string) => {
+                        setFieldValue('ddd', itemValue);
+                      }}
+                      items={Object.keys(dddsBr).map((ddd, index) => ({
+                        key: `${ddd}-${index}`,
+                        label: ddd,
+                        value: ddd,
+                      }))}
+                      useNativeAndroidPickerStyle={false}
+                      style={{
+                        inputAndroid: { color: 'black', fontSize: 14 },
+                        placeholder: { color: '#767373' },
+                        inputAndroidContainer: {
+                          flexDirection: 'row',
+                          width: 70,
+                          height: 40,
+                          padding: 10,
+                          alignItems: 'center',
+                        },
+                      }}
+                      Icon={() => (
+                        <View className="p-2">
+                          <AntDesign name="down" size={14} color="blue" />
+                        </View>
+                      )}
+                    />
+                  </View>
+                  <TextInput
+                    placeholder="9 XXXX-XXXX"
+                    placeholderTextColor="#767373"
+                    onChangeText={handleChange('telefone')}
+                    onBlur={handleBlur('telefone')}
+                    maxLength={11}
+                    value={applyPhoneMask(values.telefone)}
+                    className="border-[1.5px] border-gray rounded p-2 h-[40px] flex-1 text-[14px]"
+                  />
+                </View>
                 {touched.telefone && errors.telefone && (
-                  <Text className="text-sm text-red-500">{errors.telefone}</Text>
+                  <Text className="absolute text-sm text-errorRed -bottom-7 left-2">
+                    {errors.telefone}
+                  </Text>
                 )}
+              </View>
 
-                <Text className="pt-2 text-paragraph">Data de nascimento*</Text>
-                <TextInput
-                  placeholder="DD/MM/AAAA"
-                  onChangeText={handleChange('dataNascimento')}
-                  onBlur={handleBlur('dataNascimento')}
-                  value={values.dataNascimento}
-                  className={`border ${touched.dataNascimento && errors.dataNascimento ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
-                />
+              <View className="mt-[30px] relative">
+                <Text className="text-base">Data de nascimento*</Text>
+                <TouchableWithoutFeedback onPress={() => setShowDatePicker(true)}>
+                  <View className="border-[1.5px] border-gray rounded p-2 h-[40px] flex flex-row items-center justify-between">
+                    {showDatePicker && (
+                      <RNDateTimePicker
+                        value={values.dataNascimento ? new Date(values.dataNascimento) : maxDate}
+                        className="bg-red-200"
+                        onChange={(_, date) => {
+                          setShowDatePicker(false);
+                          setFieldValue('dataNascimento', date);
+                        }}
+                        maximumDate={maxDate}
+                      />
+                    )}
+                    <Text>
+                      {values.dataNascimento
+                        ? new Date(values.dataNascimento).toLocaleDateString('pt-BR')
+                        : 'DD/MM/AAAA'}
+                    </Text>
+                    <Feather name="calendar" size={18} color="blue" />
+                  </View>
+                </TouchableWithoutFeedback>
                 {touched.dataNascimento && errors.dataNascimento && (
-                  <Text className="text-sm text-red-500">{errors.dataNascimento}</Text>
+                  <Text className="absolute text-sm text-errorRed -bottom-7 left-2">
+                    {errors.dataNascimento}
+                  </Text>
                 )}
+              </View>
 
-                <Text className="pt-2 text-paragraph">CEP*</Text>
+              <View className="mt-[30px] relative">
+                <Text className="text-base">CEP*</Text>
                 <TextInput
                   placeholder="XXXXX-XXX"
+                  placeholderTextColor="#767373"
                   onChangeText={handleChange('cep')}
                   onBlur={handleBlur('cep')}
-                  value={values.cep}
-                  className={`border ${touched.cep && errors.cep ? 'border-gray-500' : 'border-gray-300'} rounded-md p-2`}
+                  maxLength={9}
+                  value={applyCepMask(values.cep)}
+                  className="border-[1.5px] border-gray rounded p-2 h-[40px] text-[14px]"
                 />
                 {touched.cep && errors.cep && (
-                  <Text className="text-sm text-red-500">{errors.cep}</Text>
+                  <Text className="absolute text-sm text-errorRed -bottom-7 left-2">
+                    {errors.cep}
+                  </Text>
                 )}
+              </View>
 
-                <Text className="pt-2 text-paragraph">Qual seu gênero?*</Text>
-                <View
-                  className={`border ${touched.genero && errors.genero ? 'border-gray-500' : 'border-gray-300'} rounded-md`}
-                >
-                  <Picker
-                    selectedValue={values.genero}
-                    onValueChange={(itemValue) => setFieldValue('genero', itemValue)}
-                    className="text-black"
-                  >
-                    <Picker.Item label="Selecione" value="" />
-                    <Picker.Item label="Feminino" value="feminino" />
-                    <Picker.Item label="Masculino" value="masculino" />
-                    <Picker.Item label="Não-binário" value="nao-binario" />
-                  </Picker>
+              <View className="mt-[30px] relative">
+                <Text className="text-base">Qual seu gênero?</Text>
+                <View className="border-[1.5px] border-gray rounded h-[40px]">
+                  <RNPickerSelect
+                    placeholder={{ label: 'Selecione', value: null }}
+                    value={values.genero}
+                    onValueChange={(itemValue: string) => {
+                      setFieldValue('genero', itemValue);
+                    }}
+                    items={[
+                      { label: 'Feminino', value: 'FEMININO' },
+                      { label: 'Masculino', value: 'MASCULINO' },
+                      { label: 'Não-binário', value: 'NAO_BINARIO' },
+                      { label: 'Prefiro não informar', value: '' },
+                    ]}
+                    useNativeAndroidPickerStyle={false}
+                    style={{
+                      inputAndroid: { color: 'black', fontSize: 14 },
+                      placeholder: { color: '#767373' },
+                      inputAndroidContainer: {
+                        flexDirection: 'row',
+                        width: '100%',
+                        height: 40,
+                        padding: 10,
+                        alignItems: 'center',
+                      },
+                    }}
+                    Icon={() => (
+                      <View className="p-2">
+                        <AntDesign name="down" size={14} color="blue" />
+                      </View>
+                    )}
+                  />
                 </View>
                 {touched.genero && errors.genero && (
-                  <Text className="text-sm text-tertiaryDanger">{errors.genero}</Text>
+                  <Text className="text-sm text-errorRed">{errors.genero}</Text>
                 )}
+              </View>
 
-                <Text className="pt-2 text-paragraph">Como podemos te chamar? (Opcional)</Text>
+              <View className="mt-[30px] relative">
+                <Text className="text-base">Como podemos te chamar? (Opcional)</Text>
                 <TextInput
                   placeholder="Esse nome ficará visível para os clientes"
-                  onChangeText={handleChange('nomeOpcional')}
-                  onBlur={handleBlur('nomeOpcional')}
-                  value={values.nomeOpcional}
-                  className="p-2 border border-gray-300 rounded-md"
+                  placeholderTextColor="#868686"
+                  onChangeText={handleChange('nomeSocial')}
+                  onBlur={handleBlur('nomeSocial')}
+                  value={values.nomeSocial}
+                  className="p-2 border-[1.5px] rounded border-gray h-[40px] text-[14px]"
                 />
               </View>
-
-              <View className="flex-row justify-between pb-10 mt-4">
-                <TouchableOpacity
-                  onPress={() => navigation.goBack()}
-                  className="w-[146px] h-[43px] bg-light border border-primary rounded-md flex items-center justify-center"
-                >
-                  <Text className="text-center text-primary">Voltar</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => handleSubmit()}
-                  className={`w-[146px] h-[43px] rounded-md flex items-center justify-center ${isValid && dirty ? 'bg-light border border-primary' : 'bg-light border border-gray-300'}`}
-                  disabled={!(isValid && dirty)}
-                >
-                  <Text
-                    className={`text-center ${isValid && dirty ? 'text-primary' : 'text-gray-400'}`}
-                  >
-                    Continuar
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              {touched.nomeSocial && errors.nomeSocial && (
+                <Text className="absolute text-sm text-errorRed -bottom-7 left-2">
+                  {errors.nomeSocial}
+                </Text>
+              )}
             </View>
-          </ScrollView>
+
+            <View className="flex flex-row pb-12 mt-[34px] gap-x-10">
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                className="justify-center flex-1 border-2 rounded-lg h-11 lex bg-light border-primary"
+              >
+                <Text className="text-center text-primary">Voltar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => handleSubmit()}
+                className={`justify-center flex-1 h-11 rounded-lg bg-light border-2 ${isValid && dirty ? ' border-primary' : 'border-gray'}`}
+                disabled={!(isValid && dirty)}
+              >
+                <Text className={`text-center ${isValid && dirty ? 'text-primary' : 'text-gray'}`}>
+                  Concluir
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </KeyboardAvoidingView>
       )}
     </Formik>
