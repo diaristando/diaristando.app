@@ -15,4 +15,6 @@ export const colors = {
   dark2: '#1F2A37',
   light: '#F9FAFB',
   gray: '#767373',
+  disabledGray: '#C0C0C0',
+  errorRed: '#FF0000',
 };

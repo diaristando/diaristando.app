@@ -1,8 +1,8 @@
 import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Home } from '../screens/Home';
-import { SocialLogin } from '../screens/SocialLogin';
+import { Home } from '@/screens/HomeScreen/Home';
+import { SocialLogin } from '@/screens/SocialLogin';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +23,7 @@ export function TabRoutes() {
         }}
       />
       <Tab.Screen
-        name="social-login"
+        name="SocialLogin"
         component={SocialLogin}
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="globe" size={size} color={color} />,
