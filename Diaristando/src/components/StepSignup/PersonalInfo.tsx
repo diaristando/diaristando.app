@@ -14,11 +14,13 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 import dddsBr from '../../../assets/ddd-br.json';
 
 import { RootStackParamList } from '@/navigation/appNavigation';
+import { setUser } from '@/store/slices/userSlice';
 import { applyCepMask, applyPhoneMask } from '@/utils/masks';
 
 type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'SignedOff'>;
@@ -49,6 +51,7 @@ const validationSchema = Yup.object().shape({
 
 export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
   const navigation = useNavigation<SocialLoginNavigationProp>();
+  const dispatch = useDispatch();
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const today = new Date();
   const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
@@ -69,12 +72,20 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
       onSubmit={(values) => {
         const { ddd, telefone, ...rest } = values;
         const phoneWithDdd = `${values.ddd}${values.telefone}`;
-        const payload = {
-          ...rest,
-          telefone: phoneWithDdd,
-        };
+        const payload = { ddd, ...rest, telefone: phoneWithDdd };
+        dispatch(
+          setUser({
+            name: payload.nome,
+            email: payload.email,
+            telefone: payload.telefone,
+            ddd: payload.ddd,
+            dataNascimento: payload.dataNascimento,
+            cep: payload.cep,
+            genero: payload.genero || '',
+            nomeSocial: payload.nomeSocial || '',
+          }),
+        );
         console.log('Formulário submetido com sucesso!', payload);
-        console.log('Complete!');
         navigation.navigate('SignedOff', { screen: 'Home' });
       }}
     >
@@ -98,7 +109,6 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
             <Text className="text-h5 leading-[20.25px] font-bold text-primaryDark text-center">
               Informações Pessoais
             </Text>
-
             <View className="flex">
               <View className="mt-[30px] relative">
                 <Text className="text-base text-disabledGray">Nome Completo</Text>
@@ -110,7 +120,6 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                   editable={false}
                 />
               </View>
-
               <View className="mt-[30px] relative">
                 <Text className="text-base text-disabledGray">E-mail</Text>
                 <TextInput
@@ -123,7 +132,6 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                   maxLength={50}
                 />
               </View>
-
               <View className="mt-[30px] relative">
                 <Text className="text-base">Telefone*</Text>
                 <View className="flex flex-row w-full h-[40px] gap-4">
@@ -174,7 +182,6 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                   </Text>
                 )}
               </View>
-
               <View className="mt-[30px] relative">
                 <Text className="text-base">Data de nascimento*</Text>
                 <TouchableWithoutFeedback onPress={() => setShowDatePicker(true)}>
@@ -204,7 +211,6 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                   </Text>
                 )}
               </View>
-
               <View className="mt-[30px] relative">
                 <Text className="text-base">CEP*</Text>
                 <TextInput
@@ -261,7 +267,6 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                   <Text className="text-sm text-errorRed">{errors.genero}</Text>
                 )}
               </View>
-
               <View className="mt-[30px] relative">
                 <Text className="text-base">Como podemos te chamar? (Opcional)</Text>
                 <TextInput
@@ -279,7 +284,6 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                 </Text>
               )}
             </View>
-
             <View className="flex flex-row pb-12 mt-[34px] gap-x-10">
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
@@ -287,7 +291,6 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
               >
                 <Text className="text-center text-primary">Voltar</Text>
               </TouchableOpacity>
-
               <TouchableOpacity
                 onPress={() => handleSubmit()}
                 className={`justify-center flex-1 h-11 rounded-lg bg-light border-2 ${isValid && dirty ? ' border-primary' : 'border-gray'}`}

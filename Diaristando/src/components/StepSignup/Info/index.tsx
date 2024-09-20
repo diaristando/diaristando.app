@@ -8,6 +8,7 @@ export default function Info() {
   const navigation = useNavigation();
 
   const handleContinue = () => {
+    // @ts-ignore
     navigation.navigate('Home');
   };
 
