@@ -20,7 +20,7 @@ import * as Yup from 'yup';
 import dddsBr from '../../../assets/ddd-br.json';
 
 import { RootStackParamList } from '@/navigation/appNavigation';
-import { setUser } from '@/store/slices/userSlice';
+import { setUser, UserState, Genero } from '@/store/slices/userSlice';
 import { applyCepMask, applyPhoneMask } from '@/utils/masks';
 
 type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'SignedOff'>;
@@ -43,7 +43,9 @@ const validationSchema = Yup.object().shape({
   cep: Yup.string()
     .required('*CEP inválido')
     .matches(/^\d{8}$/, '*CEP inválido'),
-  genero: Yup.string().optional(),
+  genero: Yup.string()
+    .oneOf(Object.values(Genero), '*Selecione um gênero válido')
+    .required('*Por favor, selecione seu gênero'),
   nomeSocial: Yup.string()
     .optional()
     .matches(/^[a-zA-Z0-9 ]*$/, '*Este campo não aceita caracteres especiais'),
@@ -66,25 +68,13 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
         cep: '',
         genero: null,
         nomeSocial: '',
-        ddd: '',
       }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        const { ddd, telefone, ...rest } = values;
-        const phoneWithDdd = `${values.ddd}${values.telefone}`;
-        const payload = { ddd, ...rest, telefone: phoneWithDdd };
-        dispatch(
-          setUser({
-            name: payload.nome,
-            email: payload.email,
-            telefone: payload.telefone,
-            ddd: payload.ddd,
-            dataNascimento: payload.dataNascimento,
-            cep: payload.cep,
-            genero: payload.genero || '',
-            nomeSocial: payload.nomeSocial || '',
-          }),
-        );
+        const { telefone, ...rest } = values;
+        const phoneWithDdd = `{telefone}`;
+        const payload: UserState = { ...rest, telefone: phoneWithDdd };
+        dispatch(setUser(payload));
         console.log('Formulário submetido com sucesso!', payload);
         navigation.navigate('SignedOff', { screen: 'Home' });
       }}
@@ -230,19 +220,18 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
               </View>
 
               <View className="mt-[30px] relative">
-                <Text className="text-base">Qual seu gênero?</Text>
+                <Text className="text-base">Qual seu gênero?*</Text>
                 <View className="border-[1.5px] border-gray rounded h-[40px]">
                   <RNPickerSelect
                     placeholder={{ label: 'Selecione', value: null }}
                     value={values.genero}
-                    onValueChange={(itemValue: string) => {
+                    onValueChange={(itemValue: Genero) => {
                       setFieldValue('genero', itemValue);
                     }}
                     items={[
-                      { label: 'Feminino', value: 'FEMININO' },
-                      { label: 'Masculino', value: 'MASCULINO' },
-                      { label: 'Não-binário', value: 'NAO_BINARIO' },
-                      { label: 'Prefiro não informar', value: '' },
+                      { label: 'Feminino', value: Genero.FEMININO },
+                      { label: 'Masculino', value: Genero.MASCULINO },
+                      { label: 'Não-binário', value: Genero.NAO_BINARIO },
                     ]}
                     useNativeAndroidPickerStyle={false}
                     style={{
@@ -267,6 +256,7 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                   <Text className="text-sm text-errorRed">{errors.genero}</Text>
                 )}
               </View>
+
               <View className="mt-[30px] relative">
                 <Text className="text-base">Como podemos te chamar? (Opcional)</Text>
                 <TextInput

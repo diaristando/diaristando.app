@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import { StepIndicator } from '@/components/StepsIndicator/Step/StepIndicator';
+import { Index } from '@/components/StepsIndicator/Step';
 
 export default function BankInfo() {
   const navigation = useNavigation();
@@ -22,7 +22,7 @@ export default function BankInfo() {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
         <View className="flex-1 mx-6">
-          <StepIndicator currentStep={2} />
+          <Index currentStep={2} />
 
           <View className="flex-1 justify-center items-center">
             <Text className="text-h5 pt-8 text-lg font-bold">Dados Bancários</Text>

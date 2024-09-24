@@ -1,13 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface UserState {
+export enum Genero {
+  FEMININO = 'FEMININO',
+  MASCULINO = 'MASCULINO',
+  NAO_BINARIO = 'NAO_BINARIO',
+}
+
+export interface UserState {
   name: string;
   email: string;
   telefone: string;
-  ddd: string;
   dataNascimento: string;
   cep: string;
-  genero?: string;
+  genero: Genero;
   nomeSocial?: string;
 }
 
@@ -15,7 +20,6 @@ const initialState: UserState = {
   name: '',
   email: '',
   telefone: '',
-  ddd: '',
   dataNascimento: '',
   cep: '',
   genero: '',

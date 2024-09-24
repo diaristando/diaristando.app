@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native';
 
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { PersonalInfo } from '@/components/StepSignup/PersonalInfo';
-import { StepIndicator } from '@/components/StepsIndicator/Step/StepIndicator';
+import { Index } from '@/components/StepsIndicator/Step';
 import { RootStackParamList } from '@/navigation/appNavigation';
 
 type SignupRouterProp = RouteProp<RootStackParamList, 'Signup'>;
@@ -29,7 +29,7 @@ export function Signup() {
       className="bg-light"
     >
       <FocusAwareStatusBar backgroundColor="#ffffff" />
-      <StepIndicator currentStep={1} totalSteps={1} />
+      <Index currentStep={1} totalSteps={1} />
       {renderStep(1, { email, fullName })}
     </ScrollView>
   );
