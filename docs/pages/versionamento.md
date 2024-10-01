@@ -6,6 +6,15 @@ Bem-vindo à página de documentação das versões APK do nosso aplicativo mobi
 
 ## Versões Disponíveis
 
+### Versão 0.0.4.1
+
+- **Data:** 30/09/2024
+- **Recursos:**
+  - Link para download: https://expo.dev/accounts/diaristando/projects/diaristando/builds/9c306147-3f65-4022-a6a1-507cd14e8053
+  - Funcionalidades implementadas:
+    - Correção da obrigatoriedade do campo de gênero no formulário de informações pessoais
+    - Configuração da store do Redux
+
 ### Versão 0.0.3
 
 - **Data:** 12/09/2024
@@ -33,3 +42,4 @@ Se você encontrar algum problema ou tiver dúvidas sobre as versões APK do nos
 | Versão | Data da Versão | Versão |
 |--------|---------------------|---------------------|
 | 0.0.3  | 12/09/2023          | Versão da Sprint 03  |
+| 0.0.4.1  | 30/09/2023          | Primeira versão da Sprint 04  |
