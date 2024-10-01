@@ -231,7 +231,7 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                 <Text className="text-base">Qual seu gênero?*</Text>
                 <View className="border-[1.5px] border-gray rounded h-[40px]">
                   <RNPickerSelect
-                    placeholder={{ label: 'Selecione', value: null }}
+                    placeholder={{ label: 'Selecione', value: '' }}
                     value={values.genero}
                     onValueChange={(itemValue: Genero) => {
                       setFieldValue('genero', itemValue);
