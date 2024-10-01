@@ -7,17 +7,17 @@ export enum Genero {
 }
 
 export interface UserState {
-  name: string;
+  nome: string;
   email: string;
   telefone: string;
   dataNascimento: string;
   cep: string;
-  genero: Genero;
+  genero: Genero | string;
   nomeSocial?: string;
 }
 
 const initialState: UserState = {
-  name: '',
+  nome: '',
   email: '',
   telefone: '',
   dataNascimento: '',
