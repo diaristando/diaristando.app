@@ -66,14 +66,22 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
         telefone: '',
         dataNascimento: '',
         cep: '',
-        genero: null,
+        genero: '',
         nomeSocial: '',
+        ddd: '',
       }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        const { telefone, ...rest } = values;
-        const phoneWithDdd = `{telefone}`;
-        const payload: UserState = { ...rest, telefone: phoneWithDdd };
+        const { telefone, ddd, dataNascimento, ...rest } = values;
+        const phoneWithDdd = `${ddd}${telefone}`;
+        const dataNascimentoFormatted = new Date(dataNascimento).toISOString();
+
+        const payload: UserState = {
+          ...rest,
+          telefone: phoneWithDdd,
+          dataNascimento: dataNascimentoFormatted,
+        };
+
         dispatch(setUser(payload));
         console.log('Formulário submetido com sucesso!', payload);
         navigation.navigate('SignedOff', { screen: 'Home' });
