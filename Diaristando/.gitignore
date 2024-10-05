@@ -37,10 +37,9 @@ yarn-error.*
 # Lock files
 *lock*
 
-# Vsode 
+# Vsode
 .vscode
 Diaristando/get_network_local_ip.js
 
 android
 ios
-.env
