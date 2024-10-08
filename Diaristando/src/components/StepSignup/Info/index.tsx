@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function Info() {
   const { t } = useTranslation();
@@ -10,20 +10,60 @@ export default function Info() {
   const handleContinue = () => {
     navigation.navigate('Home');
   };
+
   return (
-    <View className="flex-1 justify-center items-center p-4 bg-white">
-      <Text className="text-xl font-bold mb-4 text-primary">{t('text.componentInfo.title')}</Text>
-      <Text className="text-base text-center mb-4 text-gray-700">
-        {t('text.componentInfo.description')}
-      </Text>
-      <Text className="text-sm text-center mb-6 text-gray-500">
-        {t('text.componentInfo.guidance')}
-      </Text>
-      <View className="w-full flex-row justify-between">
-        <TouchableOpacity onPress={handleContinue} className="bg-primary w-[45%] p-3 rounded-lg">
-          <Text className="text-white text-center">{t('button.proceed')}</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>{t('text.componentInfo.title')}</Text>
+      <Text style={styles.description}>{t('text.componentInfo.description')}</Text>
+      <Text style={styles.guidance}>{t('text.componentInfo.guidance')}</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={handleContinue} style={styles.button}>
+          <Text style={styles.buttonText}>{t('button.proceed')}</Text>
         </TouchableOpacity>
       </View>
     </View>
-  );
+);
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: '#0070f3',
+  },
+  description: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 16,
+    color: '#4A4A4A',
+  },
+  guidance: {
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 24,
+    color: '#A0A0A0',
+  },
+  buttonContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    backgroundColor: '#0070f3',
+    width: '45%',
+    padding: 12,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+});

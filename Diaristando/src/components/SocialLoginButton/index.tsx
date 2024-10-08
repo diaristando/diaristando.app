@@ -6,6 +6,7 @@ import {
   View,
   Image,
   ImageSourcePropType,
+  StyleSheet,
 } from 'react-native';
 
 const googleIcon = require('../../assets/images/google-icon.png');
@@ -35,21 +36,20 @@ export function SocialLoginButton({
 }: SocialLoginButtonProps) {
   return (
     <TouchableHighlight disabled={isLoading} onPress={onPress} {...rest}>
-      <View className="bg-[#CB3F24] flex flex-row items-center p-0.5 rounded h-[40px] w-full">
+      <View style={styles.container}>
         {isLoading ? (
-          <View className="items-center flex-1">
+          <View style={styles.loadingContainer}>
             <ActivityIndicator size="small" color="#fff" />
           </View>
         ) : (
-          <View className="relative flex-row items-center flex-1">
+          <View style={styles.contentContainer}>
             {hasIcon && (
-              <View className="absolute flex items-center justify-center w-10 h-full rounded-tl rounded-bl bg-primaryLight">
-                <Image className="w-[26] h-[26]" source={iconsMap[type]} />
+              <View style={styles.iconContainer}>
+                <Image style={styles.icon} source={iconsMap[type]} />
               </View>
             )}
-
-            <View className="justify-center flex-1">
-              <Text className="text-center text-small text-light">{description}</Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>{description}</Text>
             </View>
           </View>
         )}
@@ -57,3 +57,48 @@ export function SocialLoginButton({
     </TouchableHighlight>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#CB3F24',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 0.5,
+    borderRadius: 8,
+    height: 40,
+    width: '100%',
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  contentContainer: {
+    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  iconContainer: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: '100%',
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+    backgroundColor: '#DBEAFE',
+  },
+  icon: {
+    width: 26,
+    height: 26,
+  },
+  textContainer: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  text: {
+    fontSize: 14,
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+});
