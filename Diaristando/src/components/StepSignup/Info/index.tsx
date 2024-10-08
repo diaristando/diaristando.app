@@ -22,7 +22,7 @@ export default function Info() {
         </TouchableOpacity>
       </View>
     </View>
-);
+  );
 }
 
 const styles = StyleSheet.create({
