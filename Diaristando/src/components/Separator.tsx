@@ -1,3 +1,12 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
-export const Separator = () => <View className="w-full h-[2] bg-primaryLight rounded-full" />;
+export const Separator = () => <View style={styles.separator} />;
+
+const styles = StyleSheet.create({
+  separator: {
+    width: '100%',
+    height: 2,
+    backgroundColor: '#DBEAFE',
+    borderRadius: 9999,
+  },
+});

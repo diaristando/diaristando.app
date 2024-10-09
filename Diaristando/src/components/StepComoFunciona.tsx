@@ -1,4 +1,5 @@
-import { Text, View } from 'react-native';
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 
 export interface StepComoFuncionaProps {
   step: string;
@@ -7,13 +8,37 @@ export interface StepComoFuncionaProps {
 
 export function StepComoFunciona({ step, children }: StepComoFuncionaProps) {
   return (
-    <View className="flex-row items-center gap-2 p-2 border-2 rounded-lg border-primary">
-      <View className="flex items-center justify-center w-[40px] h-[40px] rounded-full bg-primary aspect-square">
-        <Text className="font-bold leading-tight text-center text-primaryLight text-h5">
-          {step}
-        </Text>
+    <View style={styles.container}>
+      <View style={styles.stepCircle}>
+        <Text style={styles.stepText}>{step}</Text>
       </View>
       {children}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    padding: 8,
+    borderWidth: 2,
+    borderRadius: 12,
+    borderColor: '#0070f3',
+  },
+  stepCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#0070f3',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  stepText: {
+    fontWeight: 'bold',
+    lineHeight: 16,
+    textAlign: 'center',
+    color: '#ffffff',
+  },
+});

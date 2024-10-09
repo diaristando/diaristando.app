@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 type StepIndicatorProps = {
   currentStep: number;
@@ -10,21 +10,61 @@ export function Index({ currentStep, totalSteps }: StepIndicatorProps) {
   const steps = Array.from({ length: totalSteps }, (_, index) => index + 1);
 
   return (
-    <View className="flex-row items-center justify-between p-3 mb-4 text-small">
+    <View style={styles.container}>
       {steps.map((step) => (
-        <View key={step} className="items-center flex-1">
+        <View key={step} style={styles.stepContainer}>
           <Text
-            className={`text-lg font-bold ${currentStep === step ? 'text-primary' : 'text-gray'}`}
+            style={[
+              styles.stepText,
+              currentStep === step ? styles.activeStepText : styles.inactiveStepText,
+            ]}
           >
             {`Etapa ${step}`}
           </Text>
           <View
-            className={`h-2 rounded-full w-40 mt-2 ${
-              currentStep === step ? 'bg-primary' : 'bg-gray'
-            }`}
+            style={[
+              styles.stepIndicator,
+              currentStep === step ? styles.activeStepIndicator : styles.inactiveStepIndicator,
+            ]}
           />
         </View>
       ))}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 12,
+    marginBottom: 16,
+  },
+  stepContainer: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  stepText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  activeStepText: {
+    color: '#0070f3',
+  },
+  inactiveStepText: {
+    color: '#A0A0A0',
+  },
+  stepIndicator: {
+    height: 8,
+    borderRadius: 9999,
+    width: 40,
+    marginTop: 8,
+  },
+  activeStepIndicator: {
+    backgroundColor: '#0070f3',
+  },
+  inactiveStepIndicator: {
+    backgroundColor: '#A0A0A0',
+  },
+});

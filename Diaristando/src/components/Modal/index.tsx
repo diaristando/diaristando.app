@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { useEffect } from 'react';
-import { View, Modal as NativeModal, TouchableOpacity } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Modal as NativeModal, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface ModalProps {
   children?: React.ReactNode;
@@ -8,6 +8,7 @@ interface ModalProps {
   duration?: number;
   onClose: () => void;
 }
+
 export function CustomModal({ children, isOpen, duration, onClose }: ModalProps) {
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -25,10 +26,10 @@ export function CustomModal({ children, isOpen, duration, onClose }: ModalProps)
       onRequestClose={onClose}
       statusBarTranslucent
     >
-      <View className="items-center justify-center flex-1 bg-[#0000004d]">
-        <View className="flex items-center justify-center w-5/6 p-4 bg-white h-1/4 rounded-2xl">
+      <View style={styles.modalBackground}>
+        <View style={styles.modalContent}>
           {!duration && (
-            <TouchableOpacity onPress={onClose} className="absolute right-5 top-4">
+            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
               <MaterialIcons name="close" size={24} color="#929292" />
             </TouchableOpacity>
           )}
@@ -38,3 +39,26 @@ export function CustomModal({ children, isOpen, duration, onClose }: ModalProps)
     </NativeModal>
   );
 }
+
+const styles = StyleSheet.create({
+  modalBackground: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0000004d',
+  },
+  modalContent: {
+    width: '83.3333%',
+    height: '25%',
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeButton: {
+    position: 'absolute',
+    right: 20,
+    top: 16,
+  },
+});

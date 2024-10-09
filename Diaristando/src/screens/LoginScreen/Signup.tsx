@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { PersonalInfo } from '@/components/StepSignup/PersonalInfo';
@@ -24,13 +24,24 @@ export function Signup() {
 
   return (
     <ScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
+      contentContainerStyle={styles.scrollViewContent}
       showsVerticalScrollIndicator={false}
-      className="bg-light"
     >
       <FocusAwareStatusBar backgroundColor="#ffffff" />
-      <Index currentStep={1} totalSteps={1} />
+      <View style={styles.indexContainer}>
+        <Index currentStep={1} totalSteps={1} />
+      </View>
       {renderStep(1, { email, fullName })}
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexGrow: 1,
+    backgroundColor: '#F5F5F5',
+  },
+  indexContainer: {
+    marginVertical: 16,
+  },
+});
