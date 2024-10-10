@@ -1,29 +1,25 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { TabRoutes } from './tabRoutes';
+import ClienteNavigator from './cliente/clienteNavigation';
+import DiaristaNavigator from './diarista/diaristaNavigation';
+import SignedOffNavigator from './visitante/signedOffNavigation';
 
-import { Signup } from '@/screens/LoginScreen/Signup';
-
-export type RootStackParamList = {
-  SignedOff: { screen: 'Home' | 'SocialLogin' };
-  Signup: { email: string; fullName: string };
+const RoutesMapper = (role: string) => {
+  switch (role) {
+    case 'diarista':
+      return DiaristaNavigator();
+    case 'cliente':
+      return ClienteNavigator();
+    default:
+      return SignedOffNavigator();
+  }
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
 export default function AppNavigation() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="SignedOff" component={TabRoutes} options={{ headerShown: false }} />
-        <Stack.Screen name="Signup" component={Signup} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  const user = useSelector((state: any) => state.user);
+  const role = user.email ? 'diarista' : 'visitate'; // TODO: Ajustar com base na role do usuário pós login
+
+  return <NavigationContainer>{RoutesMapper(role)}</NavigationContainer>;
 }
