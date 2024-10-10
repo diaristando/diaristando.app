@@ -1,14 +1,18 @@
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
+import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
+
+type SignUpNavigationProp = NavigationProp<DiaristaRootStackParamList>;
+
 export default function Info() {
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation = useNavigation<SignUpNavigationProp>();
 
   const handleContinue = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Home', { screen: 'DiaristaTab' });
   };
 
   return (
