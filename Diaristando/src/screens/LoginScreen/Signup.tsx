@@ -5,9 +5,9 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { PersonalInfo } from '@/components/StepSignup/PersonalInfo';
 import { Index } from '@/components/StepsIndicator/Step';
-import { RootStackParamList } from '@/navigation/appNavigation';
+import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
 
-type SignupRouterProp = RouteProp<RootStackParamList, 'Signup'>;
+type SignupRouterProp = RouteProp<SignedOffRootStackParamList, 'Signup'>;
 
 const renderStep = (currentStep: number, props: { email: string; fullName: string }) => {
   switch (currentStep) {

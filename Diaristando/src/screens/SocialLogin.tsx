@@ -6,11 +6,13 @@ import LottieView from 'lottie-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Image, Text, View, StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useDispatch } from 'react-redux';
 
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
 import { SocialLoginButton } from '@/components/SocialLoginButton';
-import { RootStackParamList } from '@/navigation/appNavigation';
+import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
+import { clearUser } from '@/store/slices/userSlice';
 
 const successLogin = require('../assets/animations/success.json');
 const loginSocialImage = require('../assets/images/diaristando-image-login-social.png');
@@ -19,10 +21,11 @@ WebBrowser.maybeCompleteAuthSession();
 
 const currentYear = new Date().getFullYear();
 
-type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'Signup'>;
+type SocialLoginNavigationProp = NavigationProp<SignedOffRootStackParamList, 'Signup'>;
 
 export function SocialLogin() {
   const animation = useRef<LottieView>(null);
+  const dispatch = useDispatch();
   const { user } = useUser();
   const { isSignedIn, signOut } = useAuth();
   const navigation = useNavigation<SocialLoginNavigationProp>();
@@ -64,6 +67,7 @@ export function SocialLogin() {
     try {
       setIsLoading(true);
       await signOut();
+      dispatch(clearUser());
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -82,7 +86,7 @@ export function SocialLogin() {
     if (!user || !tempTrigger) return;
     setTimeout(() => {
       setIsModalVisible(false);
-      navigation.navigate('Signup', {
+      navigation.getParent()?.navigate('Signup', {
         email: user.emailAddresses[0].emailAddress,
         fullName: user.fullName || '',
       });

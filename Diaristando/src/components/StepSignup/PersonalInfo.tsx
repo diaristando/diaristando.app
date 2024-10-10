@@ -20,11 +20,11 @@ import * as Yup from 'yup';
 
 import dddsBr from '../../../assets/ddd-br.json';
 
-import { RootStackParamList } from '@/navigation/appNavigation';
+import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
 import { setUser, UserState, Genero } from '@/store/slices/userSlice';
 import { applyCepMask, applyPhoneMask } from '@/utils/masks';
 
-type SocialLoginNavigationProp = NavigationProp<RootStackParamList, 'SignedOff'>;
+type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
 
 type PersonalInfoProps = {
   email: string;
@@ -53,7 +53,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
-  const navigation = useNavigation<SocialLoginNavigationProp>();
+  const navigation = useNavigation<PersonalInfoNavigationProp>();
   const dispatch = useDispatch();
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const today = new Date();
@@ -85,7 +85,7 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
 
         dispatch(setUser(payload));
         console.log('Formulário submetido com sucesso!', payload);
-        navigation.navigate('SignedOff', { screen: 'Home' });
+        navigation.navigate('Home', { screen: 'DiaristaTab' });
       }}
     >
       {({
