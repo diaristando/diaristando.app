@@ -18,6 +18,13 @@ export function TabRoutes() {
       sceneContainerStyle={{ backgroundColor: 'white' }}
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: '#F9FAFB',
+          borderTopWidth: 0,
+          height: 60,
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+        },
       }}
     >
       <Tab.Screen
