@@ -14,6 +14,8 @@ export interface UserState {
   cep: string;
   genero: Genero | string;
   nomeSocial?: string;
+  profileImageUrl?: string;
+  isAuthenticated: boolean;
 }
 
 const initialState: UserState = {
@@ -24,30 +26,22 @@ const initialState: UserState = {
   cep: '',
   genero: '',
   nomeSocial: '',
+  profileImageUrl: '',
+  isAuthenticated: false,
 };
-
-interface UpdateFieldPayload {
-  fieldName: keyof UserState;
-  value: any;
-}
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<UserState>) {
-      return action.payload;
+      return {
+        ...action.payload,
+        isAuthenticated: true,
+      };
     },
     clearUser(state) {
       return initialState;
-    },
-    updateField: (state, action: PayloadAction<UpdateFieldPayload>) => {
-      const { fieldName, value } = action.payload;
-      if (state.hasOwnProperty(fieldName)) {
-        state[fieldName] = value;
-      } else {
-        console.warn(`Campo ${fieldName} não existe no estado do usuário`);
-      }
     },
   },
 });
