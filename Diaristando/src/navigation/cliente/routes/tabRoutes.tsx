@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { Home } from '@/screens/HomeScreen/Home';
 import UserProfile from '@/screens/ProfileScreen/Profile';
-import { SocialLogin } from '@/screens/SocialLogin';
+import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
 import { RootState } from '@/store';
 
 const Tab = createBottomTabNavigator();
