@@ -1,12 +1,12 @@
+import { Feather } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Feather } from '@expo/vector-icons';
-import { RootState } from '@/store';
 
 import { Home } from '@/screens/HomeScreen/Home';
 import UserProfile from '@/screens/ProfileScreen/Profile';
 import { SocialLogin } from '@/screens/SocialLogin';
+import { RootState } from '@/store';
 
 const Tab = createBottomTabNavigator();
 
