@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Home } from '@/screens/HomeScreen/Home';
-import { SocialLogin } from '@/screens/SocialLogin';
+import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
 
 const Tab = createBottomTabNavigator();
 

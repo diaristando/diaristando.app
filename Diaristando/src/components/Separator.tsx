@@ -1,12 +1,17 @@
 import { View, StyleSheet } from 'react-native';
 
-export const Separator = () => <View style={styles.separator} />;
+type SeparatorProps = {
+  color?: string;
+  height?: number;
+};
+
+export const Separator = ({ color = '#DBEAFE', height = 2 }: SeparatorProps) => (
+  <View style={[styles.separator, { backgroundColor: color, height }]} />
+);
 
 const styles = StyleSheet.create({
   separator: {
     width: '100%',
-    height: 2,
-    backgroundColor: '#DBEAFE',
     borderRadius: 9999,
   },
 });

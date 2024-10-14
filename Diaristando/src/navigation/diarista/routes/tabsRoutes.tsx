@@ -1,17 +1,30 @@
 import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { Home } from '@/screens/HomeScreen/Home';
-import { SocialLogin } from '@/screens/SocialLogin';
+import UserProfile from '@/screens/ProfileScreen/Profile';
+import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
+import { RootState } from '@/store';
 
 const Tab = createBottomTabNavigator();
 
 export function TabRoutes() {
+  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
+
   return (
     <Tab.Navigator
       sceneContainerStyle={{ backgroundColor: 'white' }}
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: '#F9FAFB',
+          borderTopWidth: 0,
+          height: 60,
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+        },
       }}
     >
       <Tab.Screen
@@ -31,6 +44,16 @@ export function TabRoutes() {
           tabBarStyle: { display: 'none' },
         }}
       />
+      {isAuthenticated && (
+        <Tab.Screen
+          name="Profile"
+          component={UserProfile}
+          options={{
+            tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
+            tabBarLabel: 'Perfil',
+          }}
+        />
+      )}
     </Tab.Navigator>
   );
 }

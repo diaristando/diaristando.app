@@ -14,8 +14,8 @@ import { SocialLoginButton } from '@/components/SocialLoginButton';
 import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
 import { clearUser } from '@/store/slices/userSlice';
 
-const successLogin = require('../assets/animations/success.json');
-const loginSocialImage = require('../assets/images/diaristando-image-login-social.png');
+const successLogin = require('../../assets/animations/success.json');
+const loginSocialImage = require('../../assets/images/diaristando-image-login-social.png');
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -186,12 +186,12 @@ const styles = StyleSheet.create({
   appTitle: {
     fontSize: RFValue(57, 800),
     fontWeight: 'bold',
-    color: '#0070f3',
+    color: '#1D4ED8',
   },
   tagline: {
     fontSize: RFValue(18, 800),
     textAlign: 'center',
-    color: '#333333',
+    color: '#172554',
     paddingHorizontal: 32,
   },
   buttonsContainer: {
