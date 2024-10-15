@@ -1,23 +1,13 @@
-import { useUser } from '@clerk/clerk-expo';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { useSelector } from 'react-redux';
 
 import { Button } from '@/components/Button';
 import { CustomModal } from '@/components/Modal';
 import ProfilePic from '@/components/ProfilePic';
 import { Separator } from '@/components/Separator';
-import { RootState } from '@/store';
 
-const UserProfile = () => {
-  const user = useSelector((state: RootState) => state.user);
-  const { user: googleUser } = useUser();
-
-  const [confirmModal, setConfirmModal] = useState(true);
-
-  if (!user) {
-    return <Text>Carregando...</Text>;
-  }
+const ServiceProfile = () => {
+  const [confirmModal, setConfirmModal] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -52,7 +42,7 @@ const UserProfile = () => {
       <View style={styles.header}>
         <View style={styles.profilePicContainer}>
           <ProfilePic
-            imageUrl={googleUser?.imageUrl || 'default-image-url'}
+            imageUrl="https://api.dicebear.com/9.x/fun-emoji/svg"
             isEditable={false}
             handleUpload={() => console.log('Foto carregada')}
             height={63}
@@ -60,14 +50,12 @@ const UserProfile = () => {
           />
         </View>
         <View style={styles.userInfo}>
-          <Text style={styles.name}>{user.nome}</Text>
+          <Text style={styles.name}>Alexandra Beatriz da Silva Campos e Oliveira Costa Lima</Text>
           <View style={styles.ratingRow}>
             <Text style={styles.rating}>★★★★☆</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image source={require('@/assets/icons/user.png')} style={styles.profile} />
-              <Text style={styles.genero}>
-                {user.genero.charAt(0).toUpperCase() + user.genero.slice(1).toLowerCase()}
-              </Text>
+              <Text style={styles.genero}>Feminino</Text>
             </View>
           </View>
         </View>
@@ -242,4 +230,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserProfile;
+export default ServiceProfile;
