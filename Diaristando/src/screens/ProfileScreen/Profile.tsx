@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { Button } from '@/components/Button';
+import Map from '@/components/Map';
 import { CustomModal } from '@/components/Modal';
 import ProfilePic from '@/components/ProfilePic';
 import { Separator } from '@/components/Separator';
@@ -18,6 +19,8 @@ const UserProfile = () => {
   if (!user) {
     return <Text>Carregando...</Text>;
   }
+
+  const markers = [{ latitude: -22.9121, longitude: -43.2302 }];
 
   return (
     <View style={styles.container}>
@@ -49,6 +52,7 @@ const UserProfile = () => {
           </View>
         </View>
       </CustomModal>
+
       <View style={styles.header}>
         <View style={styles.profilePicContainer}>
           <ProfilePic
@@ -108,8 +112,8 @@ const UserProfile = () => {
         </View>
       </View>
 
-      <View style={styles.mapPlaceholder}>
-        <Text style={styles.mapText}>Futuro mapa</Text>
+      <View style={styles.mapContainer}>
+        <Map markers={markers} />
       </View>
 
       <TouchableOpacity style={styles.whatsappButton} onPress={() => setConfirmModal(true)}>
@@ -216,17 +220,11 @@ const styles = StyleSheet.create({
     height: 24,
     color: '#1D4ED8',
   },
-  mapPlaceholder: {
+  mapContainer: {
     height: 221,
-    backgroundColor: '#f0f0f0',
     borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
     marginVertical: 24,
-  },
-  mapText: {
-    fontSize: 16,
-    color: '#666',
   },
   whatsappButton: {
     height: 48,
