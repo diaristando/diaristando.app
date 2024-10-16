@@ -1,15 +1,27 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
-import { View, Modal as NativeModal, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import {
+  View,
+  Modal as NativeModal,
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  DimensionValue,
+} from 'react-native';
 
 interface ModalProps {
   children?: React.ReactNode;
   isOpen: boolean;
   duration?: number;
   onClose: () => void;
-  title: string;
-  titleBackgroundColor: string;
-  titleTextColor: string;
+  title?: string;
+  titleBackgroundColor?: string;
+  titleTextColor?: string;
+  closable?: boolean;
+  minHeight?: DimensionValue;
+  maxHeight?: DimensionValue;
+  borderWidth?: number;
+  borderColor?: string;
 }
 
 export function CustomModal({
@@ -18,8 +30,13 @@ export function CustomModal({
   duration,
   onClose,
   title,
-  titleBackgroundColor,
-  titleTextColor,
+  titleBackgroundColor = 'white',
+  titleTextColor = 'black',
+  closable = true,
+  minHeight = 'auto',
+  maxHeight = 'auto',
+  borderWidth = 0,
+  borderColor = 'transparent',
 }: ModalProps) {
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -38,13 +55,19 @@ export function CustomModal({
       statusBarTranslucent
     >
       <View style={styles.modalBackground}>
-        <View style={styles.modalContent}>
-          <View style={[styles.titleContainer, { backgroundColor: titleBackgroundColor }]}>
-            <Text style={[styles.titleText, { color: titleTextColor }]}>{title}</Text>
+        <View
+          style={[{ ...styles.modalContent }, { maxHeight, minHeight, borderWidth, borderColor }]}
+        >
+          {closable && (
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
               <MaterialIcons name="close" size={24} color="#929292" />
             </TouchableOpacity>
-          </View>
+          )}
+          {title && (
+            <View style={[styles.titleContainer, { backgroundColor: titleBackgroundColor }]}>
+              <Text style={[styles.titleText, { color: titleTextColor }]}>{title}</Text>
+            </View>
+          )}
           <View style={styles.contentContainer}>{children}</View>
         </View>
       </View>
@@ -60,26 +83,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#0000004d',
   },
   modalContent: {
-    width: '90%',
-    padding: 0,
+    width: '83.3333%',
     backgroundColor: '#FFFFFF',
     borderRadius: 24,
-    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleContainer: {
     padding: 16,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
   },
   titleText: {
     fontSize: 18,
     fontWeight: 'bold',
   },
   closeButton: {
-    marginLeft: 10,
+    position: 'absolute',
+    right: 20,
+    top: 16,
+    zIndex: 99,
   },
   contentContainer: {
     padding: 16,
