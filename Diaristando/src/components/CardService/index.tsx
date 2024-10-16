@@ -54,9 +54,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     backgroundColor: '#1F2A37',
     borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonText: {
-    color: '#DBEAFE',
+    color: '#F9FAFB',
     fontSize: 12,
     fontWeight: 'bold',
   },
