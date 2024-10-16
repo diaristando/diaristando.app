@@ -6,6 +6,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { Separator } from '@/components/Separator';
 import { StepComoFunciona } from '@/components/StepComoFunciona';
+import ServiceScreen from '@/screens/ServiceScreen/Service';
 
 export function Home() {
   const { t } = useTranslation();
@@ -40,6 +41,7 @@ export function Home() {
           </View>
         </View>
       </View>
+      <ServiceScreen />
     </View>
   );
 }
