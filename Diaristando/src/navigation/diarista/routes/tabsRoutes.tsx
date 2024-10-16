@@ -1,18 +1,15 @@
 import { Feather } from '@expo/vector-icons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import { Home } from '@/screens/HomeScreen/Home';
-import UserProfile from '@/screens/ProfileScreen/Profile';
+import ServiceProfile from '@/screens/ServiceScreen/Service';
 import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
-import { RootState } from '@/store';
 
 const Tab = createBottomTabNavigator();
 
 export function TabRoutes() {
-  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-
   return (
     <Tab.Navigator
       sceneContainerStyle={{ backgroundColor: 'white' }}
@@ -27,6 +24,16 @@ export function TabRoutes() {
         },
       }}
     >
+      <Tab.Screen
+        name="Services"
+        component={ServiceProfile}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="cleaning-services" size={size} color={color} />
+          ),
+          tabBarLabel: 'Serviços',
+        }}
+      />
       <Tab.Screen
         name="DiaristaTab"
         component={Home}
@@ -44,16 +51,6 @@ export function TabRoutes() {
           tabBarStyle: { display: 'none' },
         }}
       />
-      {isAuthenticated && (
-        <Tab.Screen
-          name="Profile"
-          component={UserProfile}
-          options={{
-            tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
-            tabBarLabel: 'Perfil',
-          }}
-        />
-      )}
     </Tab.Navigator>
   );
 }
