@@ -7,11 +7,20 @@ import ServiceCard from '@/components/CardService';
 import { CustomModal } from '@/components/Modal';
 import { Separator } from '@/components/Separator';
 
+type ServiceType = {
+  title: string;
+  animation: Record<string, any>;
+  includedItems: string[];
+  extraItems: string[];
+  color: string;
+  titleColor: string;
+};
+
 const ServiceScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
+  const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
 
-  const services = [
+  const services: ServiceType[] = [
     {
       title: 'Limpeza Padrão',
       animation: defaultCleanAnimation,
@@ -59,7 +68,7 @@ const ServiceScreen = () => {
     },
   ];
 
-  const handleCardPress = (services) => {
+  const handleCardPress = (services: ServiceType) => {
     setSelectedService(services);
     setModalVisible(true);
   };
@@ -86,6 +95,8 @@ const ServiceScreen = () => {
           title={selectedService.title}
           titleBackgroundColor={selectedService.color}
           titleTextColor="black"
+          borderWidth={2}
+          borderColor="black"
         >
           <Text style={styles.subTitle}>O que está incluso:</Text>
           {selectedService.includedItems.map((item, index) => (
@@ -115,7 +126,6 @@ const ServiceScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     paddingTop: 100,
   },
   title: {
@@ -135,7 +145,7 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginTop: 20,
   },
   modalTitle: {
