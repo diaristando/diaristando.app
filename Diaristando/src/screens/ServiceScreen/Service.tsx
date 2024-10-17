@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 import { Button } from '@/components/Button';
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import Map from '@/components/Map';
 import { CustomModal } from '@/components/Modal';
 import ProfilePic from '@/components/ProfilePic';
@@ -14,6 +15,7 @@ const ServiceProfile = () => {
 
   return (
     <View style={styles.container}>
+      <FocusAwareStatusBar backgroundColor="#ffffff" />
       <CustomModal
         isOpen={confirmModal}
         onClose={() => {

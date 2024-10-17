@@ -8,8 +8,7 @@ interface Markers {
 }
 
 type MapProps = {
-  provider?: 'google';
-  markers: Markers[];
+  markers?: Markers[];
 };
 
 const MapContainer = styled.View`
@@ -17,13 +16,13 @@ const MapContainer = styled.View`
   height: 100%;
 `;
 
-const Map = ({ markers, provider = 'google' }: MapProps) => {
+const Map = ({ markers = [] }: MapProps) => {
   return (
     <MapContainer>
       <MapView
-        style={{ flex: 1 }}
-        provider={provider === 'google' ? PROVIDER_GOOGLE : null}
-        initialRegion={{
+        style={{ width: '100%', height: '100%', flex: 1 }}
+        provider={PROVIDER_GOOGLE}
+        region={{
           latitude: -22.9121,
           longitude: -43.2302,
           latitudeDelta: 0.0922,
