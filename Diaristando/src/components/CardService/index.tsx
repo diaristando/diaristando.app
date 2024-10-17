@@ -10,15 +10,13 @@ type ServiceCardProps = {
 
 const ServiceCard = ({ title, onPress, animationSource }: ServiceCardProps) => {
   return (
-    <TouchableOpacity style={styles.card}>
+    <View style={styles.card}>
       <Text style={styles.title}>{title}</Text>
       <LottieView source={animationSource} autoPlay loop style={styles.animation} />
-      <View style={styles.button}>
-        <Text style={styles.buttonText} onPress={onPress}>
-          Serviços inclusos
-        </Text>
-      </View>
-    </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+        <Text style={styles.buttonText}>Serviços inclusos</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
