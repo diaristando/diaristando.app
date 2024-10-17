@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-export interface StepComoFuncionaProps {
+export interface StepsCardProps {
   step: string;
   children: React.ReactNode;
 }
 
-export function StepComoFunciona({ step, children }: StepComoFuncionaProps) {
+export function StepsCard({ step, children }: StepsCardProps) {
   return (
     <View style={styles.container}>
       <View style={styles.stepCircle}>

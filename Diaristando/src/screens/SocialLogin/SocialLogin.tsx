@@ -103,6 +103,8 @@ export function SocialLogin() {
             setIsModalVisible(false);
           }}
           duration={3000}
+          closable={false}
+          maxHeight="25%"
         >
           <View style={styles.modalContent}>
             <LottieView

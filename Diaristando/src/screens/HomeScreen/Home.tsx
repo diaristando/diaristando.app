@@ -5,7 +5,8 @@ import { Text, View, StyleSheet } from 'react-native';
 
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { Separator } from '@/components/Separator';
-import { StepComoFunciona } from '@/components/StepComoFunciona';
+import { StepsCard } from '@/components/StepsCard';
+import ServiceScreen from '@/screens/HomeScreen/components/ServiceSection/Service';
 
 export function Home() {
   const { t } = useTranslation();
@@ -20,26 +21,27 @@ export function Home() {
           <Text style={styles.heading}>{t('h2-como-funciona')}</Text>
           <Text style={styles.paragraph}>{t('p-como-funciona')}</Text>
           <View style={styles.stepsContainer}>
-            <StepComoFunciona step="01">
+            <StepsCard step="01">
               <Text style={styles.stepText}>Cadastre-se facilmente via redes sociais.</Text>
-            </StepComoFunciona>
-            <StepComoFunciona step="02">
+            </StepsCard>
+            <StepsCard step="02">
               <Text style={styles.stepText}>Encontre clientes e agende os serviços.</Text>
-            </StepComoFunciona>
-            <StepComoFunciona step="03">
+            </StepsCard>
+            <StepsCard step="03">
               <Text style={styles.stepText}>
                 No dia agendado, vá ao local do serviço e faça o check-in.
               </Text>
-            </StepComoFunciona>
-            <StepComoFunciona step="04">
+            </StepsCard>
+            <StepsCard step="04">
               <Text style={styles.stepText}>
                 Após o serviço realize o checkout, e{' '}
                 <Text style={styles.boldText}>receba em até 3 horas.</Text>
               </Text>
-            </StepComoFunciona>
+            </StepsCard>
           </View>
         </View>
       </View>
+      <ServiceScreen />
     </View>
   );
 }
