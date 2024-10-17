@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 import { Button } from '@/components/Button';
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
+import Map from '@/components/Map';
 import { CustomModal } from '@/components/Modal';
 import ProfilePic from '@/components/ProfilePic';
 import { Separator } from '@/components/Separator';
@@ -9,8 +11,11 @@ import { Separator } from '@/components/Separator';
 const ServiceProfile = () => {
   const [confirmModal, setConfirmModal] = useState(false);
 
+  const markers = [{ latitude: -22.9121, longitude: -43.2302 }];
+
   return (
     <View style={styles.container}>
+      <FocusAwareStatusBar backgroundColor="#ffffff" />
       <CustomModal
         isOpen={confirmModal}
         onClose={() => {
@@ -39,6 +44,7 @@ const ServiceProfile = () => {
           </View>
         </View>
       </CustomModal>
+
       <View style={styles.header}>
         <View style={styles.profilePicContainer}>
           <ProfilePic
@@ -96,8 +102,8 @@ const ServiceProfile = () => {
         </View>
       </View>
 
-      <View style={styles.mapPlaceholder}>
-        <Text style={styles.mapText}>Futuro mapa</Text>
+      <View style={styles.mapContainer}>
+        <Map markers={markers} />
       </View>
 
       <TouchableOpacity style={styles.whatsappButton} onPress={() => setConfirmModal(true)}>
@@ -204,17 +210,11 @@ const styles = StyleSheet.create({
     height: 24,
     color: '#1D4ED8',
   },
-  mapPlaceholder: {
+  mapContainer: {
     height: 221,
-    backgroundColor: '#f0f0f0',
     borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
     marginVertical: 24,
-  },
-  mapText: {
-    fontSize: 16,
-    color: '#666',
   },
   whatsappButton: {
     height: 48,
