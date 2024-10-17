@@ -21,7 +21,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.diaristando.diaristando"
+      "package": "com.diaristando.diaristando",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCyB7bR0Si1H-GdVLxeL0dXkzCZLDGYylQ"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
