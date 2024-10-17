@@ -1,4 +1,3 @@
-import LottieView from 'lottie-react-native';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -99,25 +98,27 @@ const ServiceScreen = () => {
           borderWidth={2}
           borderColor="black"
         >
-          <Text style={styles.subTitle}>O que está incluso:</Text>
-          {selectedService.includedItems.map((item, index) => (
-            <Text
-              key={index}
-              style={[
-                styles.listItem,
-                item.includes('Serviços da limpeza padrão') ? { fontWeight: 'bold' } : null,
-              ]}
-            >
-              • {item}
-            </Text>
-          ))}
-          <Separator />
-          <Text style={styles.subTitle}>Serviços adicionais (cobrados à parte):</Text>
-          {selectedService.extraItems.map((item, index) => (
-            <Text key={index} style={styles.listItem}>
-              • {item}
-            </Text>
-          ))}
+          <View>
+            <Text style={styles.subTitle}>O que está incluso:</Text>
+            {selectedService.includedItems.map((item, index) => (
+              <Text
+                key={index}
+                style={[
+                  styles.listItem,
+                  item.includes('Serviços da limpeza padrão') ? { fontWeight: 'bold' } : null,
+                ]}
+              >
+                • {item}
+              </Text>
+            ))}
+            <Separator />
+            <Text style={styles.subTitle}>Serviços adicionais (cobrados à parte):</Text>
+            {selectedService.extraItems.map((item, index) => (
+              <Text key={index} style={styles.listItem}>
+                • {item}
+              </Text>
+            ))}
+          </View>
         </CustomModal>
       )}
     </View>
