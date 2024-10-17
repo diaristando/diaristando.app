@@ -1,3 +1,4 @@
+import LottieView from 'lottie-react-native';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
