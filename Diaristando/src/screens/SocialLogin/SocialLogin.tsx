@@ -96,7 +96,7 @@ export function SocialLogin() {
   return (
     <>
       <View style={styles.container}>
-        <FocusAwareStatusBar barStyle="light-content" backgroundColor="#DBEAFE" />
+        <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#DBEAFE" />
         <CustomModal
           isOpen={isModalVisible}
           onClose={() => {
@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 8,
+    backgroundColor: '#DBEAFE',
   },
   footerText: {
     fontSize: RFValue(14, 800),
