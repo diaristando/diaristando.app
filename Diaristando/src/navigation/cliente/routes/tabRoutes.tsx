@@ -1,9 +1,10 @@
 import { Feather } from '@expo/vector-icons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
 import { Home } from '@/screens/HomeScreen/Home';
-import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
+import Service from '@/screens/ServiceScreen/Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +17,17 @@ export function TabRoutes() {
       }}
     >
       <Tab.Screen
-        name="DiaristaTab"
+        name="Services"
+        component={Home}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="cleaning-services" size={size} color={color} />
+          ),
+          tabBarLabel: 'Serviços',
+        }}
+      />
+      <Tab.Screen
+        name="Home"
         component={Home}
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
@@ -24,11 +35,20 @@ export function TabRoutes() {
         }}
       />
       <Tab.Screen
-        name="LogoutTab"
-        component={SocialLogin}
+        name="Search"
+        component={Home}
         options={{
-          tabBarIcon: ({ color, size }) => <Feather name="log-out" size={size} color={color} />,
-          tabBarLabel: 'Logout',
+          tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
+          tabBarLabel: 'Busca',
+          tabBarStyle: { display: 'none' },
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Service}
+        options={{
+          tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
+          tabBarLabel: 'Perfil',
           tabBarStyle: { display: 'none' },
         }}
       />
