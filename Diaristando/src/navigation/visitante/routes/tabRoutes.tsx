@@ -70,7 +70,9 @@ export function TabRoutes() {
           name="Search"
           component={Home}
           options={{
-            tabBarIcon: ({ size, color }) => <Ionicons name="search-sharp" size={size} color={color} />,
+            tabBarIcon: ({ size, color }) => (
+              <Ionicons name="search-sharp" size={size} color={color} />
+            ),
             tabBarLabel: 'Busca',
             tabBarStyle: { display: 'none' },
           }}
