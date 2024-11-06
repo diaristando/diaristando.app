@@ -2,8 +2,8 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useState } from 'react';
-import { LoginPromptModal } from 'src/components/CardGuest';
 
+import { LoginPromptModal } from '@/components/CardGuest';
 import { Home } from '@/screens/HomeScreen/Home';
 import Profile from '@/screens/ServiceScreen/Profile';
 
