@@ -49,7 +49,6 @@ export function LoginPromptModal({
   );
 }
 
-
 const styles = StyleSheet.create({
   messageText: {
     textAlign: 'center',
