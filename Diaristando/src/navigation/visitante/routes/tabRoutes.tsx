@@ -2,7 +2,6 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { LoginPromptModal } from 'src/components/CardGuest';
 
 import { Home } from '@/screens/HomeScreen/Home';
@@ -11,11 +10,10 @@ import Profile from '@/screens/ServiceScreen/Profile';
 const Tab = createBottomTabNavigator();
 
 export function TabRoutes() {
-  const isUserLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [isLoginPromptVisible, setLoginPromptVisible] = useState(false);
 
   const handleTabPress = (route: string) => {
-    if (!isUserLoggedIn && route !== 'Home') {
+    if (route !== 'Home') {
       setLoginPromptVisible(true);
       return false;
     }
@@ -31,6 +29,7 @@ export function TabRoutes() {
       />
 
       <Tab.Navigator
+        initialRouteName="Home"
         sceneContainerStyle={{ backgroundColor: 'white' }}
         screenOptions={{
           headerShown: false,

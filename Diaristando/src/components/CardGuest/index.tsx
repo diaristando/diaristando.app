@@ -5,7 +5,6 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import blockNavigation from '@/assets/animations/block-navigation.json';
 import { CustomModal } from '@/components/Modal';
-import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 
 interface LoginPromptModalProps {
   isVisible: boolean;
@@ -28,7 +27,6 @@ export function LoginPromptModal({
       titleTextColor="#1D4ED8"
       closable
     >
-      <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#DBEAFE" />
       <LottieView
         source={blockNavigation}
         autoPlay
@@ -39,7 +37,7 @@ export function LoginPromptModal({
       <TouchableOpacity
         onPress={() => {
           onRequestClose();
-          navigation.navigate(targetRoute); // Use o targetRoute passado como prop
+          navigation.navigate(targetRoute as never);
         }}
         style={styles.loginButton}
       >

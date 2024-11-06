@@ -9,7 +9,7 @@ import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
 const SignedOffStack = createNativeStackNavigator();
 
 export type SignedOffRootStackParamList = {
-  SignedOff: { screen: 'Home' | 'SocialLogin' };
+  SignedOff: { screen: 'Home' | 'SocialLogin' | 'Services' | 'Search' | 'Profile' };
   Signup: { email: string; fullName: string };
 };
 

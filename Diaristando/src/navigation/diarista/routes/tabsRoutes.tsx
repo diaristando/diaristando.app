@@ -47,7 +47,6 @@ export function TabRoutes() {
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
           tabBarLabel: 'Busca',
-          tabBarStyle: { display: 'none' },
         }}
       />
       <Tab.Screen
@@ -56,7 +55,6 @@ export function TabRoutes() {
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
           tabBarLabel: 'Perfil',
-          tabBarStyle: { display: 'none' },
         }}
       />
     </Tab.Navigator>

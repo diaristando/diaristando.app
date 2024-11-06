@@ -81,11 +81,12 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
           ...rest,
           telefone: phoneWithDdd,
           dataNascimento: dataNascimentoFormatted,
+          isAuthenticated: true,
         };
 
         dispatch(setUser(payload));
         console.log('Formulário submetido com sucesso!', payload);
-        navigation.navigate('Home', { screen: 'DiaristaTab' });
+        navigation.navigate('DiaristaTab', { screen: 'Home' });
       }}
     >
       {({
