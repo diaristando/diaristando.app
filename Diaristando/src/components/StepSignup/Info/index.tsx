@@ -12,7 +12,7 @@ export default function Info() {
   const navigation = useNavigation<SignUpNavigationProp>();
 
   const handleContinue = () => {
-    navigation.navigate('Home', { screen: 'DiaristaTab' });
+    navigation.navigate('DiaristaTab', { screen: 'Home' });
   };
 
   return (

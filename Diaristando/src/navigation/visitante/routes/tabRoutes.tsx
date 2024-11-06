@@ -1,36 +1,105 @@
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useState } from 'react';
+import { LoginPromptModal } from 'src/components/CardGuest';
 
 import { Home } from '@/screens/HomeScreen/Home';
-import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
+import Profile from '@/screens/ServiceScreen/Profile';
 
 const Tab = createBottomTabNavigator();
 
 export function TabRoutes() {
+  const [isLoginPromptVisible, setLoginPromptVisible] = useState(false);
+
+  const handleTabPress = (route: string) => {
+    if (route !== 'Home') {
+      setLoginPromptVisible(true);
+      return false;
+    }
+    return true;
+  };
+
   return (
-    <Tab.Navigator
-      sceneContainerStyle={{ backgroundColor: 'white' }}
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
-          tabBarLabel: 'Início',
-        }}
+    <>
+      <LoginPromptModal
+        isVisible={isLoginPromptVisible}
+        onRequestClose={() => setLoginPromptVisible(false)}
+        targetRoute="SocialLogin"
       />
-      <Tab.Screen
-        name="SocialLogin"
-        component={SocialLogin}
-        options={{
-          tabBarIcon: ({ color, size }) => <Feather name="globe" size={size} color={color} />,
-          tabBarLabel: 'Login Social',
-          tabBarStyle: { display: 'none' },
+
+      <Tab.Navigator
+        initialRouteName="Home"
+        sceneContainerStyle={{ backgroundColor: 'white' }}
+        screenOptions={{
+          headerShown: false,
         }}
-      />
-    </Tab.Navigator>
+      >
+        <Tab.Screen
+          name="Services"
+          component={Home}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="vacuum-outline" size={24} color={color} />
+            ),
+            tabBarLabel: 'Serviços',
+          }}
+          listeners={{
+            tabPress: (e) => {
+              if (!handleTabPress('Services')) {
+                e.preventDefault();
+              }
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
+            tabBarLabel: 'Início',
+          }}
+          listeners={{
+            tabPress: (e) => {
+              if (!handleTabPress('Home')) {
+                e.preventDefault();
+              }
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Search"
+          component={Home}
+          options={{
+            tabBarIcon: ({ size, color }) => (
+              <Ionicons name="search-sharp" size={size} color={color} />
+            ),
+            tabBarLabel: 'Busca',
+          }}
+          listeners={{
+            tabPress: (e) => {
+              if (!handleTabPress('Search')) {
+                e.preventDefault();
+              }
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
+            tabBarLabel: 'Perfil',
+          }}
+          listeners={{
+            tabPress: (e) => {
+              if (!handleTabPress('Profile')) {
+                e.preventDefault();
+              }
+            },
+          }}
+        />
+      </Tab.Navigator>
+    </>
   );
 }

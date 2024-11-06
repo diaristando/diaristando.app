@@ -27,7 +27,7 @@ export function Signup() {
       contentContainerStyle={styles.scrollViewContent}
       showsVerticalScrollIndicator={false}
     >
-      <FocusAwareStatusBar backgroundColor="#ffffff" />
+      <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
       <View style={styles.indexContainer}>
         <Index currentStep={1} totalSteps={1} />
       </View>
