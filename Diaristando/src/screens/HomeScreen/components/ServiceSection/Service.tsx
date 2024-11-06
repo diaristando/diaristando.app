@@ -6,6 +6,7 @@ import heavyCleanAnimation from '@/assets/animations/heavy-clean.json';
 import ServiceCard from '@/components/CardService';
 import { CustomModal } from '@/components/Modal';
 import { Separator } from '@/components/Separator';
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 
 type ServiceType = {
   title: string;
@@ -75,6 +76,7 @@ const ServiceScreen = () => {
 
   return (
     <View style={styles.container}>
+      <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
       <Text style={styles.title}>Serviços</Text>
       <Text style={styles.subtext}>Entenda os tipos de serviço que você pode realizar</Text>
       <View style={styles.cardsContainer}>

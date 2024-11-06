@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
@@ -28,7 +28,7 @@ export function TabRoutes() {
         component={Home}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="vacuum-outline" size={size} color={color} />
+            <MaterialCommunityIcons name="vacuum-outline" size={24} color={color} />
           ),
           tabBarLabel: 'Serviços',
         }}

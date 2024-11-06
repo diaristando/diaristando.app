@@ -4,6 +4,7 @@ import React from 'react';
 import { TabRoutes } from './routes/tabRoutes';
 
 import { Signup } from '@/screens/LoginScreen/Signup';
+import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
 
 const SignedOffStack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ export default function SignedOffNavigator() {
         component={TabRoutes}
         options={{ headerShown: false }}
       />
+      <SignedOffStack.Screen name="SocialLogin" component={SocialLogin} />
       <SignedOffStack.Screen name="Signup" component={Signup} />
     </SignedOffStack.Navigator>
   );

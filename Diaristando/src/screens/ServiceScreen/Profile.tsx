@@ -15,7 +15,7 @@ const ServiceProfile = () => {
 
   return (
     <View style={styles.container}>
-      <FocusAwareStatusBar backgroundColor="#ffffff" />
+      <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
       <CustomModal
         isOpen={confirmModal}
         onClose={() => {

@@ -1,4 +1,5 @@
-import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -26,6 +27,7 @@ export function TabRoutes() {
       <LoginPromptModal
         isVisible={isLoginPromptVisible}
         onRequestClose={() => setLoginPromptVisible(false)}
+        targetRoute="SocialLogin"
       />
 
       <Tab.Navigator
@@ -74,11 +76,10 @@ export function TabRoutes() {
               <Ionicons name="search-sharp" size={size} color={color} />
             ),
             tabBarLabel: 'Busca',
-            tabBarStyle: { display: 'none' },
           }}
           listeners={{
             tabPress: (e) => {
-              if (!handleTabPress('Logout')) {
+              if (!handleTabPress('Search')) {
                 e.preventDefault();
               }
             },
@@ -90,11 +91,10 @@ export function TabRoutes() {
           options={{
             tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
             tabBarLabel: 'Perfil',
-            tabBarStyle: { display: 'none' },
           }}
           listeners={{
             tabPress: (e) => {
-              if (!handleTabPress('Logout')) {
+              if (!handleTabPress('Profile')) {
                 e.preventDefault();
               }
             },

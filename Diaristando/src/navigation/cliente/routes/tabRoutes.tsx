@@ -40,8 +40,15 @@ export function TabRoutes() {
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
           tabBarLabel: 'Busca',
-          tabBarStyle: { display: 'none' },
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            navigation.navigate('Home');
+          },
+          focus: () => navigation.setOptions({ tabBarStyle: { display: 'none' } }),
+          blur: () => navigation.setOptions({ tabBarStyle: undefined }),
+        })}
       />
       <Tab.Screen
         name="Profile"
@@ -49,8 +56,11 @@ export function TabRoutes() {
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
           tabBarLabel: 'Perfil',
-          tabBarStyle: { display: 'none' },
         }}
+        listeners={({ navigation }) => ({
+          focus: () => navigation.setOptions({ tabBarStyle: { display: 'none' } }),
+          blur: () => navigation.setOptions({ tabBarStyle: undefined }),
+        })}
       />
     </Tab.Navigator>
   );
