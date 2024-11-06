@@ -86,7 +86,7 @@ export function SocialLogin() {
     if (!user || !tempTrigger) return;
     setTimeout(() => {
       setIsModalVisible(false);
-      navigation.getParent()?.navigate('Signup', {
+      navigation.navigate('Signup', {
         email: user.emailAddresses[0].emailAddress,
         fullName: user.fullName || '',
       });
