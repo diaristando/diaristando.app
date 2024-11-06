@@ -4,9 +4,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import defaultCleanAnimation from '@/assets/animations/default-clean.json';
 import heavyCleanAnimation from '@/assets/animations/heavy-clean.json';
 import ServiceCard from '@/components/CardService';
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
 import { Separator } from '@/components/Separator';
-import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 
 type ServiceType = {
   title: string;
