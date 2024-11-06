@@ -12,7 +12,7 @@ export function Home() {
   const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+      <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <View style={styles.header}>
         <Text style={styles.title}>{t('h1-boas-vindas')}</Text>
         <Text style={styles.subtitle}>{t('h2-boas-vindas')}</Text>
