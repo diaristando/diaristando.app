@@ -12,14 +12,10 @@ import { Separator } from '@/components/Separator';
 const Profile = () => {
   const [confirmModal, setConfirmModal] = useState(false);
 
-  const {
-    nome,
-    genero,
-    nomeSocial,
-    profileImageUrl,
-    isAuthenticated,
-  } = useSelector((state) => state.user);
-  console.log("Imagem do perfil:", profileImageUrl);
+  const { nome, genero, nomeSocial, profileImageUrl, isAuthenticated } = useSelector(
+    (state) => state.user,
+  );
+  console.log('Imagem do perfil:', profileImageUrl);
 
   const markers = [{ latitude: -22.9121, longitude: -43.2302 }];
 
@@ -58,7 +54,9 @@ const Profile = () => {
       <View style={styles.header}>
         <View style={styles.profilePicContainer}>
           <ProfilePic
-            imageUrl={profileImageUrl ? profileImageUrl : 'https://api.dicebear.com/9.x/fun-emoji/svg'}
+            imageUrl={
+              profileImageUrl ? profileImageUrl : 'https://api.dicebear.com/9.x/fun-emoji/svg'
+            }
             isEditable={false}
             handleUpload={() => console.log('Foto carregada')}
             height={63}
