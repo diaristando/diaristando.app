@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import defaultCleanAnimation from '@/assets/animations/default-clean.json';
 import heavyCleanAnimation from '@/assets/animations/heavy-clean.json';
+import Profile from '@/components/ProfilePic';
 import ServiceCard from '@/components/CardService';
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';

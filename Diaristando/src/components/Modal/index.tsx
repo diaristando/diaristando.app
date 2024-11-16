@@ -22,6 +22,7 @@ interface ModalProps {
   maxHeight?: DimensionValue;
   borderWidth?: number;
   borderColor?: string;
+  profileImageUrl?: string;
 }
 
 export function CustomModal({

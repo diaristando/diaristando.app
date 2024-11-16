@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { Button } from '@/components/Button';
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
@@ -8,8 +9,17 @@ import { CustomModal } from '@/components/Modal';
 import ProfilePic from '@/components/ProfilePic';
 import { Separator } from '@/components/Separator';
 
-const ServiceProfile = () => {
+const Profile = () => {
   const [confirmModal, setConfirmModal] = useState(false);
+
+  const {
+    nome,
+    genero,
+    nomeSocial,
+    profileImageUrl,
+    isAuthenticated,
+  } = useSelector((state) => state.user);
+  console.log("Imagem do perfil:", profileImageUrl);
 
   const markers = [{ latitude: -22.9121, longitude: -43.2302 }];
 
@@ -48,7 +58,7 @@ const ServiceProfile = () => {
       <View style={styles.header}>
         <View style={styles.profilePicContainer}>
           <ProfilePic
-            imageUrl="https://api.dicebear.com/9.x/fun-emoji/svg"
+            imageUrl={profileImageUrl ? profileImageUrl : 'https://api.dicebear.com/9.x/fun-emoji/svg'}
             isEditable={false}
             handleUpload={() => console.log('Foto carregada')}
             height={63}
@@ -56,12 +66,12 @@ const ServiceProfile = () => {
           />
         </View>
         <View style={styles.userInfo}>
-          <Text style={styles.name}>Alexandra Beatriz da Silva Campos e Oliveira Costa Lima</Text>
+          <Text style={styles.name}>{nomeSocial || nome}</Text>
           <View style={styles.ratingRow}>
             <Text style={styles.rating}>★★★★☆</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image source={require('@/assets/icons/user.png')} style={styles.profile} />
-              <Text style={styles.genero}>Feminino</Text>
+              <Text style={styles.genero}>{genero}</Text>
             </View>
           </View>
         </View>
@@ -81,7 +91,7 @@ const ServiceProfile = () => {
 
       <View style={styles.addressInfo}>
         <Separator color="#00000033" height={1} />
-        <Text style={styles.address}>Rua dos bobos, 123, casa 3, Valqueire, Rio de Janeiro</Text>
+        <Text style={styles.address}>Valqueire, Rio de Janeiro</Text>
         <View style={styles.propertyInfo}>
           <View style={styles.propertyItem}>
             <Image source={require('@/assets/icons/bed.png')} style={styles.icon} />
@@ -230,4 +240,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ServiceProfile;
+export default Profile;

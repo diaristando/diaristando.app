@@ -4,7 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
 import { Home } from '@/screens/HomeScreen/Home';
-import Service from '@/screens/ServiceScreen/Profile';
+import Profile from '@/screens/Profile/Profile';
+import Service from '@/screens/ServiceScreen/Service';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +19,7 @@ export function TabRoutes() {
     >
       <Tab.Screen
         name="Services"
-        component={Home}
+        component={Service}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="cleaning-services" size={size} color={color} />
@@ -51,16 +52,12 @@ export function TabRoutes() {
         })}
       />
       <Tab.Screen
-        name="Profile"
-        component={Service}
+        name="Perfil"
+        component={Profile}
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
           tabBarLabel: 'Perfil',
         }}
-        listeners={({ navigation }) => ({
-          focus: () => navigation.setOptions({ tabBarStyle: { display: 'none' } }),
-          blur: () => navigation.setOptions({ tabBarStyle: undefined }),
-        })}
       />
     </Tab.Navigator>
   );
