@@ -12,9 +12,7 @@ import { Separator } from '@/components/Separator';
 const Profile = () => {
   const [confirmModal, setConfirmModal] = useState(false);
 
-  const { nome, genero, nomeSocial, profileImageUrl, isAuthenticated } = useSelector(
-    (state) => state.user,
-  );
+  const { nome, genero, nomeSocial, profileImageUrl } = useSelector((state) => state.user);
   console.log('Imagem do perfil:', profileImageUrl);
 
   const markers = [{ latitude: -22.9121, longitude: -43.2302 }];
