@@ -10,54 +10,60 @@ import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
 const Tab = createBottomTabNavigator();
 
 export function TabRoutes() {
-  return (
-    <Tab.Navigator
-      sceneContainerStyle={{ backgroundColor: 'white' }}
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: '#F9FAFB',
-          borderTopWidth: 0,
-          height: 60,
-          borderTopLeftRadius: 15,
-          borderTopRightRadius: 15,
-        },
-      }}
-    >
-      <Tab.Screen
-        name="Services"
-        component={Profile}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="vacuum-outline" size={24} color={color} />
-          ),
-          tabBarLabel: 'Serviços',
-        }}
-      />
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
-          tabBarLabel: 'Início',
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={Home}
-        options={{
-          tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
-          tabBarLabel: 'Busca',
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={SocialLogin}
-        options={{
-          tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
-          tabBarLabel: 'Perfil',
-        }}
-      />
-    </Tab.Navigator>
-  );
+    return (
+        <Tab.Navigator
+            sceneContainerStyle={{ backgroundColor: 'white' }}
+            screenOptions={{
+                headerShown: false,
+                tabBarStyle: {
+                    backgroundColor: '#F9FAFB',
+                    borderTopWidth: 0,
+                    height: 60,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                },
+            }}
+        >
+            <Tab.Screen
+                name="Services"
+                component={Profile}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="vacuum-outline" size={24} color={color} />
+                    ),
+                    tabBarLabel: 'Serviços',
+                }}
+            />
+            <Tab.Screen
+                name="Home"
+                component={Home}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <Feather name="home" size={size} color={color} />
+                    ),
+                    tabBarLabel: 'Início',
+                }}
+            />
+            <Tab.Screen
+                name="Search"
+                component={Home}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <Feather name="search" size={size} color={color} />
+                    ),
+                    tabBarLabel: 'Busca',
+                }}
+            />
+            <Tab.Screen
+                name="Profile"
+                component={SocialLogin}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <Feather name="user" size={size} color={color} />
+                    ),
+                    tabBarLabel: 'Perfil',
+                }}
+            />
+        </Tab.Navigator>
+    );
 }

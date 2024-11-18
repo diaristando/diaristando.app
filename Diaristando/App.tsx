@@ -11,20 +11,20 @@ import './config/translator';
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    Roboto_400Regular,
-    Roboto_700Bold,
-  });
+    const [fontsLoaded] = useFonts({
+        Roboto_400Regular,
+        Roboto_700Bold,
+    });
 
-  if (!fontsLoaded) {
-    return null;
-  }
+    if (!fontsLoaded) {
+        return null;
+    }
 
-  return (
-    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <Provider store={store}>
-        <AppNavigation />
-      </Provider>
-    </ClerkProvider>
-  );
+    return (
+        <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+            <Provider store={store}>
+                <AppNavigation />
+            </Provider>
+        </ClerkProvider>
+    );
 }

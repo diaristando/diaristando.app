@@ -6,21 +6,21 @@ import { TabRoutes } from './routes/tabsRoutes';
 const DiaristaNavigation = createNativeStackNavigator();
 
 export type DiaristaRootStackParamList = {
-  DiaristaTab: { screen: 'Services' | 'Home' | 'Search' | 'Profile' };
+    DiaristaTab: { screen: 'Services' | 'Home' | 'Search' | 'Profile' };
 };
 
 export default function DiaristaNavigator() {
-  return (
-    <DiaristaNavigation.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <DiaristaNavigation.Screen
-        name="DiaristaTab"
-        component={TabRoutes}
-        options={{ headerShown: false }}
-      />
-    </DiaristaNavigation.Navigator>
-  );
+    return (
+        <DiaristaNavigation.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <DiaristaNavigation.Screen
+                name="DiaristaTab"
+                component={TabRoutes}
+                options={{ headerShown: false }}
+            />
+        </DiaristaNavigation.Navigator>
+    );
 }
