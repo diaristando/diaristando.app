@@ -25,18 +25,17 @@ export function Home() {
               <Text style={styles.stepText}>Cadastre-se facilmente via redes sociais.</Text>
             </StepsCard>
             <StepsCard step="02">
-              <Text style={styles.stepText}>Encontre clientes e agende os serviços.</Text>
+              <Text style={styles.stepText}>
+                Encontre clientes ou diaristas de acordo com sua localização.
+              </Text>
             </StepsCard>
             <StepsCard step="03">
               <Text style={styles.stepText}>
-                No dia agendado, vá ao local do serviço e faça o check-in.
+                Registre os serviços no app e gerencie o agendamento pelo aplicativo.
               </Text>
             </StepsCard>
             <StepsCard step="04">
-              <Text style={styles.stepText}>
-                Após o serviço realize o checkout, e{' '}
-                <Text style={styles.boldText}>receba em até 3 horas.</Text>
-              </Text>
+              <Text style={styles.stepText}>Forneça o feedback sobre o serviço.</Text>
             </StepsCard>
           </View>
         </View>
@@ -93,8 +92,5 @@ const styles = StyleSheet.create({
     lineHeight: 18.2,
     flex: 1,
     color: '#000000',
-  },
-  boldText: {
-    fontWeight: 'bold',
   },
 });
