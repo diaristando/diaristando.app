@@ -22,7 +22,7 @@ export function Home() {
           <Text style={styles.paragraph}>{t('p-como-funciona')}</Text>
           <View style={styles.stepsContainer}>
             <StepsCard step="01">
-              <Text style={styles.stepText}>Cadastre-se facilmente via redes sociais.</Text>
+              <Text style={styles.stepText}>Cadastre-se facilmente via rede social.</Text>
             </StepsCard>
             <StepsCard step="02">
               <Text style={styles.stepText}>
