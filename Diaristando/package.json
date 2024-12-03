@@ -25,7 +25,9 @@
     "dotenv": "^16.4.5",
     "expo": "~51.0.14",
     "expo-auth-session": "~5.5.2",
+    "expo-device": "~6.0.2",
     "expo-linking": "^6.3.1",
+    "expo-notifications": "~0.28.19",
     "expo-secure-store": "^13.0.2",
     "expo-web-browser": "^13.0.3",
     "formik": "^2.4.6",
@@ -42,6 +44,7 @@
     "react-native-screens": "3.31.1",
     "react-redux": "^9.1.2",
     "styled-components": "^6.1.13",
+    "typescript": "~5.3.3",
     "yup": "^1.4.0"
   },
   "devDependencies": {
