@@ -1,6 +1,6 @@
+import * as Notifications from 'expo-notifications';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Linking } from 'react-native';
-import * as Notifications from 'expo-notifications';
 
 import { Button } from '@/components/Button';
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
@@ -23,7 +23,7 @@ const ServiceProfile = () => {
                 body: 'Como foi sua última experiência?',
                 data: {},
             },
-            trigger: { hour: 2 },
+            trigger: { seconds: 5 },
         });
     }
 
