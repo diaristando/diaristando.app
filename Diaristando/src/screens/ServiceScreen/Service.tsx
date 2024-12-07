@@ -8,7 +8,7 @@ import { CustomModal } from '@/components/Modal';
 import ProfilePic from '@/components/ProfilePic';
 import { Separator } from '@/components/Separator';
 
-const ServiceProfile = () => {
+const Service = () => {
   const [confirmModal, setConfirmModal] = useState(false);
 
   const markers = [{ latitude: -22.9121, longitude: -43.2302 }];
@@ -230,4 +230,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ServiceProfile;
+export { Service };

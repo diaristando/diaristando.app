@@ -11,11 +11,11 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  TouchableWithoutFeedback,
   StyleSheet,
+  Pressable,
 } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 import dddsBr from '../../../assets/ddd-br.json';
@@ -23,12 +23,18 @@ import dddsBr from '../../../assets/ddd-br.json';
 import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
 import { setUser, UserState, Genero } from '@/store/slices/userSlice';
 import { applyCepMask, applyPhoneMask } from '@/utils/masks';
+import { RootState } from '@/store';
 
 type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
 
-type PersonalInfoProps = {
+type Props = {
   email: string;
   fullName: string;
+  editable?: boolean;
+  editPicker?: boolean;
+  showEmailAndName?: boolean;
+  showButtons?: boolean;
+  handleOpenModal?: () => void;
 };
 
 const validationSchema = Yup.object().shape({
@@ -52,9 +58,18 @@ const validationSchema = Yup.object().shape({
     .matches(/^[a-zA-Z0-9 ]*$/, '*Este campo não aceita caracteres especiais'),
 });
 
-export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
+export function PersonalInfo({
+  email,
+  fullName,
+  editable = true,
+  editPicker = false,
+  showButtons = true,
+  showEmailAndName = true,
+  handleOpenModal,
+}: Props) {
   const navigation = useNavigation<PersonalInfoNavigationProp>();
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const today = new Date();
   const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
@@ -64,29 +79,38 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
       initialValues={{
         nome: fullName,
         email,
-        telefone: '',
-        dataNascimento: '',
-        cep: '',
-        genero: '',
-        nomeSocial: '',
-        ddd: '',
+        telefone: user.telefone,
+        dataNascimento: user.dataNascimento,
+        cep: user.cep,
+        genero: user.genero,
+        nomeSocial: user.nomeSocial,
+        ddd: user.ddd,
       }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
         const { telefone, ddd, dataNascimento, ...rest } = values;
-        const phoneWithDdd = `${ddd}${telefone}`;
+
         const dataNascimentoFormatted = new Date(dataNascimento).toISOString();
 
         const payload: UserState = {
           ...rest,
-          telefone: phoneWithDdd,
+          ddd,
+          imageUrl: user.imageUrl,
+          telefone,
           dataNascimento: dataNascimentoFormatted,
           isAuthenticated: true,
         };
 
         dispatch(setUser(payload));
         console.log('Formulário submetido com sucesso!', payload);
-        navigation.navigate('DiaristaTab', { screen: 'Home' });
+
+        if (handleOpenModal) {
+          handleOpenModal();
+        } else {
+          navigation.navigate('DiaristaTab', {
+            screen: 'Home',
+          });
+        }
       }}
     >
       {({
@@ -108,34 +132,52 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
           <View style={styles.container}>
             <Text style={styles.title}>Informações Pessoais</Text>
             <View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Nome Completo</Text>
-                <TextInput
-                  placeholder="Nome Completo"
-                  placeholderTextColor="#909090"
-                  value={values.nome}
-                  style={styles.disabledInput}
-                  editable={false}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>E-mail</Text>
-                <TextInput
-                  placeholder="email@email.com.br"
-                  placeholderTextColor="#909090"
-                  value={values.email}
-                  keyboardType="email-address"
-                  style={styles.disabledInput}
-                  editable={false}
-                  maxLength={50}
-                />
-              </View>
+              {showEmailAndName && (
+                <>
+                  <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Nome Completo</Text>
+                    <TextInput
+                      placeholder="Nome Completo"
+                      placeholderTextColor="#909090"
+                      value={values.nome}
+                      style={styles.disabledInput}
+                      editable={false}
+                    />
+                  </View>
+                  <View style={styles.inputContainer}>
+                    <Text style={styles.label}>E-mail</Text>
+                    <TextInput
+                      placeholder="email@email.com.br"
+                      placeholderTextColor="#909090"
+                      value={values.email}
+                      keyboardType="email-address"
+                      style={styles.disabledInput}
+                      editable={false}
+                      maxLength={50}
+                    />
+                  </View>
+                </>
+              )}
+
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>Telefone*</Text>
                 <View style={styles.phoneContainer}>
-                  <View style={styles.dddContainer}>
+                  <View
+                    style={[
+                      styles.dddContainer,
+                      {
+                        backgroundColor: editPicker ? '#D9D9D9' : 'transparent',
+                        borderWidth: editPicker ? 0 : 1.5,
+                        borderColor: editPicker ? 'transparent' : '#A0A0A0',
+                      },
+                    ]}
+                  >
                     <RNPickerSelect
-                      placeholder={{ label: 'DDD', value: null }}
+                      placeholder={{
+                        label: 'DDD',
+                        value: null,
+                        color: editPicker ? '#868686' : '#4F4F4F',
+                      }}
                       value={values.ddd}
                       onValueChange={(itemValue: string) => {
                         setFieldValue('ddd', itemValue);
@@ -145,27 +187,34 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                         label: ddd,
                         value: ddd,
                       }))}
+                      disabled={editPicker}
                       useNativeAndroidPickerStyle={false}
                       style={{
-                        inputAndroid: { color: 'black', fontSize: 14 },
-                        placeholder: { color: '#767373' },
+                        inputAndroid: { color: editPicker ? '#868686' : '#4F4F4F', fontSize: 14 },
+                        placeholder: { color: editPicker ? '#868686' : '#4F4F4F' },
                         inputAndroidContainer: styles.dddPicker,
                       }}
                       Icon={() => (
                         <View style={styles.pickerIcon}>
-                          <AntDesign name="down" size={14} color="blue" />
+                          <AntDesign
+                            name="down"
+                            size={14}
+                            color={editPicker ? '#868686' : 'blue'}
+                          />
                         </View>
                       )}
                     />
                   </View>
                   <TextInput
                     placeholder="9 XXXX-XXXX"
-                    placeholderTextColor="#767373"
+                    placeholderTextColor="#868686"
                     onChangeText={handleChange('telefone')}
+                    keyboardType="numeric"
                     onBlur={handleBlur('telefone')}
+                    editable={editable}
                     maxLength={11}
                     value={applyPhoneMask(values.telefone)}
-                    style={styles.textInput}
+                    style={[editable ? styles.textInput : styles.disabledInput, { flex: 1 }]}
                   />
                 </View>
                 {touched.telefone && errors.telefone && (
@@ -174,10 +223,20 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
               </View>
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>Data de nascimento*</Text>
-                <TouchableWithoutFeedback onPress={() => setShowDatePicker(true)}>
-                  <View style={styles.datePickerContainer}>
-                    {showDatePicker && (
+                <Pressable onPress={() => setShowDatePicker(true)}>
+                  <View
+                    style={[
+                      styles.datePickerContainer,
+                      {
+                        backgroundColor: editPicker ? '#D9D9D9' : 'transparent',
+                        borderWidth: editPicker ? 0 : 1.5,
+                        borderColor: editPicker ? 'transparent' : '#A0A0A0',
+                      },
+                    ]}
+                  >
+                    {!editPicker && showDatePicker && (
                       <RNDateTimePicker
+                        disabled={editPicker}
                         value={values.dataNascimento ? new Date(values.dataNascimento) : maxDate}
                         onChange={(_, date) => {
                           setShowDatePicker(false);
@@ -186,14 +245,15 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                         maximumDate={maxDate}
                       />
                     )}
-                    <Text>
+
+                    <Text style={{ color: editPicker ? '#868686' : '#4F4F4F' }}>
                       {values.dataNascimento
                         ? new Date(values.dataNascimento).toLocaleDateString('pt-BR')
                         : 'DD/MM/AAAA'}
                     </Text>
-                    <Feather name="calendar" size={18} color="blue" />
+                    <Feather name="calendar" size={18} color={editPicker ? '#868686' : 'blue'} />
                   </View>
-                </TouchableWithoutFeedback>
+                </Pressable>
                 {touched.dataNascimento && errors.dataNascimento && (
                   <Text style={styles.errorText}>{errors.dataNascimento}</Text>
                 )}
@@ -202,21 +262,37 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                 <Text style={styles.label}>CEP*</Text>
                 <TextInput
                   placeholder="XXXXX-XXX"
-                  placeholderTextColor="#767373"
+                  placeholderTextColor="#868686"
                   onChangeText={handleChange('cep')}
+                  keyboardType="numeric"
                   onBlur={handleBlur('cep')}
+                  editable={editable}
                   maxLength={9}
                   value={applyCepMask(values.cep)}
-                  style={styles.textInput}
+                  style={editable ? styles.textInput : styles.disabledInput}
                 />
                 {touched.cep && errors.cep && <Text style={styles.errorText}>{errors.cep}</Text>}
               </View>
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>Qual seu gênero?*</Text>
-                <View style={styles.pickerContainer}>
+                <View
+                  style={[
+                    styles.pickerContainer,
+                    {
+                      backgroundColor: editPicker ? '#D9D9D9' : 'transparent',
+                      borderWidth: editPicker ? 0 : 1.5,
+                      borderColor: editPicker ? 'transparent' : '#A0A0A0',
+                    },
+                  ]}
+                >
                   <RNPickerSelect
-                    placeholder={{ label: 'Selecione', value: '' }}
+                    placeholder={{
+                      label: 'Selecione',
+                      value: '',
+                      color: editPicker ? '#868686' : '#4F4F4F',
+                    }}
                     value={values.genero}
+                    disabled={editPicker}
                     onValueChange={(itemValue: Genero) => {
                       setFieldValue('genero', itemValue);
                     }}
@@ -227,13 +303,13 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                     ]}
                     useNativeAndroidPickerStyle={false}
                     style={{
-                      inputAndroid: { color: 'black', fontSize: 14 },
-                      placeholder: { color: '#767373' },
+                      inputAndroid: { color: editPicker ? '#868686' : '#4F4F4F', fontSize: 14 },
+                      placeholder: { color: editPicker ? '#868686' : '#4F4F4F' },
                       inputAndroidContainer: styles.pickerAndroid,
                     }}
                     Icon={() => (
                       <View style={styles.pickerIcon}>
-                        <AntDesign name="down" size={14} color="blue" />
+                        <AntDesign name="down" size={14} color={editPicker ? '#868686' : 'blue'} />
                       </View>
                     )}
                   />
@@ -249,36 +325,39 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
                   placeholderTextColor="#868686"
                   onChangeText={handleChange('nomeSocial')}
                   onBlur={handleBlur('nomeSocial')}
+                  editable={editable}
                   value={values.nomeSocial}
-                  style={styles.textInput}
+                  style={editable ? styles.textInput : styles.disabledInput}
                 />
               </View>
               {touched.nomeSocial && errors.nomeSocial && (
                 <Text style={styles.errorText}>{errors.nomeSocial}</Text>
               )}
             </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Text style={styles.backButtonText}>Voltar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => handleSubmit()}
-                style={[
-                  styles.submitButton,
-                  { borderColor: isValid && dirty ? '#0070f3' : '#A0A0A0' },
-                ]}
-                disabled={!(isValid && dirty)}
-              >
-                <Text
+            {showButtons && (
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                  <Text style={styles.backButtonText}>Voltar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleSubmit()}
                   style={[
-                    styles.submitButtonText,
-                    { color: isValid && dirty ? '#0070f3' : '#A0A0A0' },
+                    styles.submitButton,
+                    { borderColor: isValid && dirty ? '#0070f3' : '#A0A0A0' },
                   ]}
+                  disabled={!(isValid && dirty)}
                 >
-                  Concluir
-                </Text>
-              </TouchableOpacity>
-            </View>
+                  <Text
+                    style={[
+                      styles.submitButtonText,
+                      { color: isValid && dirty ? '#0070f3' : '#A0A0A0' },
+                    ]}
+                  >
+                    Concluir
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         </KeyboardAvoidingView>
       )}
@@ -289,7 +368,6 @@ export function PersonalInfo({ email, fullName }: PersonalInfoProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 24,
   },
   title: {
     fontSize: 20,
@@ -315,6 +393,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#909090',
   },
+  disablePicker: {
+    borderWidth: 1.5,
+    borderColor: '#D9D9D9',
+    borderRadius: 8,
+    padding: 8,
+    height: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   phoneContainer: {
     flexDirection: 'row',
     gap: 16,
@@ -323,8 +411,6 @@ const styles = StyleSheet.create({
   dddContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1.5,
-    borderColor: '#A0A0A0',
     borderRadius: 8,
     padding: 8,
     width: 70,
@@ -344,6 +430,7 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1.5,
     borderColor: '#A0A0A0',
+    color: '#868686',
     borderRadius: 8,
     padding: 8,
     height: 40,
@@ -358,8 +445,6 @@ const styles = StyleSheet.create({
     left: 8,
   },
   datePickerContainer: {
-    borderWidth: 1.5,
-    borderColor: '#A0A0A0',
     borderRadius: 8,
     padding: 8,
     height: 40,
@@ -368,8 +453,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   pickerContainer: {
-    borderWidth: 1.5,
-    borderColor: '#A0A0A0',
     borderRadius: 8,
     height: 40,
   },

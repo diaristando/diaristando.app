@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
     backgroundColor: '#F5F5F5',
+    paddingHorizontal: 24,
   },
   indexContainer: {
     marginVertical: 16,

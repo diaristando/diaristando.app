@@ -7,9 +7,11 @@ export enum Genero {
 }
 
 export interface UserState {
+  imageUrl: string;
   nome: string;
   email: string;
   telefone: string;
+  ddd: string;
   dataNascimento: string;
   cep: string;
   genero: Genero | string;
@@ -19,6 +21,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
+  imageUrl: '',
   nome: '',
   email: '',
   telefone: '',
@@ -27,6 +30,7 @@ const initialState: UserState = {
   genero: '',
   nomeSocial: '',
   profileImageUrl: '',
+  ddd: '',
   isAuthenticated: false,
 };
 
@@ -40,12 +44,20 @@ const userSlice = createSlice({
         isAuthenticated: true,
       };
     },
+    setUserFromGoogle(
+      state,
+      action: PayloadAction<{ email: string; nome: string; imageUrl: string }>,
+    ) {
+      state.email = action.payload.email;
+      state.nome = action.payload.nome;
+      state.imageUrl = action.payload.imageUrl;
+    },
     clearUser(state) {
       return initialState;
     },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, setUserFromGoogle, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;

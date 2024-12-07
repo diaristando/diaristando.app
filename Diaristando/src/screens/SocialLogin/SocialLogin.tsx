@@ -6,13 +6,14 @@ import LottieView from 'lottie-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Image, Text, View, StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
 import { SocialLoginButton } from '@/components/SocialLoginButton';
 import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
-import { clearUser } from '@/store/slices/userSlice';
+import { clearUser, setUserFromGoogle } from '@/store/slices/userSlice';
+import { RootState } from '@/store';
 
 const successLogin = require('../../assets/animations/success.json');
 const loginSocialImage = require('../../assets/images/diaristando-image-login-social.png');
@@ -28,6 +29,7 @@ export function SocialLogin() {
   const dispatch = useDispatch();
   const { user } = useUser();
   const { isSignedIn, signOut } = useAuth();
+  const imageGoogle = useSelector((user: RootState) => user.user.nome);
   const navigation = useNavigation<SocialLoginNavigationProp>();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,6 +54,7 @@ export function SocialLogin() {
         await oAuthFlow.setActive({ session: oAuthFlow.createdSessionId });
         setIsModalVisible(true);
         console.log('Login realizado com sucesso!');
+
         setTempTrigger(true);
         animation.current?.play();
       }
@@ -84,9 +87,18 @@ export function SocialLogin() {
 
   useEffect(() => {
     if (!user || !tempTrigger) return;
-    setTimeout(() => {
+    setTimeout(async () => {
       setIsModalVisible(false);
-      navigation.navigate('Signup', {
+
+      dispatch(
+        setUserFromGoogle({
+          email: user.emailAddresses[0].emailAddress,
+          nome: user.fullName || '',
+          imageUrl: user.imageUrl,
+        }),
+      );
+
+      await navigation.navigate('Signup', {
         email: user.emailAddresses[0].emailAddress,
         fullName: user.fullName || '',
       });
