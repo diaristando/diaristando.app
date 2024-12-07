@@ -6,7 +6,6 @@ import React from 'react';
 import { Home } from '@/screens/HomeScreen/Home';
 import { Service } from '@/screens/ServiceScreen/Service';
 import { Profile } from '@/screens/ProfileScreen/Profile';
-import { EditCompleted } from '@/screens/EditCompleted/EditCompleted';
 
 const Tab = createBottomTabNavigator();
 
@@ -58,11 +57,6 @@ export function TabRoutes() {
           tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
           tabBarLabel: 'Perfil',
         }}
-      />
-      <Tab.Screen
-        name="EditCompleted"
-        component={EditCompleted}
-        options={{ tabBarButton: () => null }}
       />
     </Tab.Navigator>
   );
