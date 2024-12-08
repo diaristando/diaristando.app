@@ -115,6 +115,9 @@ export function PersonalInfo({
             screen: 'Home',
           });
         }
+        if (handleDisableInputs) {
+          handleDisableInputs();
+        }
       }}
     >
       {({
