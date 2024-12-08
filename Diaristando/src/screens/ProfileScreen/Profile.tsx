@@ -28,18 +28,15 @@ export function Profile() {
   const { t } = useTranslation();
 
   function handleEdit() {
-    setEditInputs(!editInputs);
-    setEditPickerInputs(!editPickerInputs);
+    setEditInputs(true);
+    setEditPickerInputs(false);
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        setEditInputs(false);
-        setEditPickerInputs(true);
-      };
-    }, []),
-  );
+  function resetInputsToRead() {
+    setEditInputs(false);
+    setEditPickerInputs(true);
+  }
+
   return (
     <ScrollView style={{ flexGrow: 1 }}>
       <View style={styles.container}>
@@ -83,9 +80,11 @@ export function Profile() {
                 <FontAwesome name="star" color={'#DBEAFE'} size={20} />
                 <Text style={styles.ratingLabel}>4.4</Text>
               </View>
-              <Pressable style={styles.editView} onPress={handleEdit}>
-                <Feather name="edit" color={'#DBEAFE'} size={20} />
-              </Pressable>
+              {editInputs === false && editPickerInputs === true && (
+                <Pressable style={styles.editView} onPress={handleEdit}>
+                  <Feather name="edit" color={'#DBEAFE'} size={20} />
+                </Pressable>
+              )}
             </View>
           </View>
         </View>
@@ -99,6 +98,8 @@ export function Profile() {
           editPicker={editPickerInputs}
           showButtons={editInputs}
           handleOpenModal={() => setIsModalVisible(true)}
+          profile
+          handleDisableInputs={resetInputsToRead}
         />
       </View>
     </ScrollView>
