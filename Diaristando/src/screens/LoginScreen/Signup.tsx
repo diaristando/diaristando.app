@@ -10,38 +10,38 @@ import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNav
 type SignupRouterProp = RouteProp<SignedOffRootStackParamList, 'Signup'>;
 
 const renderStep = (currentStep: number, props: { email: string; fullName: string }) => {
-  switch (currentStep) {
-    case 1:
-      return <PersonalInfo email={props.email} fullName={props.fullName} />;
-    default:
-      return null;
-  }
+    switch (currentStep) {
+        case 1:
+            return <PersonalInfo email={props.email} fullName={props.fullName} />;
+        default:
+            return null;
+    }
 };
 
 export function Signup() {
-  const route = useRoute<SignupRouterProp>();
-  const { email, fullName } = route.params || { email: '', fullName: '' };
+    const route = useRoute<SignupRouterProp>();
+    const { email, fullName } = route.params || { email: '', fullName: '' };
 
-  return (
-    <ScrollView
-      contentContainerStyle={styles.scrollViewContent}
-      showsVerticalScrollIndicator={false}
-    >
-      <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
-      <View style={styles.indexContainer}>
-        <Index currentStep={1} totalSteps={1} />
-      </View>
-      {renderStep(1, { email, fullName })}
-    </ScrollView>
-  );
+    return (
+        <ScrollView
+            contentContainerStyle={styles.scrollViewContent}
+            showsVerticalScrollIndicator={false}
+        >
+            <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+            <View style={styles.indexContainer}>
+                <Index currentStep={1} totalSteps={1} />
+            </View>
+            {renderStep(1, { email, fullName })}
+        </ScrollView>
+    );
 }
 
 const styles = StyleSheet.create({
-  scrollViewContent: {
-    flexGrow: 1,
-    backgroundColor: '#F5F5F5',
-  },
-  indexContainer: {
-    marginVertical: 16,
-  },
+    scrollViewContent: {
+        flexGrow: 1,
+        backgroundColor: '#F5F5F5',
+    },
+    indexContainer: {
+        marginVertical: 16,
+    },
 });
