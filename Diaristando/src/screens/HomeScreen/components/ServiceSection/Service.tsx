@@ -79,7 +79,7 @@ const ServiceScreen = () => {
             <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
             <Text style={styles.title}>Serviços</Text>
-            <Text style={styles.subtext}>Entenda os tipos de serviço que você pode realizar</Text>
+            <Text style={styles.subtext}>Entenda os tipos de serviço oferecidos</Text>
             <View style={styles.cardsContainer}>
                 {services.map((service, index) => (
                     <ServiceCard

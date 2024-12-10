@@ -126,7 +126,7 @@ export function SocialLogin() {
                         />
                         <Text style={styles.appTitle}>Diaristando</Text>
                     </View>
-                    <Text style={styles.tagline}>Te ajudando a conquistar sua independência!</Text>
+                    <Text style={styles.tagline}>Entre na sua conta para acessar a plataforma</Text>
                 </View>
                 <View style={styles.buttonsContainer}>
                     {isSignedIn ? (
