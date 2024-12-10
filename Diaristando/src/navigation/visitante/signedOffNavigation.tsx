@@ -9,24 +9,24 @@ import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
 const SignedOffStack = createNativeStackNavigator();
 
 export type SignedOffRootStackParamList = {
-  SignedOff: { screen: 'Home' | 'SocialLogin' | 'Services' | 'Search' | 'Profile' };
-  Signup: { email: string; fullName: string };
+    SignedOff: { screen: 'Home' | 'SocialLogin' | 'Services' | 'Search' | 'Profile' };
+    Signup: { email: string; fullName: string };
 };
 
 export default function SignedOffNavigator() {
-  return (
-    <SignedOffStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <SignedOffStack.Screen
-        name="SignedOff"
-        component={TabRoutes}
-        options={{ headerShown: false }}
-      />
-      <SignedOffStack.Screen name="SocialLogin" component={SocialLogin} />
-      <SignedOffStack.Screen name="Signup" component={Signup} />
-    </SignedOffStack.Navigator>
-  );
+    return (
+        <SignedOffStack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <SignedOffStack.Screen
+                name="SignedOff"
+                component={TabRoutes}
+                options={{ headerShown: false }}
+            />
+            <SignedOffStack.Screen name="SocialLogin" component={SocialLogin} />
+            <SignedOffStack.Screen name="Signup" component={Signup} />
+        </SignedOffStack.Navigator>
+    );
 }
