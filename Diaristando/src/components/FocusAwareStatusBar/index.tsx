@@ -4,7 +4,7 @@ import { StatusBar, StatusBarProps } from 'react-native';
 interface FocusAwareStatusBarProps extends StatusBarProps {}
 
 export function FocusAwareStatusBar(props: FocusAwareStatusBarProps) {
-  const isFocused = useIsFocused();
+    const isFocused = useIsFocused();
 
-  return isFocused ? <StatusBar {...props} /> : null;
+    return isFocused ? <StatusBar {...props} /> : null;
 }

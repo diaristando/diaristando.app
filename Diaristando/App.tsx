@@ -24,11 +24,9 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
-    const [expoPushToken, setExpoPushToken] = useState('');
-    const [channels, setChannels] = useState<Notifications.NotificationChannel[]>([]);
-    const [notification, setNotification] = useState<Notifications.Notification | undefined>(
-        undefined,
-    );
+    const [, setExpoPushToken] = useState('');
+    const [, setChannels] = useState<Notifications.NotificationChannel[]>([]);
+    const [, setNotification] = useState<Notifications.Notification | undefined>(undefined);
     const notificationListener = useRef<Notifications.Subscription>();
     const responseListener = useRef<Notifications.Subscription>();
 
@@ -49,17 +47,21 @@ export default function App() {
         registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
 
         if (Platform.OS === 'android') {
-            Notifications.getNotificationChannelsAsync().then((value) => setChannels(value ?? []));
+            // TODO: Make the typation later
+            Notifications.getNotificationChannelsAsync().then((value: any) =>
+                setChannels(value ?? []),
+            );
         }
 
         notificationListener.current = Notifications.addNotificationReceivedListener(
-            (notification) => {
+            (notification: Notifications.Notification | undefined) => {
                 setNotification(notification);
             },
         );
 
         responseListener.current = Notifications.addNotificationResponseReceivedListener(
-            (response) => {
+            // TODO: Make the typation later
+            (response: any) => {
                 console.log(JSON.stringify(response));
             },
         );
@@ -74,6 +76,10 @@ export default function App() {
 
     if (!fontsLoaded) {
         return <></>;
+    }
+
+    if (!fontsLoaded) {
+        return null;
     }
 
     return (
