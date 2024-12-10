@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
 import { Home } from '@/screens/HomeScreen/Home';
-import Profile from '@/screens/ServiceScreen/Profile';
-import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
+import { Profile } from '@/screens/ProfileScreen/Profile';
+import { Service } from '@/screens/ServiceScreen/Service';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +26,7 @@ export function TabRoutes() {
         >
             <Tab.Screen
                 name="Services"
-                component={Profile}
+                component={Service}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="vacuum-outline" size={24} color={color} />
@@ -56,7 +56,7 @@ export function TabRoutes() {
             />
             <Tab.Screen
                 name="Profile"
-                component={SocialLogin}
+                component={Profile}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="user" size={size} color={color} />

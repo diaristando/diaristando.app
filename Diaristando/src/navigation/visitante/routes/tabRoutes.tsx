@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { LoginPromptModal } from '@/components/CardGuest';
 import { Home } from '@/screens/HomeScreen/Home';
-import Profile from '@/screens/ServiceScreen/Profile';
+import { Service } from '@/screens/ServiceScreen/Service';
 
 const Tab = createBottomTabNavigator();
 
@@ -88,7 +88,7 @@ export function TabRoutes() {
                 />
                 <Tab.Screen
                     name="Profile"
-                    component={Profile}
+                    component={Service}
                     options={{
                         tabBarIcon: ({ color, size }) => (
                             <Feather name="user" size={size} color={color} />

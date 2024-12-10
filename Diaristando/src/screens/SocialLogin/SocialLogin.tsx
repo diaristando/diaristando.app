@@ -12,7 +12,7 @@ import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
 import { SocialLoginButton } from '@/components/SocialLoginButton';
 import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
-import { clearUser } from '@/store/slices/userSlice';
+import { clearUser, setUserFromGoogle } from '@/store/slices/userSlice';
 
 const successLogin = require('../../assets/animations/success.json');
 const loginSocialImage = require('../../assets/images/diaristando-image-login-social.png');
@@ -52,6 +52,7 @@ export function SocialLogin() {
                 await oAuthFlow.setActive({ session: oAuthFlow.createdSessionId });
                 setIsModalVisible(true);
                 console.log('Login realizado com sucesso!');
+
                 setTempTrigger(true);
                 animation.current?.play();
             }
@@ -74,6 +75,33 @@ export function SocialLogin() {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        WebBrowser.warmUpAsync();
+        return () => {
+            WebBrowser.coolDownAsync();
+        };
+    });
+
+    useEffect(() => {
+        if (!user || !tempTrigger) return;
+        setTimeout(async () => {
+            setIsModalVisible(false);
+
+            dispatch(
+                setUserFromGoogle({
+                    email: user.emailAddresses[0].emailAddress,
+                    nome: user.fullName || '',
+                    imageUrl: user.imageUrl,
+                }),
+            );
+
+            await navigation.navigate('Signup', {
+                email: user.emailAddresses[0].emailAddress,
+                fullName: user.fullName || '',
+            });
+        }, 3000);
+    }, [user, tempTrigger]);
 
     useEffect(() => {
         WebBrowser.warmUpAsync();
