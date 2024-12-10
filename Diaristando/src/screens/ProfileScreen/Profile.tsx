@@ -1,18 +1,17 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
-
-import ProfilePic from '@/components/ProfilePic';
-import { FontAwesome, Feather } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { PersonalInfo } from '@/components/StepSignup/PersonalInfo';
-import { useCallback, useRef, useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
-const successEdit = require('../../assets/animations/success.json');
-import { CustomModal } from '@/components/Modal';
 import LottieView from 'lottie-react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useSelector } from 'react-redux';
+
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
+import { CustomModal } from '@/components/Modal';
+import ProfilePic from '@/components/ProfilePic';
+import { PersonalInfo } from '@/components/StepSignup/PersonalInfo';
+import { RootState } from '@/store';
+
+const successEdit = require('../../assets/animations/success.json');
 
 export function Profile() {
   const [editInputs, setEditInputs] = useState(false);
@@ -77,12 +76,12 @@ export function Profile() {
 
             <View style={styles.cardView}>
               <View style={styles.cardViewRating}>
-                <FontAwesome name="star" color={'#DBEAFE'} size={20} />
+                <Image source={require('../../assets/icons/star.png')} />
                 <Text style={styles.ratingLabel}>4.4</Text>
               </View>
               {editInputs === false && editPickerInputs === true && (
                 <Pressable style={styles.editView} onPress={handleEdit}>
-                  <Feather name="edit" color={'#DBEAFE'} size={20} />
+                  <Image source={require('../../assets/icons/tablerEdit.png')} />
                 </Pressable>
               )}
             </View>
@@ -157,22 +156,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#172554',
-    maxWidth: 95,
-    height: 40,
-    borderRadius: 10,
+    maxWidth: 85,
+    height: 35,
+    borderRadius: 6,
     gap: 10,
     flex: 1,
   },
   ratingLabel: {
     color: '#DBEAFE',
-    fontSize: 22,
+    fontSize: 17,
+    fontWeight: 'bold',
   },
   editView: {
     width: 50,
-    height: 40,
+    height: 35,
     backgroundColor: '#1D4ED8',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
+    borderRadius: 6,
   },
 });

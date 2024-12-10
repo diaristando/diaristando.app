@@ -21,9 +21,9 @@ import * as Yup from 'yup';
 import dddsBr from '../../../assets/ddd-br.json';
 
 import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
+import { RootState } from '@/store';
 import { setUser, UserState, Genero } from '@/store/slices/userSlice';
 import { applyCepMask, applyPhoneMask } from '@/utils/masks';
-import { RootState } from '@/store';
 
 type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
 
@@ -88,7 +88,7 @@ export function PersonalInfo({
         cep: user.cep,
         genero: user.genero,
         nomeSocial: user.nomeSocial,
-        ddd: user.ddd,
+        ddd: user.ddd || '',
       }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
@@ -149,7 +149,8 @@ export function PersonalInfo({
             keyboardVerticalOffset={100}
           >
             <View style={styles.container}>
-              <Text style={styles.title}>Informações Pessoais</Text>
+              {!profile && <Text style={styles.title}>Informações Pessoais</Text>}
+
               <View>
                 {showEmailAndName && (
                   <>
@@ -179,15 +180,14 @@ export function PersonalInfo({
                 )}
 
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Telefone*</Text>
+                  <Text style={styles.label}>{profile ? 'Telefone' : 'Telefone*'}</Text>
                   <View style={styles.phoneContainer}>
                     <View
                       style={[
                         styles.dddContainer,
                         {
-                          backgroundColor: editPicker ? '#D9D9D9' : 'transparent',
-                          borderWidth: editPicker ? 0 : 1.5,
-                          borderColor: editPicker ? 'transparent' : '#A0A0A0',
+                          borderWidth: 1.5,
+                          borderColor: '#000',
                         },
                       ]}
                     >
@@ -195,7 +195,7 @@ export function PersonalInfo({
                         placeholder={{
                           label: 'DDD',
                           value: null,
-                          color: editPicker ? '#868686' : '#4F4F4F',
+                          color: '#868686',
                         }}
                         value={values.ddd}
                         onValueChange={(itemValue: string) => {
@@ -209,17 +209,13 @@ export function PersonalInfo({
                         disabled={editPicker}
                         useNativeAndroidPickerStyle={false}
                         style={{
-                          inputAndroid: { color: editPicker ? '#868686' : '#4F4F4F', fontSize: 14 },
-                          placeholder: { color: editPicker ? '#868686' : '#4F4F4F' },
+                          inputAndroid: { color: '#868686', fontSize: 14 },
+                          placeholder: { color: '#868686' },
                           inputAndroidContainer: styles.dddPicker,
                         }}
                         Icon={() => (
                           <View style={styles.pickerIcon}>
-                            <AntDesign
-                              name="down"
-                              size={14}
-                              color={editPicker ? '#868686' : 'blue'}
-                            />
+                            {!editPicker && <AntDesign name="down" size={14} color="blue" />}
                           </View>
                         )}
                       />
@@ -233,7 +229,7 @@ export function PersonalInfo({
                       editable={editable}
                       maxLength={11}
                       value={applyPhoneMask(values.telefone)}
-                      style={[editable ? styles.textInput : styles.disabledInput, { flex: 1 }]}
+                      style={[styles.textInput, { flex: 1 }]}
                     />
                   </View>
                   {touched.telefone && errors.telefone && (
@@ -241,15 +237,16 @@ export function PersonalInfo({
                   )}
                 </View>
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Data de nascimento*</Text>
+                  <Text style={styles.label}>
+                    {profile ? 'Data de nascimento' : 'Data de nascimento*'}
+                  </Text>
                   <Pressable onPress={() => setShowDatePicker(true)}>
                     <View
                       style={[
                         styles.datePickerContainer,
                         {
-                          backgroundColor: editPicker ? '#D9D9D9' : 'transparent',
-                          borderWidth: editPicker ? 0 : 1.5,
-                          borderColor: editPicker ? 'transparent' : '#A0A0A0',
+                          borderWidth: 1.5,
+                          borderColor: '#000',
                         },
                       ]}
                     >
@@ -265,12 +262,12 @@ export function PersonalInfo({
                         />
                       )}
 
-                      <Text style={{ color: editPicker ? '#868686' : '#4F4F4F' }}>
+                      <Text style={{ color: '#868686' }}>
                         {values.dataNascimento
                           ? new Date(values.dataNascimento).toLocaleDateString('pt-BR')
                           : 'DD/MM/AAAA'}
                       </Text>
-                      <Feather name="calendar" size={18} color={editPicker ? '#868686' : 'blue'} />
+                      {!editPicker && <Feather name="calendar" size={18} color="blue" />}
                     </View>
                   </Pressable>
                   {touched.dataNascimento && errors.dataNascimento && (
@@ -278,7 +275,7 @@ export function PersonalInfo({
                   )}
                 </View>
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>CEP*</Text>
+                  <Text style={styles.label}>{profile ? 'CEP' : 'CEP*'}</Text>
                   <TextInput
                     placeholder="XXXXX-XXX"
                     placeholderTextColor="#868686"
@@ -288,19 +285,20 @@ export function PersonalInfo({
                     editable={editable}
                     maxLength={9}
                     value={applyCepMask(values.cep)}
-                    style={editable ? styles.textInput : styles.disabledInput}
+                    style={styles.textInput}
                   />
                   {touched.cep && errors.cep && <Text style={styles.errorText}>{errors.cep}</Text>}
                 </View>
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Qual seu gênero?*</Text>
+                  <Text style={styles.label}>
+                    {profile ? 'Qual seu gênero?' : 'Qual seu gênero?*'}
+                  </Text>
                   <View
                     style={[
                       styles.pickerContainer,
                       {
-                        backgroundColor: editPicker ? '#D9D9D9' : 'transparent',
-                        borderWidth: editPicker ? 0 : 1.5,
-                        borderColor: editPicker ? 'transparent' : '#A0A0A0',
+                        borderWidth: 1.5,
+                        borderColor: '#000',
                       },
                     ]}
                   >
@@ -308,7 +306,7 @@ export function PersonalInfo({
                       placeholder={{
                         label: 'Selecione',
                         value: '',
-                        color: editPicker ? '#868686' : '#4F4F4F',
+                        color: '#000',
                       }}
                       value={values.genero}
                       disabled={editPicker}
@@ -322,17 +320,13 @@ export function PersonalInfo({
                       ]}
                       useNativeAndroidPickerStyle={false}
                       style={{
-                        inputAndroid: { color: editPicker ? '#868686' : '#4F4F4F', fontSize: 14 },
-                        placeholder: { color: editPicker ? '#868686' : '#4F4F4F' },
+                        inputAndroid: { color: '#868686', fontSize: 14 },
+                        placeholder: { color: '#868686' },
                         inputAndroidContainer: styles.pickerAndroid,
                       }}
                       Icon={() => (
                         <View style={styles.pickerIcon}>
-                          <AntDesign
-                            name="down"
-                            size={14}
-                            color={editPicker ? '#868686' : 'blue'}
-                          />
+                          {!editPicker && <AntDesign name="down" size={14} color="blue" />}
                         </View>
                       )}
                     />
@@ -342,7 +336,9 @@ export function PersonalInfo({
                   )}
                 </View>
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Como podemos te chamar? (Opcional)</Text>
+                  <Text style={styles.label}>
+                    {profile ? 'Como podemos te chamar?' : 'Como podemos te chamar? (Opcional)'}
+                  </Text>
                   <TextInput
                     placeholder="Esse nome ficará visível para os clientes"
                     placeholderTextColor="#868686"
@@ -350,7 +346,7 @@ export function PersonalInfo({
                     onBlur={handleBlur('nomeSocial')}
                     editable={editable}
                     value={values.nomeSocial}
-                    style={editable ? styles.textInput : styles.disabledInput}
+                    style={styles.textInput}
                   />
                 </View>
                 {touched.nomeSocial && errors.nomeSocial && (
@@ -453,7 +449,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1.5,
-    borderColor: '#A0A0A0',
+    borderColor: '#000',
     color: '#868686',
     borderRadius: 8,
     padding: 8,

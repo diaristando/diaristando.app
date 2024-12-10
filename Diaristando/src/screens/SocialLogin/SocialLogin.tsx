@@ -12,8 +12,8 @@ import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
 import { SocialLoginButton } from '@/components/SocialLoginButton';
 import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
-import { clearUser, setUserFromGoogle } from '@/store/slices/userSlice';
 import { RootState } from '@/store';
+import { clearUser, setUserFromGoogle } from '@/store/slices/userSlice';
 
 const successLogin = require('../../assets/animations/success.json');
 const loginSocialImage = require('../../assets/images/diaristando-image-login-social.png');
@@ -29,7 +29,6 @@ export function SocialLogin() {
   const dispatch = useDispatch();
   const { user } = useUser();
   const { isSignedIn, signOut } = useAuth();
-  const imageGoogle = useSelector((user: RootState) => user.user.nome);
   const navigation = useNavigation<SocialLoginNavigationProp>();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
