@@ -12,7 +12,6 @@ import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
 import { SocialLoginButton } from '@/components/SocialLoginButton';
 import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
-
 import { clearUser, setUserFromGoogle } from '@/store/slices/userSlice';
 
 const successLogin = require('../../assets/animations/success.json');
