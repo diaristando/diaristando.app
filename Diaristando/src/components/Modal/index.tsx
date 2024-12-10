@@ -113,10 +113,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     closeButton: {
-        position: 'absolute',
-        right: 20,
-        top: 16,
-        zIndex: 99,
+        alignSelf: 'flex-end',
+        paddingHorizontal: 22,
+        paddingTop: 18,
     },
     contentContainer: {
         padding: 16,
