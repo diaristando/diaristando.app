@@ -6,7 +6,7 @@ import { TabRoutes } from './routes/tabsRoutes';
 const DiaristaNavigation = createNativeStackNavigator();
 
 export type DiaristaRootStackParamList = {
-    DiaristaTab: { screen: 'Services' | 'Home' | 'Search' | 'Profile' };
+    DiaristaTab: { screen: 'Services' | 'Home' | 'Search' | 'Profile' | 'Feedback' };
 };
 
 export default function DiaristaNavigator() {

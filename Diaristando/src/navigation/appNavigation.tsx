@@ -21,7 +21,7 @@ const RoutesMapper = (role: string) => {
 
 export default function AppNavigation() {
     const user = useSelector((state: RootState) => state.user);
-    const role = user.isAuthenticated ? 'diarista' : 'visitate'; // TODO: Ajustar com base na role do usuário pós login
+    const role = user.isAuthenticated ? 'diarista' : 'diarista'; // TODO: Ajustar com base na role do usuário pós login
 
-    return <NavigationContainer>{RoutesMapper(role)}</NavigationContainer>;
+    return <>{RoutesMapper(role)}</>;
 }

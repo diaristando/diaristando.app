@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { LoginPromptModal } from '@/components/CardGuest';
 import { Home } from '@/screens/HomeScreen/Home';
-import { Service } from '@/screens/ServiceScreen/Service';
+import { Service } from '@/screens/ServiceScreen/Profile';
 
 const Tab = createBottomTabNavigator();
 
