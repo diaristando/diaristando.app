@@ -19,8 +19,7 @@ export function ContentModal({ pressable }: Props) {
 
     function navigateToFeedback() {
         pressable();
-        navigate('DiaristaTab', { screen: 'Feedback' });
-        console.log('clicou');
+        navigate('Feedback');
     }
 
     return (

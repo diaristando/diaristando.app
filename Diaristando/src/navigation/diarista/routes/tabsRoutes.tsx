@@ -3,7 +3,6 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { FeedbackService } from '@/screens/FeedbackService/FeedbackService';
 import { Home } from '@/screens/HomeScreen/Home';
 import { Profile } from '@/screens/ProfileScreen/Profile';
 import { Service } from '@/screens/ServiceScreen/Profile';
@@ -64,11 +63,6 @@ export function TabRoutes() {
                     ),
                     tabBarLabel: 'Perfil',
                 }}
-            />
-            <Tab.Screen
-                name="Feedback"
-                component={FeedbackService}
-                options={{ tabBarButton: () => null }}
             />
         </Tab.Navigator>
     );

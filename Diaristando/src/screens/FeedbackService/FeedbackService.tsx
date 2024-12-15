@@ -1,15 +1,54 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, View } from 'react-native';
-
-import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
-
-type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
+import { FeedbackInfo } from '@/components/StepFeedback/info/FeedbackInfo';
+import { useTranslation } from 'react-i18next';
+import { StyleSheet, Text, View } from 'react-native';
 
 export function FeedbackService() {
-    const navigation = useNavigation<PersonalInfoNavigationProp>();
+    const { t } = useTranslation();
     return (
-        <View>
-            <Text>Feedback</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>{t('feedback-title')}</Text>
+            <View style={styles.onlyRead}>
+                <Text numberOfLines={1} style={styles.onlyReadName}>
+                    dsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdk
+                </Text>
+                <Text style={styles.onlyReadAdress}>
+                    dsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdk
+                </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+                <FeedbackInfo />
+            </View>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 24,
+    },
+    title: {
+        fontSize: 20,
+        color: '#000',
+        fontWeight: 'bold',
+    },
+    onlyRead: {
+        width: '100%',
+        borderWidth: 1,
+        borderColor: '#767373',
+        borderRadius: 6,
+        marginVertical: 20,
+        padding: 6,
+    },
+    onlyReadName: {
+        fontSize: 16,
+        color: '#767373',
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    onlyReadAdress: {
+        color: '#767373',
+        fontSize: 14,
+        width: '80%',
+    },
+});
