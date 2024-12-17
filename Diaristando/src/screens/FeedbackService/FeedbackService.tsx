@@ -1,24 +1,27 @@
-import { FeedbackInfo } from '@/components/StepFeedback/info/FeedbackInfo';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+
+import { FeedbackInfo } from '@/components/StepFeedback/info/FeedbackInfo';
 
 export function FeedbackService() {
     const { t } = useTranslation();
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{t('feedback-title')}</Text>
-            <View style={styles.onlyRead}>
-                <Text numberOfLines={1} style={styles.onlyReadName}>
-                    dsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdk
-                </Text>
-                <Text style={styles.onlyReadAdress}>
-                    dsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdk
-                </Text>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+            <View style={styles.container}>
+                <Text style={styles.title}>{t('feedback-title')}</Text>
+                <View style={styles.onlyRead}>
+                    <Text numberOfLines={1} style={styles.onlyReadName}>
+                        dsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdk
+                    </Text>
+                    <Text style={styles.onlyReadAdress}>
+                        dsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdkdsajjjjjjjjdajsjdawadaskdk
+                    </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                    <FeedbackInfo />
+                </View>
             </View>
-            <View style={{ flex: 1 }}>
-                <FeedbackInfo />
-            </View>
-        </View>
+        </ScrollView>
     );
 }
 

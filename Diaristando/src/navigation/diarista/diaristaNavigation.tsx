@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import { TabRoutes } from './routes/tabsRoutes';
+
 import { FeedbackService } from '@/screens/FeedbackService/FeedbackService';
 
 const DiaristaNavigation = createNativeStackNavigator();
