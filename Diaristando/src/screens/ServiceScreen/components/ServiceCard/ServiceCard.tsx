@@ -1,12 +1,4 @@
-import {
-    History,
-    MapPin,
-    Banknote,
-    Newspaper,
-    CircleCheck,
-    CircleX,
-    Ban,
-} from 'lucide-react-native';
+import { CircleCheck, CircleX, Ban } from 'lucide-react-native';
 import React from 'react';
 import { Text, View } from 'react-native';
 
@@ -15,6 +7,7 @@ import ServiceBodyRow from '../ServiceBodyRow/ServiceBodyRow';
 
 import { Button } from '@/components/Button';
 import { TabsEnum } from '@/enums/ServiceProfile';
+import { Banknote, History, MapPin, Newspaper } from '@/assets/svgs';
 
 const ServiceCard = ({ tabSelected }: { tabSelected: TabsEnum }) => {
     const cardStyles = {
@@ -22,7 +15,7 @@ const ServiceCard = ({ tabSelected }: { tabSelected: TabsEnum }) => {
             headerColor: '#60A5FA',
             textColor: '#031140',
             bodyColor: '#F9FAFB',
-            Icon: () => <History size={24} color="#031140" />,
+            Icon: () => <History />,
         },
         [TabsEnum.ACCOMPLISHED]: {
             headerColor: '#2E7D324D',

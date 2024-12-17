@@ -1,8 +1,8 @@
-import { Bell } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 import { styles } from './styles';
+import { Bell } from '@/assets/svgs';
 
 const ServiceNavigationHeader = ({
     callBackChangeTab,
@@ -24,7 +24,7 @@ const ServiceNavigationHeader = ({
                     <Text style={styles.headerTitle}>Serviços</Text>
 
                     <TouchableOpacity activeOpacity={0.6}>
-                        <Bell size={20} color="#172554" />
+                        <Bell />
                     </TouchableOpacity>
                 </View>
             </View>

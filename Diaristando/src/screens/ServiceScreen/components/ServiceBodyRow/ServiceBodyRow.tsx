@@ -1,10 +1,9 @@
 import React from 'react';
-import { LucideIcon } from 'lucide-react-native';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
 
 type TServiceBodyRow = {
-    Icon: LucideIcon;
+    Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
     title: string;
     value: string;
     isScheduledTab: boolean;
@@ -22,7 +21,7 @@ const ServiceBodyRow = ({ Icon, title, value, isScheduledTab }: TServiceBodyRow)
 
     return (
         <View style={styles.container}>
-            <Icon size={20} color={iconColor} style={{ marginRight: 5 }} />
+            <Icon style={{ marginRight: 5 }} />
             <Text style={[styles.title, titleStyle]}>{title}</Text>
             <Text style={[styles.value, valueStyle]}>{value}</Text>
         </View>
