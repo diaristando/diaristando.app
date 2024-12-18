@@ -3,7 +3,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { FeedbackService } from '@/screens/FeedbackService/FeedbackService';
 import { Home } from '@/screens/HomeScreen/Home';
 import { Service } from '@/screens/ServiceScreen/Profile';
 

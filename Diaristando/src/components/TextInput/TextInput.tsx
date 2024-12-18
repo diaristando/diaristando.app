@@ -4,8 +4,6 @@ import {
     TextInput as RNTextInput,
     TextInputProps,
     StyleSheet,
-    StyleProp,
-    TextStyle,
     ViewProps,
 } from 'react-native';
 

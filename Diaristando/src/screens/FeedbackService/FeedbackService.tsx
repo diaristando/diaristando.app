@@ -1,15 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-
-import { FeedbackInfo } from '@/components/StepFeedback/info/FeedbackInfo';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
-import LottieView from 'lottie-react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { useRef, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { FeedbackInfo } from '@/components/StepFeedback/info/FeedbackInfo';
+import { RootState } from '@/store';
 
 const successEdit = require('../../assets/animations/success.json');
 

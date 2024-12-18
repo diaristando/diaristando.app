@@ -10,11 +10,10 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
 import { TextInput } from '@/components/TextInput/TextInput';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { FeedbackState, setFeedback } from '@/store/slices/feedbackSlice';
 
 type Props = {
@@ -33,7 +32,6 @@ export function FeedbackInfo({ handleOpenModal }: Props) {
     const [formattedPrice, setFormattedPrice] = useState('');
 
     const dispatch = useDispatch();
-    const feedback = useSelector((state: RootState) => state.feedback);
 
     const today = new Date();
     const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
