@@ -13,18 +13,27 @@ import {
 import * as yup from 'yup';
 
 import { TextInput } from '@/components/TextInput/TextInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { FeedbackState, setFeedback } from '@/store/slices/feedbackSlice';
+
+type Props = {
+    handleOpenModal: () => void;
+};
 
 const schema = yup.object({
-    service: yup.string().required('Informe a data de serviço.'),
-    time: yup.string().required('Informe o horário de serviço.'),
-    description: yup.string(),
+    service: yup.string().required('Informe a data do serviço.'),
+    time: yup.string().required('Informe o horário do serviço.'),
 });
 
-export function FeedbackInfo() {
+export function FeedbackInfo({ handleOpenModal }: Props) {
     const [selected, setSelected] = useState('padrao');
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
     const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
     const [formattedPrice, setFormattedPrice] = useState('');
+
+    const dispatch = useDispatch();
+    const feedback = useSelector((state: RootState) => state.feedback);
 
     const today = new Date();
     const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
@@ -55,23 +64,41 @@ export function FeedbackInfo() {
         return cleanValue;
     }
 
-    function handlePriceChange(text: string) {
+    function handlePriceChange(
+        text: string,
+        setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void,
+    ) {
         const formatted = formatCurrency(text);
         setFormattedPrice(formatted);
+        setFieldValue('reciveValue', formatted);
     }
 
     return (
         <Formik
-            initialValues={{ service: '', time: '', dateServie: '', description: '' }}
+            initialValues={{
+                service: '',
+                time: '',
+                description: '',
+                reciveValue: '',
+                typeService: '',
+            }}
             validationSchema={schema}
             onSubmit={(values) => {
-                console.log({ service: '', time: '', dateServie: '', description: '' });
+                const { service, ...rest } = values;
 
-                const formData = values;
-                console.log('form atualizado', formData);
+                const dateServiceFormatted = new Date(service).toISOString();
+
+                const payload: FeedbackState = {
+                    service: dateServiceFormatted,
+                    ...rest,
+                };
+
+                dispatch(setFeedback(payload));
+
+                handleOpenModal();
             }}
         >
-            {({ handleSubmit, setFieldValue, values }) => (
+            {({ handleSubmit, setFieldValue, values, errors }) => (
                 <KeyboardAvoidingView
                     style={{ flex: 1 }}
                     behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -91,26 +118,23 @@ export function FeedbackInfo() {
                             >
                                 {showDatePicker && (
                                     <RNDateTimePicker
-                                        value={
-                                            values.dateServie
-                                                ? new Date(values.dateServie)
-                                                : maxDate
-                                        }
+                                        value={values.service ? new Date(values.service) : maxDate}
                                         onChange={(_, date) => {
                                             setShowDatePicker(false);
-                                            setFieldValue('dateServie', date);
+                                            setFieldValue('service', date);
                                         }}
                                         maximumDate={maxDate}
                                     />
                                 )}
 
                                 <Text style={{ color: '#172554' }}>
-                                    {values.dateServie
-                                        ? new Date(values.dateServie).toLocaleDateString('pt-BR')
+                                    {values.service
+                                        ? new Date(values.service).toLocaleDateString('pt-BR')
                                         : 'DD/MM/AAAA'}
                                 </Text>
                             </View>
                         </Pressable>
+                        {errors.service && <Text style={styles.errorText}>{errors.service}</Text>}
                     </View>
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Hora do serviço*</Text>
@@ -139,6 +163,7 @@ export function FeedbackInfo() {
                                 </Text>
                             </View>
                         </Pressable>
+                        {errors.time && <Text style={styles.errorText}>{errors.time}</Text>}
                     </View>
 
                     <View style={styles.inputContainer}>
@@ -146,9 +171,7 @@ export function FeedbackInfo() {
                             placeholder="R$ 0,00"
                             label="Valor a receber"
                             value={formattedPrice}
-                            onChangeText={(text) => {
-                                handlePriceChange(text);
-                            }}
+                            onChangeText={(text) => handlePriceChange(text, setFieldValue)}
                             style={styles.textInput}
                             keyboardType="numeric"
                         />
@@ -163,7 +186,10 @@ export function FeedbackInfo() {
                                     borderWidth: 0,
                                 },
                             ]}
-                            onPress={() => setSelected('padrao')}
+                            onPress={() => {
+                                setSelected('padrao');
+                                setFieldValue('typeService', 'padrao');
+                            }}
                         >
                             <Text
                                 style={[
@@ -182,7 +208,10 @@ export function FeedbackInfo() {
                                     borderWidth: 0,
                                 },
                             ]}
-                            onPress={() => setSelected('pesado')}
+                            onPress={() => {
+                                setSelected('pesado');
+                                setFieldValue('typeService', 'pesado');
+                            }}
                         >
                             <Text
                                 style={[
@@ -286,5 +315,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+    },
+    errorText: {
+        fontSize: 12,
+        color: '#FF0000',
+        position: 'absolute',
+        bottom: -20,
+        left: 8,
     },
 });

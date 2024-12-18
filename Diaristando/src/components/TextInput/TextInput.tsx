@@ -15,6 +15,7 @@ type Props = TextInputProps & {
     multiline?: boolean;
     numberOfLines?: number;
     inputContainer?: ViewProps['style'];
+    errorMessage?: string;
 };
 
 export function TextInput({
@@ -23,6 +24,7 @@ export function TextInput({
     multiline = false,
     numberOfLines = 1,
     inputContainer = { height: 70 },
+    errorMessage,
     ...textInputProps
 }: Props) {
     return (
@@ -36,6 +38,7 @@ export function TextInput({
                 editable={editable}
                 {...textInputProps}
             />
+            <Text style={styles.errorText}>{errorMessage}</Text>
         </View>
     );
 }
@@ -49,5 +52,12 @@ const styles = StyleSheet.create({
     multiline: {
         height: 160,
         textAlignVertical: 'top',
+    },
+    errorText: {
+        fontSize: 12,
+        color: '#FF0000',
+        position: 'absolute',
+        bottom: -20,
+        left: 8,
     },
 });

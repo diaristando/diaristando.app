@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import userReducer from './slices/userSlice';
+import feedbackReducer from './slices/feedbackSlice';
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
+        feedback: feedbackReducer,
     },
 });
 
