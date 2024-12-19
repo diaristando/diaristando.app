@@ -1,3 +1,4 @@
+import * as Notifications from 'expo-notifications';
 import React, { useState } from 'react';
 import {
     View,
