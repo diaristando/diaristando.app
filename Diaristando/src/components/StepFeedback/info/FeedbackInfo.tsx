@@ -13,6 +13,7 @@ import {
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { TextInput } from '@/components/TextInput/TextInput';
 import { FeedbackState, setFeedback } from '@/store/slices/feedbackSlice';
 
@@ -21,8 +22,8 @@ type Props = {
 };
 
 const schema = yup.object({
-    service: yup.string().required('Informe a data do serviço.'),
-    time: yup.string().required('Informe o horário do serviço.'),
+    service: yup.string().required('*Por favor, insira uma data.'),
+    time: yup.string().required('*Por favor, informe o horário do serviço.'),
 });
 
 export function FeedbackInfo({ handleOpenModal }: Props) {
@@ -32,9 +33,6 @@ export function FeedbackInfo({ handleOpenModal }: Props) {
     const [formattedPrice, setFormattedPrice] = useState('');
 
     const dispatch = useDispatch();
-
-    const today = new Date();
-    const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
 
     function handleTimeChange(
         event: DateTimePickerEvent,
@@ -102,6 +100,7 @@ export function FeedbackInfo({ handleOpenModal }: Props) {
                     behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                     keyboardVerticalOffset={100}
                 >
+                    <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#DBEAFE" />
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Data do serviço*</Text>
                         <Pressable onPress={() => setShowDatePicker(true)}>
@@ -116,12 +115,13 @@ export function FeedbackInfo({ handleOpenModal }: Props) {
                             >
                                 {showDatePicker && (
                                     <RNDateTimePicker
-                                        value={values.service ? new Date(values.service) : maxDate}
+                                        value={
+                                            values.service ? new Date(values.service) : new Date()
+                                        }
                                         onChange={(_, date) => {
                                             setShowDatePicker(false);
                                             setFieldValue('service', date);
                                         }}
-                                        maximumDate={maxDate}
                                     />
                                 )}
 

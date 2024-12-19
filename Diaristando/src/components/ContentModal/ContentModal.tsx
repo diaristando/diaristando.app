@@ -22,6 +22,11 @@ export function ContentModal({ pressable }: Props) {
         navigate('Feedback');
     }
 
+    function navigateToHome() {
+        pressable();
+        navigate('DiaristaTab', { screen: 'Home' });
+    }
+
     return (
         <View
             style={{
@@ -43,7 +48,7 @@ export function ContentModal({ pressable }: Props) {
                     gap: 10,
                 }}
             >
-                <ButtonPressableOpacity text="Não" onPress={pressable} reverse width={120} />
+                <ButtonPressableOpacity text="Não" onPress={navigateToHome} reverse width={120} />
                 <ButtonPressableOpacity
                     width={120}
                     reverse
