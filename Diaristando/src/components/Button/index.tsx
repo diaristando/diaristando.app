@@ -5,18 +5,38 @@ type ButtonProps = {
     height?: number;
     width?: number;
     reverse?: boolean;
+    destructive?: boolean;
     onPress: () => void;
 };
-export function Button({ text, reverse = false, height = 34, onPress, width = 100 }: ButtonProps) {
+export function Button({
+    text,
+    reverse = false,
+    height = 34,
+    destructive = false,
+    onPress,
+    width = 100,
+}: ButtonProps) {
+    const getContainerStyle = () => {
+        if (destructive) return styles.destructiveContainer;
+        if (reverse) return styles.reverseContainer;
+        return styles.container;
+    };
+
+    const getTextStyle = () => {
+        if (destructive) return styles.destructiveText;
+        if (reverse) return styles.reverseText;
+        return styles.text;
+    };
+
     return (
         <TouchableOpacity
             style={[
-                reverse ? { ...styles.reverseContainer } : { ...styles.container },
+                getContainerStyle(),
                 { height, width, alignItems: 'center', justifyContent: 'center', padding: 8 },
             ]}
             onPress={onPress}
         >
-            <Text style={reverse ? styles.reverseText : styles.text}>{text}</Text>
+            <Text style={getTextStyle()}>{text}</Text>
         </TouchableOpacity>
     );
 }
@@ -39,6 +59,17 @@ const styles = StyleSheet.create({
     },
     reverseText: {
         color: '#1D4ED8',
+        lineHeight: 16,
+        fontSize: 14,
+    },
+    destructiveContainer: {
+        backgroundColor: 'transparent',
+        borderColor: '#B91C1C',
+        borderWidth: 1,
+        borderRadius: 4,
+    },
+    destructiveText: {
+        color: '#B91C1C',
         lineHeight: 16,
         fontSize: 14,
     },

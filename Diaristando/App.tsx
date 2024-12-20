@@ -87,10 +87,6 @@ export default function App() {
     }, []);
 
     if (!fontsLoaded) {
-        return <></>;
-    }
-
-    if (!fontsLoaded) {
         return null;
     }
 

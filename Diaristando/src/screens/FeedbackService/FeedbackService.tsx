@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,11 +9,20 @@ import { useSelector } from 'react-redux';
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { CustomModal } from '@/components/Modal';
 import { FeedbackInfo } from '@/components/StepFeedback/info/FeedbackInfo';
+import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
 import { RootState } from '@/store';
 
 const successEdit = require('../../assets/animations/success.json');
 
-export function FeedbackService() {
+type DetailsScreenRouteProp = RouteProp<DiaristaRootStackParamList, 'Feedback'>;
+
+type Props = {
+    route: DetailsScreenRouteProp;
+};
+
+export function FeedbackService({ route }: Props) {
+    const { update } = route.params;
+
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const { t } = useTranslation();
     const { nome } = useSelector((state: RootState) => state.user);
@@ -57,7 +66,7 @@ export function FeedbackService() {
                     </Text>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <FeedbackInfo handleOpenModal={() => setIsModalVisible(true)} />
+                    <FeedbackInfo update={update} handleOpenModal={() => setIsModalVisible(true)} />
                 </View>
             </View>
         </ScrollView>

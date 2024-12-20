@@ -5,12 +5,14 @@ import { TabRoutes } from './routes/tabsRoutes';
 
 import { FeedbackService } from '@/screens/FeedbackService/FeedbackService';
 
-const DiaristaNavigation = createNativeStackNavigator();
-
 export type DiaristaRootStackParamList = {
     DiaristaTab: { screen: 'Services' | 'Home' | 'Search' | 'Profile' };
-    Feedback: undefined;
+    Feedback: {
+        update: boolean;
+    };
 };
+
+const DiaristaNavigation = createNativeStackNavigator<DiaristaRootStackParamList>();
 
 export default function DiaristaNavigator() {
     return (

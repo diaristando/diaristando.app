@@ -19,6 +19,7 @@ import { FeedbackState, setFeedback } from '@/store/slices/feedbackSlice';
 
 type Props = {
     handleOpenModal: () => void;
+    update?: boolean;
 };
 
 const schema = yup.object({
@@ -26,7 +27,7 @@ const schema = yup.object({
     time: yup.string().required('*Por favor, informe o horário do serviço.'),
 });
 
-export function FeedbackInfo({ handleOpenModal }: Props) {
+export function FeedbackInfo({ handleOpenModal, update = false }: Props) {
     const [selected, setSelected] = useState('padrao');
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
     const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
@@ -195,7 +196,7 @@ export function FeedbackInfo({ handleOpenModal }: Props) {
                                     selected === 'padrao' && styles.activeText,
                                 ]}
                             >
-                                Limpeza Pesada
+                                Limpeza Padrão
                             </Text>
                         </Pressable>
                         <Pressable
@@ -234,7 +235,7 @@ export function FeedbackInfo({ handleOpenModal }: Props) {
                         />
                     </View>
                     <TouchableOpacity style={styles.Buttoncontainer} onPress={() => handleSubmit()}>
-                        <Text style={styles.text}>Enviar</Text>
+                        <Text style={styles.text}>{update ? 'Atualizar' : 'Enviar'}</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
             )}
