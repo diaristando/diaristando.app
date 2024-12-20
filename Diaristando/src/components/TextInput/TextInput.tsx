@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#FF0000',
         position: 'absolute',
-        bottom: -20,
+        bottom: -10,
         left: 8,
     },
 });

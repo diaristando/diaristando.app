@@ -1,8 +1,8 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import LottieView from 'lottie-react-native';
-import { useRef } from 'react';
-import { StyleSheet, Text, TextInputProps, View } from 'react-native';
+import { Formik } from 'formik';
+import { Image, StyleSheet, Text, TextInputProps, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import * as yup from 'yup';
 
 import { Button } from '../Button';
 import { ButtonPressableOpacity } from '../ButtonPressableOpacity/ButtonPressableOpacity';
@@ -16,9 +16,13 @@ type Props = TextInputProps & {
     confirm: () => void;
 };
 
-const error = require('../../assets/animations/error.json');
+const error = require('../../assets/animations/alert.gif');
 
 type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
+
+const schema = yup.object({
+    confirmForm: yup.string().required('*Por favor, informe o motivo do cancelamento.'),
+});
 
 export function ContentModal({ pressable }: Props) {
     const { navigate } = useNavigation<PersonalInfoNavigationProp>();
@@ -68,7 +72,6 @@ export function ContentModal({ pressable }: Props) {
 }
 
 export function ConfirCancelModal({ pressable, confirm }: Props) {
-    const animation = useRef<LottieView>(null);
     return (
         <View
             style={{
@@ -78,13 +81,7 @@ export function ConfirCancelModal({ pressable, confirm }: Props) {
                 padding: 20,
             }}
         >
-            <LottieView
-                autoPlay
-                ref={animation}
-                style={styles.lottieAnimation}
-                source={error}
-                loop={false}
-            />
+            <Image source={error} />
             <Text style={{ fontSize: 18, color: '#000', textAlign: 'center' }}>
                 Deseja cancelar o serviço?
             </Text>
@@ -106,34 +103,53 @@ export function ConfirCancelModal({ pressable, confirm }: Props) {
 
 export function CancelModal({ confirm }: Props) {
     return (
-        <View
-            style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 12,
-                padding: 10,
+        <Formik
+            initialValues={{ confirmForm: '' }}
+            validationSchema={schema}
+            onSubmit={(values) => {
+                const { confirmForm } = values;
+                console.log(confirmForm);
+
+                confirm();
             }}
         >
-            <Text style={{ fontSize: 18, color: '#000' }}>Insira o motivo do cancelamento*</Text>
-            <TextInput
-                numberOfLines={5}
-                inputContainer={{ height: 150 }}
-                multiline
-                style={[styles.textInput, { textAlignVertical: 'top' }]}
-            />
-            <Button text="Confirmar" width="100%" height={40} onPress={confirm} />
-        </View>
+            {({ handleSubmit, setFieldValue, values, errors }) => (
+                <View
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: 12,
+                        padding: 10,
+                    }}
+                >
+                    <Text style={{ fontSize: 18, color: '#000' }}>
+                        Insira o motivo do cancelamento*
+                    </Text>
+                    <TextInput
+                        numberOfLines={5}
+                        inputContainer={{ height: 150 }}
+                        multiline
+                        value={values.confirmForm}
+                        onChangeText={(text) => setFieldValue('confirmForm', text)}
+                        errorMessage={errors.confirmForm}
+                        style={[styles.textInput, { textAlignVertical: 'top' }]}
+                    />
+                    <Button
+                        text="Confirmar"
+                        width="100%"
+                        height={40}
+                        onPress={() => handleSubmit()}
+                    />
+                </View>
+            )}
+        </Formik>
     );
 }
 
 const styles = StyleSheet.create({
-    lottieAnimation: {
-        width: 149,
-        height: 133,
-    },
     textInput: {
         marginTop: -25,
-        marginBottom: 10,
+        marginBottom: 8,
         borderWidth: 1.5,
         borderColor: '#767373',
         color: '#000',

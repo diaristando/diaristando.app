@@ -3,8 +3,8 @@
     "fr": 60,
     "ip": 0,
     "op": 90,
-    "w": 180,
-    "h": 180,
+    "w": 700,
+    "h": 720,
     "nm": "error",
     "ddd": 0,
     "assets": [],
@@ -171,7 +171,7 @@
                                 },
                                 "ix": 2
                             },
-                            "nm": "í¨ì¤ 1",
+                            "nm": "í¨ì¤ 1",
                             "mn": "ADBE Vector Shape - Group",
                             "hd": false,
                             "_render": true
@@ -205,7 +205,7 @@
                                 },
                                 "ix": 2
                             },
-                            "nm": "í¨ì¤ 2",
+                            "nm": "í¨ì¤ 2",
                             "mn": "ADBE Vector Shape - Group",
                             "hd": false,
                             "_render": true
@@ -213,7 +213,7 @@
                         {
                             "ty": "mm",
                             "mm": 1,
-                            "nm": "í¨ì¤ ë³í© 1",
+                            "nm": "í¨ì¤ ë³í© 1",
                             "mn": "ADBE Vector Filter - Merge",
                             "hd": false,
                             "_render": true
@@ -224,7 +224,7 @@
                             "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "bm": 0,
-                            "nm": "ì¹  1",
+                            "nm": "ì¹ 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false,
                             "_render": true
@@ -238,7 +238,7 @@
                             "o": { "a": 0, "k": 100, "ix": 7 },
                             "sk": { "a": 0, "k": 0, "ix": 4 },
                             "sa": { "a": 0, "k": 0, "ix": 5 },
-                            "nm": "ë³í",
+                            "nm": "ë³í",
                             "_render": true
                         }
                     ],
@@ -281,18 +281,18 @@
                             "ty": "el",
                             "s": { "a": 0, "k": [52, 52], "ix": 2 },
                             "p": { "a": 0, "k": [0, 0], "ix": 3 },
-                            "nm": "íì í¨ì¤ 1",
+                            "nm": "íì í¨ì¤ 1",
                             "mn": "ADBE Vector Shape - Ellipse",
                             "hd": false,
                             "_render": true
                         },
                         {
                             "ty": "fl",
-                            "c": { "a": 0, "k": [1, 0.2353, 0, 1], "ix": 4 },
+                            "c": { "a": 0, "k": [0.7255, 0.1059, 0.1059, 1], "ix": 4 },
                             "o": { "a": 0, "k": 100, "ix": 5 },
                             "r": 1,
                             "bm": 0,
-                            "nm": "ì¹  1",
+                            "nm": "ì¹ 1",
                             "mn": "ADBE Vector Graphic - Fill",
                             "hd": false,
                             "_render": true
@@ -306,7 +306,7 @@
                             "o": { "a": 0, "k": 100, "ix": 7 },
                             "sk": { "a": 0, "k": 0, "ix": 4 },
                             "sa": { "a": 0, "k": 0, "ix": 5 },
-                            "nm": "ë³í",
+                            "nm": "ë³í",
                             "_render": true
                         }
                     ],
