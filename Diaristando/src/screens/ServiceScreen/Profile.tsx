@@ -12,7 +12,7 @@ import ServiceCard from '@/screens/ServiceScreen/components/ServiceCard/ServiceC
 type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
 
 const Service = () => {
-    const [mockList, setMockList] = useState(['1']);
+    const [mockList, setMockList] = useState([]);
 
     const [tabSelected, setTabSelected] = useState<TabsEnum>(TabsEnum.SCHEDULED);
     const { navigate } = useNavigation<PersonalInfoNavigationProp>();
