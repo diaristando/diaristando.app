@@ -1,5 +1,6 @@
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
+import { NavigationContainer } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
@@ -7,6 +8,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import { Provider } from 'react-redux';
 
+import { ContentModal } from '@/components/ContentModal/ContentModal';
+import { CustomModal } from '@/components/Modal';
 import AppNavigation from '@/navigation/appNavigation';
 import tokenCache from '@/storage/token';
 import { store } from '@/store';
@@ -27,6 +30,7 @@ export default function App() {
     const [, setExpoPushToken] = useState('');
     const [, setChannels] = useState<Notifications.NotificationChannel[]>([]);
     const [, setNotification] = useState<Notifications.Notification | undefined>(undefined);
+    const [confirmModal, setConfirmModal] = useState(false);
     const notificationListener = useRef<Notifications.Subscription>();
     const responseListener = useRef<Notifications.Subscription>();
 
@@ -42,6 +46,14 @@ export default function App() {
             shouldSetBadge: false,
         }),
     });
+
+    useEffect(() => {
+        const subscription = Notifications.addNotificationResponseReceivedListener(() => {
+            setConfirmModal(true);
+        });
+
+        return () => subscription.remove();
+    }, []);
 
     useEffect(() => {
         registerForPushNotificationsAsync().then((token) => token && setExpoPushToken(token));
@@ -81,7 +93,12 @@ export default function App() {
     return (
         <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
             <Provider store={store}>
-                <AppNavigation />
+                <NavigationContainer>
+                    <CustomModal isOpen={confirmModal} onClose={() => {}} closable={false}>
+                        <ContentModal pressable={() => setConfirmModal(false)} />
+                    </CustomModal>
+                    <AppNavigation />
+                </NavigationContainer>
             </Provider>
         </ClerkProvider>
     );

@@ -1,15 +1,26 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { CircleCheck, CircleX, Ban } from 'lucide-react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 
 import { styles } from './styles';
 import ServiceBodyRow from '../ServiceBodyRow/ServiceBodyRow';
 
-import { Button } from '@/components/Button';
-import { TabsEnum } from '@/enums/ServiceProfile';
 import { Banknote, History, MapPin, Newspaper } from '@/assets/svgs';
+import { Button } from '@/components/Button';
+import { CancelModal, ConfirCancelModal } from '@/components/ContentModal/ContentModal';
+import { CustomModal } from '@/components/Modal';
+import { TabsEnum } from '@/enums/ServiceProfile';
+import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
+
+type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
 
 const ServiceCard = ({ tabSelected }: { tabSelected: TabsEnum }) => {
+    const [isConfirmCancelModal, setIsConfirmCancelModal] = useState<boolean>(false);
+    const [cancelModal, setCancelModal] = useState<boolean>(false);
+
+    const { navigate } = useNavigation<PersonalInfoNavigationProp>();
+
     const cardStyles = {
         [TabsEnum.SCHEDULED]: {
             headerColor: '#60A5FA',
@@ -39,6 +50,19 @@ const ServiceCard = ({ tabSelected }: { tabSelected: TabsEnum }) => {
 
     const defaultStyle = cardStyles[TabsEnum.SCHEDULED];
     const currentStyle = cardStyles[tabSelected] || defaultStyle;
+
+    function confirmRemove() {
+        setIsConfirmCancelModal(true);
+    }
+
+    function confirmModalRemove() {
+        setIsConfirmCancelModal(false);
+        setCancelModal(true);
+    }
+
+    function removeItem() {
+        setCancelModal(false);
+    }
 
     return (
         <View style={styles.container}>
@@ -81,10 +105,19 @@ const ServiceCard = ({ tabSelected }: { tabSelected: TabsEnum }) => {
 
             {tabSelected === TabsEnum.SCHEDULED && (
                 <View style={[styles.footer, { backgroundColor: currentStyle.bodyColor }]}>
-                    <Button text="Cancelar" destructive onPress={() => {}} />
-                    <Button text="Editar" onPress={() => {}} />
+                    <Button text="Cancelar" destructive onPress={confirmRemove} />
+                    <Button text="Editar" onPress={() => navigate('Feedback', { update: true })} />
                 </View>
             )}
+            <CustomModal isOpen={isConfirmCancelModal} onClose={() => {}} closable={false}>
+                <ConfirCancelModal
+                    confirm={confirmModalRemove}
+                    pressable={() => setIsConfirmCancelModal(false)}
+                />
+            </CustomModal>
+            <CustomModal isOpen={cancelModal} onClose={() => {}} closable={false}>
+                <CancelModal confirm={removeItem} pressable={() => {}} />
+            </CustomModal>
         </View>
     );
 };

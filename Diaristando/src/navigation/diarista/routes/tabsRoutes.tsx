@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Home } from '@/screens/HomeScreen/Home';
 import { Profile } from '@/screens/ProfileScreen/Profile';
-import { Service } from '@/screens/ServiceScreen/Service';
+import { Service } from '@/screens/ServiceScreen/Profile';
 
 const Tab = createBottomTabNavigator();
 
