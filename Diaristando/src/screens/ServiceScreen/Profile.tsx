@@ -1,43 +1,95 @@
-import * as Notifications from 'expo-notifications';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    StyleSheet,
-    Image,
-    ScrollView,
-    Dimensions,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, FlatList } from 'react-native';
 
-import { Button } from '@/components/Button';
+import { Logo, Plus } from '@/assets/svgs';
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
-import Map from '@/components/Map';
-import { CustomModal } from '@/components/Modal';
-import ProfilePic from '@/components/ProfilePic';
-import { Separator } from '@/components/Separator';
-import ServiceCard from '@/screens/ServiceScreen/components/ServiceCard/ServiceCard';
 import ServiceNavigationHeader from '@/components/ServiceNavigationHeader';
 import { TabsEnum } from '@/enums/ServiceProfile';
+import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
+import ServiceCard from '@/screens/ServiceScreen/components/ServiceCard/ServiceCard';
 
-const ServiceProfile = () => {
-    const [confirmModal, setConfirmModal] = useState(false);
+type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
+
+const Service = () => {
+    const mockList: string[] = [];
+
     const [tabSelected, setTabSelected] = useState<TabsEnum>(TabsEnum.SCHEDULED);
+    const { navigate } = useNavigation<PersonalInfoNavigationProp>();
 
-    const markers = [{ latitude: -22.9121, longitude: -43.2302 }];
+    function handleOpenForm() {
+        navigate('Feedback', { update: false });
+    }
 
     return (
         <>
             <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
             <ServiceNavigationHeader callBackChangeTab={(newTab) => setTabSelected(newTab)} />
 
-            <ScrollView contentContainerStyle={styles.container}>
-                <ServiceCard tabSelected={tabSelected} />
-                <ServiceCard tabSelected={tabSelected} />
-                <ServiceCard tabSelected={tabSelected} />
-                <ServiceCard tabSelected={tabSelected} />
+            <FlatList
+                style={{ flex: 1 }}
+                data={mockList}
+                keyExtractor={(item) => item}
+                renderItem={() => <ServiceCard tabSelected={tabSelected} />}
+                contentContainerStyle={styles.container}
+                ListEmptyComponent={() => {
+                    switch (tabSelected) {
+                        case 0:
+                            return (
+                                <View style={{ flex: 1 }}>
+                                    <TouchableOpacity
+                                        style={styles.empityButton}
+                                        onPress={handleOpenForm}
+                                    >
+                                        <Plus />
+                                        <Text style={styles.emptyText}>Registrar novo serviço</Text>
+                                    </TouchableOpacity>
+                                    <View style={styles.emptyView}>
+                                        <Logo />
+                                        <Text style={styles.emptyTextView}>
+                                            Parece que não há serviços agendados
+                                        </Text>
+                                    </View>
+                                </View>
+                            );
+                        case 1:
+                            return (
+                                <View style={{ flex: 1 }}>
+                                    <View style={styles.emptyView}>
+                                        <Logo />
+                                        <Text style={styles.emptyTextView}>
+                                            Parece que não há serviços realizados
+                                        </Text>
+                                    </View>
+                                </View>
+                            );
+                        case 2:
+                            return (
+                                <View style={{ flex: 1 }}>
+                                    <View style={styles.emptyView}>
+                                        <Logo />
+                                        <Text style={styles.emptyTextView}>
+                                            Parece que não há serviços cancelados
+                                        </Text>
+                                    </View>
+                                </View>
+                            );
+                        case 3:
+                            return (
+                                <View style={{ flex: 1 }}>
+                                    <View style={styles.emptyView}>
+                                        <Logo />
+                                        <Text style={styles.emptyTextView}>
+                                            Parece que não há serviços não realizados
+                                        </Text>
+                                    </View>
+                                </View>
+                            );
+                    }
+                }}
+            />
 
-                {/* <CustomModal
+            {/* <CustomModal
                     isOpen={confirmModal}
                     onClose={() => {
                         setConfirmModal(false);
@@ -148,7 +200,6 @@ const ServiceProfile = () => {
                 <TouchableOpacity style={styles.whatsappButton} onPress={() => setConfirmModal(true)}>
                     <Text style={styles.whatsappButtonText}>Contato via WhatsApp</Text>
                 </TouchableOpacity> */}
-            </ScrollView>
         </>
     );
 };
@@ -269,6 +320,36 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'semibold',
     },
+    empityButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10,
+        height: 40,
+        borderWidth: 2,
+        borderColor: '#1D4ED8',
+        borderRadius: 8,
+    },
+    emptyText: {
+        color: '#1D4ED8',
+        fontWeight: 'bold',
+    },
+    emptyView: {
+        height: 200,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderColor: '#D3D3D3',
+        borderRadius: 8,
+        marginTop: 16,
+    },
+    emptyTextView: {
+        color: '#000',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 16,
+        textAlign: 'center',
+    },
 });
 
-export default ServiceProfile;
+export { Service };
