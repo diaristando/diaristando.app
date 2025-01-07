@@ -77,6 +77,7 @@ export function PersonalInfo({
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
     const today = new Date();
     const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const minDate = new Date(1900, 0, 1);
 
     return (
         <Formik
@@ -274,6 +275,7 @@ export function PersonalInfo({
                                                         setFieldValue('dataNascimento', date);
                                                     }}
                                                     maximumDate={maxDate}
+                                                    minimumDate={minDate}
                                                 />
                                             )}
 
