@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useAuth, useOAuth, useUser } from '@clerk/clerk-expo';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import * as Link from 'expo-linking';
@@ -96,7 +98,7 @@ export function SocialLogin() {
                 }),
             );
 
-            await navigation.navigate('Signup', {
+            await navigation.navigate('choicePerfil', {
                 email: user.emailAddresses[0].emailAddress,
                 fullName: user.fullName || '',
             });
