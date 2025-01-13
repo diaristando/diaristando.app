@@ -112,8 +112,10 @@ const styles = StyleSheet.create({
     },
     absoluteText: {
         color: '#000',
-        fontSize: 20,
+        fontSize: 14,
         marginTop: 10,
+        marginLeft: 14,
+        marginRight: 14,
     },
     button: {
         width: '100%',
