@@ -5,11 +5,13 @@ import { TabRoutes } from './routes/tabRoutes';
 
 import { Signup } from '@/screens/LoginScreen/Signup';
 import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
+import { ChoicePerfil } from '@/screens/ChoicePerfil/ChoicePerfil';
 
 const SignedOffStack = createNativeStackNavigator();
 
 export type SignedOffRootStackParamList = {
     SignedOff: { screen: 'Home' | 'SocialLogin' | 'Services' | 'Search' | 'Profile' };
+    choicePerfil: { email: string; fullName: string };
     Signup: { email: string; fullName: string };
 };
 
@@ -20,12 +22,9 @@ export default function SignedOffNavigator() {
                 headerShown: false,
             }}
         >
-            <SignedOffStack.Screen
-                name="SignedOff"
-                component={TabRoutes}
-                options={{ headerShown: false }}
-            />
+            <SignedOffStack.Screen name="SignedOff" component={TabRoutes} />
             <SignedOffStack.Screen name="SocialLogin" component={SocialLogin} />
+            <SignedOffStack.Screen name="choicePerfil" component={ChoicePerfil} />
             <SignedOffStack.Screen name="Signup" component={Signup} />
         </SignedOffStack.Navigator>
     );
