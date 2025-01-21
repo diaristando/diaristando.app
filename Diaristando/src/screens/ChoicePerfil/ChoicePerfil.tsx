@@ -14,10 +14,10 @@ type SocialLoginNavigationProp = NavigationProp<SignedOffRootStackParamList, 'Si
 
 export function ChoicePerfil() {
     const route = useRoute<SignupRouterProp>();
-    const { email, fullName } = route.params || { email: '', fullName: '' };
+    const { email, fullName, imageUrl } = route.params || { email: '', fullName: '', imageUrl: '' };
     const { navigate } = useNavigation<SocialLoginNavigationProp>();
 
-    const [isToggled, setIsToggled] = useState('diarista');
+    const [isToggled, setIsToggled] = useState('DIARISTA');
 
     function handlePress(option: string) {
         setIsToggled(option);
@@ -28,6 +28,8 @@ export function ChoicePerfil() {
         navigate('Signup', {
             email,
             fullName,
+            imageUrl,
+            isToggled,
         });
     }
 
@@ -42,9 +44,9 @@ export function ChoicePerfil() {
                     <Pressable
                         style={[
                             styles.cardView,
-                            isToggled === 'diarista' && { borderWidth: 2, borderColor: '#1D4ED8' },
+                            isToggled === 'DIARISTA' && { borderWidth: 2, borderColor: '#1D4ED8' },
                         ]}
-                        onPress={() => handlePress('diarista')}
+                        onPress={() => handlePress('DIARISTA')}
                     >
                         <View style={styles.absolute}>
                             <Image source={diarista} />
@@ -54,9 +56,9 @@ export function ChoicePerfil() {
                     <Pressable
                         style={[
                             styles.cardView,
-                            isToggled === 'cliente' && { borderWidth: 2, borderColor: '#1D4ED8' },
+                            isToggled === 'ClIENTE' && { borderWidth: 2, borderColor: '#1D4ED8' },
                         ]}
-                        onPress={() => handlePress('cliente')}
+                        onPress={() => handlePress('ClIENTE')}
                     >
                         <View style={styles.absolute}>
                             <Image source={cliente} />

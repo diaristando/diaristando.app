@@ -9,10 +9,20 @@ import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNav
 
 type SignupRouterProp = RouteProp<SignedOffRootStackParamList, 'Signup'>;
 
-const renderStep = (currentStep: number, props: { email: string; fullName: string }) => {
+const renderStep = (
+    currentStep: number,
+    props: { email: string; fullName: string; isToggled: string; imageUrl: string },
+) => {
     switch (currentStep) {
         case 1:
-            return <PersonalInfo email={props.email} fullName={props.fullName} />;
+            return (
+                <PersonalInfo
+                    email={props.email}
+                    fullName={props.fullName}
+                    isToggled={props.isToggled}
+                    imageUrl={props.imageUrl}
+                />
+            );
         default:
             return null;
     }
@@ -20,7 +30,14 @@ const renderStep = (currentStep: number, props: { email: string; fullName: strin
 
 export function Signup() {
     const route = useRoute<SignupRouterProp>();
-    const { email, fullName } = route.params || { email: '', fullName: '' };
+    const { email, fullName, isToggled, imageUrl } = route.params || {
+        email: '',
+        fullName: '',
+        isToggled: '',
+        imageUrl: '',
+    };
+
+    console.log(isToggled);
 
     return (
         <ScrollView
@@ -31,7 +48,7 @@ export function Signup() {
             <View style={styles.indexContainer}>
                 <Index currentStep={1} totalSteps={1} />
             </View>
-            {renderStep(1, { email, fullName })}
+            {renderStep(1, { email, fullName, isToggled, imageUrl })}
         </ScrollView>
     );
 }

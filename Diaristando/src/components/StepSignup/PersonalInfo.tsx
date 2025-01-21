@@ -25,11 +25,18 @@ import { RootState } from '@/store';
 import { setUser, UserState, Genero } from '@/store/slices/userSlice';
 import { applyCepMask, applyPhoneMask } from '@/utils/masks';
 
+import { format } from 'date-fns';
+
+import { api } from '@/services/api';
+import { AppError } from '@/utils/AppError';
+
 type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
 
 type Props = {
     email: string;
     fullName: string;
+    isToggled: string;
+    imageUrl: string;
     editable?: boolean;
     editPicker?: boolean;
     showEmailAndName?: boolean;
@@ -63,6 +70,8 @@ const validationSchema = Yup.object().shape({
 export function PersonalInfo({
     email,
     fullName,
+    isToggled,
+    imageUrl,
     editable = true,
     editPicker = false,
     showButtons = true,
@@ -84,6 +93,7 @@ export function PersonalInfo({
             initialValues={{
                 nome: fullName,
                 email,
+                isToggled,
                 telefone: user.telefone,
                 dataNascimento: user.dataNascimento,
                 cep: user.cep,
@@ -92,32 +102,101 @@ export function PersonalInfo({
                 ddd: user.ddd || '',
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-                const { telefone, ddd, dataNascimento, ...rest } = values;
+            onSubmit={async (values) => {
+                const {
+                    telefone,
+                    ddd,
+                    dataNascimento,
+                    cep,
+                    email,
+                    genero,
+                    isToggled,
+                    nome,
+                    nomeSocial,
+                } = values;
 
                 const dataNascimentoFormatted = new Date(dataNascimento).toISOString();
+                const dataFormated = format(new Date(dataNascimentoFormatted), 'dd/MM/yyyy');
 
-                const payload: UserState = {
-                    ...rest,
-                    ddd,
-                    imageUrl: user.imageUrl,
-                    telefone,
-                    dataNascimento: dataNascimentoFormatted,
-                    isAuthenticated: true,
-                };
+                console.log(dataFormated);
 
-                dispatch(setUser(payload));
-                console.log('Formulário submetido com sucesso!', payload);
+                try {
+                    const payload: UserState = {
+                        cep,
+                        email,
+                        genero,
+                        isToggled,
+                        nome,
+                        nomeSocial,
+                        ddd,
+                        imageUrl: user.imageUrl,
+                        telefone,
+                        dataNascimento: dataNascimentoFormatted,
+                        isAuthenticated: true,
+                    };
 
-                if (handleOpenModal) {
-                    handleOpenModal();
-                } else {
-                    navigation.navigate('DiaristaTab', {
-                        screen: 'Home',
+                    console.log(
+                        'telefone',
+                        `${ddd}${telefone}`,
+                        'data',
+                        dataFormated,
+                        'cep',
+                        cep,
+                        'email',
+                        email,
+                        'genero',
+                        genero,
+                        'isToggled',
+                        isToggled,
+                        'nome',
+                        nome,
+                        'nome social',
+                        nomeSocial,
+                        'imagem',
+                        imageUrl,
+                    );
+
+                    const { data } = await api.post('/api/v2/usuario/cadastro', {
+                        tipo: isToggled,
+                        imageUrl: imageUrl,
+                        identificacaoGeneroForm: {
+                            nomeVisivel: nome,
+                            genero: genero,
+                        },
+                        dadosPessoaisForm: {
+                            nome: nome,
+                            nomeSocial: nomeSocial,
+                            email,
+                            cpf: '89732281375',
+                            telefone: `55${ddd}${telefone}`,
+                            dataNascimento: dataFormated,
+                        },
+                        endereco: {
+                            cep: cep,
+                        },
                     });
-                }
-                if (handleDisableInputs) {
-                    handleDisableInputs();
+
+                    console.log('login realizado com sucesso!', data);
+
+                    dispatch(setUser(payload));
+                    console.log('Formulário submetido com sucesso!', payload);
+
+                    if (handleOpenModal) {
+                        handleOpenModal();
+                    } else {
+                        navigation.navigate('DiaristaTab', {
+                            screen: 'Home',
+                        });
+                    }
+                    if (handleDisableInputs) {
+                        handleDisableInputs();
+                    }
+                } catch (error) {
+                    const isAppError = error instanceof AppError;
+
+                    const title = isAppError && error.message;
+
+                    console.log('erro ao cadastrar ====>', title);
                 }
             }}
         >

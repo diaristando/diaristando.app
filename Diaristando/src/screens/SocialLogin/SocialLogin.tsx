@@ -99,6 +99,7 @@ export function SocialLogin() {
             );
 
             await navigation.navigate('choicePerfil', {
+                imageUrl: user.imageUrl,
                 email: user.emailAddresses[0].emailAddress,
                 fullName: user.fullName || '',
             });
@@ -116,7 +117,8 @@ export function SocialLogin() {
         if (!user || !tempTrigger) return;
         setTimeout(() => {
             setIsModalVisible(false);
-            navigation.navigate('Signup', {
+            navigation.navigate('choicePerfil', {
+                imageUrl: user.imageUrl,
                 email: user.emailAddresses[0].emailAddress,
                 fullName: user.fullName || '',
             });

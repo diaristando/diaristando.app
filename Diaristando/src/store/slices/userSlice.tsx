@@ -8,6 +8,7 @@ export enum Genero {
 
 export interface UserState {
     imageUrl: string;
+    isToggled: string;
     nome: string;
     email: string;
     telefone: string;
@@ -30,6 +31,7 @@ const initialState: UserState = {
     genero: '',
     nomeSocial: '',
     profileImageUrl: '',
+    isToggled: '',
     ddd: '',
     isAuthenticated: false,
 };

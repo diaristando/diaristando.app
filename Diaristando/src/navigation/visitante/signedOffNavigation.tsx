@@ -11,8 +11,8 @@ const SignedOffStack = createNativeStackNavigator();
 
 export type SignedOffRootStackParamList = {
     SignedOff: { screen: 'Home' | 'SocialLogin' | 'Services' | 'Search' | 'Profile' };
-    choicePerfil: { email: string; fullName: string };
-    Signup: { email: string; fullName: string };
+    choicePerfil: { email: string; fullName: string; imageUrl: string };
+    Signup: { email: string; fullName: string; isToggled: string; imageUrl: string };
 };
 
 export default function SignedOffNavigator() {
