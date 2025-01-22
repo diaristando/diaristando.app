@@ -12,9 +12,11 @@ import { ContentModal } from '@/components/ContentModal/ContentModal';
 import { CustomModal } from '@/components/Modal';
 import AppNavigation from '@/navigation/appNavigation';
 import tokenCache from '@/storage/token';
-import { store } from '@/store';
+import { persistor, store } from '@/store';
 
 import './config/translator';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Loading } from '@/components/Loading';
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -93,12 +95,14 @@ export default function App() {
     return (
         <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
             <Provider store={store}>
-                <NavigationContainer>
-                    <CustomModal isOpen={confirmModal} onClose={() => {}} closable={false}>
-                        <ContentModal pressable={() => setConfirmModal(false)} />
-                    </CustomModal>
-                    <AppNavigation />
-                </NavigationContainer>
+                <PersistGate loading={<Loading />} persistor={persistor}>
+                    <NavigationContainer>
+                        <CustomModal isOpen={confirmModal} onClose={() => {}} closable={false}>
+                            <ContentModal pressable={() => setConfirmModal(false)} />
+                        </CustomModal>
+                        <AppNavigation />
+                    </NavigationContainer>
+                </PersistGate>
             </Provider>
         </ClerkProvider>
     );
