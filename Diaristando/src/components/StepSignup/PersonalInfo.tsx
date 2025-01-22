@@ -167,7 +167,6 @@ export function PersonalInfo({
                             nome: nome,
                             nomeSocial: nomeSocial,
                             email,
-                            cpf: '89732281375',
                             telefone: `55${ddd}${telefone}`,
                             dataNascimento: dataFormated,
                         },
