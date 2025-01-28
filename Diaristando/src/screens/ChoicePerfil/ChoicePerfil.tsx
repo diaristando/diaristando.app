@@ -56,9 +56,9 @@ export function ChoicePerfil() {
                     <Pressable
                         style={[
                             styles.cardView,
-                            isToggled === 'ClIENTE' && { borderWidth: 2, borderColor: '#1D4ED8' },
+                            isToggled === 'CLIENTE' && { borderWidth: 2, borderColor: '#1D4ED8' },
                         ]}
-                        onPress={() => handlePress('ClIENTE')}
+                        onPress={() => handlePress('CLIENTE')}
                     >
                         <View style={styles.absolute}>
                             <Image source={cliente} />

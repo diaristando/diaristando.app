@@ -4,12 +4,13 @@ enum Genero {
     OUTRO = 'OUTRO',
 }
 
-enum Tipo {
+export enum Tipo {
     CLIENTE = 'CLIENTE',
     DIARISTA = 'DIARISTA',
 }
 
 export type userDTO = {
+    id: string;
     tipo: Tipo;
     imageURL: string;
     identificacaoGeneroForm: {

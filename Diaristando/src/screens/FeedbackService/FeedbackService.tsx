@@ -61,9 +61,6 @@ export function FeedbackService({ route }: Props) {
                     <Text numberOfLines={1} style={styles.onlyReadName}>
                         {nome}
                     </Text>
-                    <Text style={styles.onlyReadAdress}>
-                        Rua dos bobos, 123, casa 3, Valqueire, Rio de Janeiro, RJ
-                    </Text>
                 </View>
                 <View style={{ flex: 1 }}>
                     <FeedbackInfo update={update} handleOpenModal={() => setIsModalVisible(true)} />

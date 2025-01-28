@@ -29,6 +29,7 @@ import { format } from 'date-fns';
 
 import { api } from '@/services/api';
 import { AppError } from '@/utils/AppError';
+import { userDTO } from '@/dtos/userDTO';
 
 type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
 
@@ -84,6 +85,7 @@ export function PersonalInfo({
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+    const [userData, setUserData] = useState<userDTO>();
     const today = new Date();
     const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     const minDate = new Date(1900, 0, 1);
@@ -118,8 +120,6 @@ export function PersonalInfo({
                 const dataNascimentoFormatted = new Date(dataNascimento).toISOString();
                 const dataFormated = format(new Date(dataNascimentoFormatted), 'dd/MM/yyyy');
 
-                console.log(dataFormated);
-
                 try {
                     const payload: UserState = {
                         cep,
@@ -135,47 +135,50 @@ export function PersonalInfo({
                         isAuthenticated: true,
                     };
 
-                    console.log(
-                        'telefone',
-                        `${ddd}${telefone}`,
-                        'data',
-                        dataFormated,
-                        'cep',
-                        cep,
-                        'email',
-                        email,
-                        'genero',
-                        genero,
-                        'isToggled',
-                        isToggled,
-                        'nome',
-                        nome,
-                        'nome social',
-                        nomeSocial,
-                        'imagem',
-                        imageUrl,
-                    );
+                    if (!profile) {
+                        const { data } = await api.post('/api/v2/usuario/cadastro', {
+                            tipo: isToggled,
+                            imageUrl: imageUrl,
+                            identificacaoGeneroForm: {
+                                nomeVisivel: nome,
+                                genero,
+                            },
+                            dadosPessoaisForm: {
+                                nome,
+                                nomeSocial,
+                                email,
+                                telefone: `55${ddd}${telefone}`,
+                                dataNascimento: dataFormated,
+                            },
+                            endereco: {
+                                cep,
+                            },
+                        });
 
-                    const { data } = await api.post('/api/v2/usuario/cadastro', {
-                        tipo: isToggled,
-                        imageUrl: imageUrl,
-                        identificacaoGeneroForm: {
-                            nomeVisivel: nome,
-                            genero: genero,
-                        },
-                        dadosPessoaisForm: {
-                            nome: nome,
-                            nomeSocial: nomeSocial,
+                        console.log('perfil criado com sucesso', data);
+                    } else {
+                        const { data } = await api.put('/api/v2/usuario', {
                             email,
-                            telefone: `55${ddd}${telefone}`,
-                            dataNascimento: dataFormated,
-                        },
-                        endereco: {
-                            cep: cep,
-                        },
-                    });
+                            tipo: isToggled,
+                            endereco: [
+                                {
+                                    cep,
+                                },
+                            ],
+                            identificacaoGeneroForm: {
+                                nomeVisivel: nome,
+                                genero,
+                            },
+                            dadosPessoaisForm: {
+                                nome,
+                                nomeSocial,
+                                telefone: `55${ddd}${telefone}`,
+                                dataNascimento: dataFormated,
+                            },
+                        });
 
-                    console.log('login realizado com sucesso!', data);
+                        console.log('perfil atualizado com sucesso', data);
+                    }
 
                     dispatch(setUser(payload));
                     console.log('Formulário submetido com sucesso!', payload);
