@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 type ButtonProps = {
     text: string;
     height?: number;
-    width?: number;
+    width?: number | string;
     reverse?: boolean;
     destructive?: boolean;
     onPress: () => void;

@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { LoginPromptModal } from '@/components/CardGuest';
 import { Home } from '@/screens/HomeScreen/Home';
 import { Service } from '@/screens/ServiceScreen/Profile';
+import { Search } from '@/screens/Search/Search';
 
 const Tab = createBottomTabNavigator();
 
@@ -71,7 +72,7 @@ export function TabRoutes() {
                 />
                 <Tab.Screen
                     name="Search"
-                    component={Home}
+                    component={Search}
                     options={{
                         tabBarIcon: ({ size, color }) => (
                             <Ionicons name="search-sharp" size={size} color={color} />
