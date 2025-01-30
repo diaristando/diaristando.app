@@ -1,11 +1,9 @@
-import React from 'react';
-
 import { useAuth, useOAuth, useUser } from '@clerk/clerk-expo';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import * as Link from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import LottieView from 'lottie-react-native';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, Text, View, StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch } from 'react-redux';

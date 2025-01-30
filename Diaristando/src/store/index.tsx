@@ -1,9 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 
 import feedbackReducer from './slices/feedbackSlice';
 import userReducer from './slices/userSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const persistConfig = {
     key: 'user',

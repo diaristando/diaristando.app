@@ -1,14 +1,14 @@
-import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
-import { ScrollView, Text, TextInput, View } from 'react-native';
-import { styles } from './styles';
-import RNPickerSelect from 'react-native-picker-select';
+import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
+import { ScrollView, Text, TextInput, View } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+
+import { styles } from './styles';
+import estados from '../../../assets/locale/estados-br.json';
 
 import { Logo, SvgSearch } from '@/assets/svgs';
-
-import estados from '../../../assets/locale/estados-br.json';
-import { AntDesign } from '@expo/vector-icons';
 import { Button } from '@/components/Button';
+import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { api } from '@/services/api';
 
 export function Search() {
@@ -107,7 +107,7 @@ export function Search() {
                     <View style={{ width: '100%', position: 'absolute', bottom: 20 }}>
                         {/* foi entregado, porem, falta mudar a tela para a de procurados */}
 
-                        <Button width={'100%'} height={50} text="Buscar" onPress={SearchService} />
+                        <Button width="100%" height={50} text="Buscar" onPress={SearchService} />
                     </View>
                 </View>
             </View>

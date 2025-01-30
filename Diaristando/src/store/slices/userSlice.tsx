@@ -1,4 +1,3 @@
-import { Tipo } from '@/dtos/userDTO';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export enum Genero {

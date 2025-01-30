@@ -2,6 +2,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { format } from 'date-fns';
 import { Formik } from 'formik';
 import React, { useState } from 'react';
 import {
@@ -21,15 +22,11 @@ import * as Yup from 'yup';
 import dddsBr from '../../../assets/ddd-br.json';
 
 import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
+import { api } from '@/services/api';
 import { RootState } from '@/store';
 import { setUser, UserState, Genero } from '@/store/slices/userSlice';
-import { applyCepMask, applyPhoneMask } from '@/utils/masks';
-
-import { format } from 'date-fns';
-
-import { api } from '@/services/api';
 import { AppError } from '@/utils/AppError';
-import { userDTO } from '@/dtos/userDTO';
+import { applyCepMask, applyPhoneMask } from '@/utils/masks';
 
 type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
 
@@ -85,7 +82,7 @@ export function PersonalInfo({
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
-    const [userData, setUserData] = useState<userDTO>();
+
     const today = new Date();
     const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     const minDate = new Date(1900, 0, 1);
@@ -138,7 +135,7 @@ export function PersonalInfo({
                     if (!profile) {
                         const { data } = await api.post('/api/v2/usuario/cadastro', {
                             tipo: isToggled,
-                            imageUrl: imageUrl,
+                            imageUrl,
                             identificacaoGeneroForm: {
                                 nomeVisivel: nome,
                                 genero,

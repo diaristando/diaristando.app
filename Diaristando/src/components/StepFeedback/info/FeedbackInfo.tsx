@@ -16,7 +16,6 @@ import * as yup from 'yup';
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
 import { TextInput } from '@/components/TextInput/TextInput';
 import { FeedbackState, setFeedback } from '@/store/slices/feedbackSlice';
-import { format } from 'date-fns';
 
 type Props = {
     handleOpenModal: () => void;
@@ -85,7 +84,6 @@ export function FeedbackInfo({ handleOpenModal, update = false }: Props) {
                 const { service, ...rest } = values;
 
                 const dateServiceFormatted = new Date(service).toISOString();
-                const dataFormated = format(new Date(dateServiceFormatted), 'dd/MM/yyyy');
 
                 const payload: FeedbackState = {
                     service: dateServiceFormatted,

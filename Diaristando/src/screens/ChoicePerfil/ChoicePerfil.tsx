@@ -1,13 +1,13 @@
-import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import diarista from '../../assets/icons/diarista.png';
 import cliente from '../../assets/icons/cliente.png';
-import { useState } from 'react';
-import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
+import diarista from '../../assets/icons/diarista.png';
 
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
+import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
 
 type SignupRouterProp = RouteProp<SignedOffRootStackParamList, 'choicePerfil'>;
 type SocialLoginNavigationProp = NavigationProp<SignedOffRootStackParamList, 'Signup'>;

@@ -3,9 +3,9 @@ import React from 'react';
 
 import { TabRoutes } from './routes/tabRoutes';
 
+import { ChoicePerfil } from '@/screens/ChoicePerfil/ChoicePerfil';
 import { Signup } from '@/screens/LoginScreen/Signup';
 import { SocialLogin } from '@/screens/SocialLogin/SocialLogin';
-import { ChoicePerfil } from '@/screens/ChoicePerfil/ChoicePerfil';
 
 const SignedOffStack = createNativeStackNavigator();
 

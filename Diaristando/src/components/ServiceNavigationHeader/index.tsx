@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 import { styles } from './styles';
+
 import { Bell } from '@/assets/svgs';
 
 const ServiceNavigationHeader = ({
