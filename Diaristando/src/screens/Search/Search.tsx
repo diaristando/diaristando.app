@@ -105,7 +105,8 @@ export function Search() {
                     </View>
 
                     <View style={{ width: '100%', position: 'absolute', bottom: 20 }}>
-                        //foi entregado, porem, falta mudar a tela para a de procurado
+                        {/* foi entregado, porem, falta mudar a tela para a de procurados */}
+
                         <Button width={'100%'} height={50} text="Buscar" onPress={SearchService} />
                     </View>
                 </View>
