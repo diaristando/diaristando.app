@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
 import { Home } from '@/screens/HomeScreen/Home';
+import { Search } from '@/screens/Search/Search';
 import { Service } from '@/screens/ServiceScreen/Profile';
 
 const Tab = createBottomTabNavigator();
@@ -38,7 +39,7 @@ export function TabRoutes() {
             />
             <Tab.Screen
                 name="Search"
-                component={Home}
+                component={Search}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="search" size={size} color={color} />

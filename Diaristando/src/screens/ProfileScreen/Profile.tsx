@@ -22,7 +22,7 @@ export function Profile() {
 
     const name = useSelector((user: RootState) => user.user.nome);
     const email = useSelector((user: RootState) => user.user.email);
-    const { imageUrl } = useSelector((state: RootState) => state.user);
+    const { imageUrl, isToggled } = useSelector((state: RootState) => state.user);
 
     const { t } = useTranslation();
 
@@ -92,7 +92,9 @@ export function Profile() {
                 <View style={styles.line} />
                 <FocusAwareStatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
                 <PersonalInfo
+                    imageUrl={imageUrl}
                     fullName={name}
+                    isToggled={isToggled}
                     email={email}
                     editable={editInputs}
                     showEmailAndName={false}

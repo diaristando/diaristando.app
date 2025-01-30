@@ -2,6 +2,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { format } from 'date-fns';
 import { Formik } from 'formik';
 import React, { useState } from 'react';
 import {
@@ -21,8 +22,10 @@ import * as Yup from 'yup';
 import dddsBr from '../../../assets/ddd-br.json';
 
 import { DiaristaRootStackParamList } from '@/navigation/diarista/diaristaNavigation';
+import { api } from '@/services/api';
 import { RootState } from '@/store';
 import { setUser, UserState, Genero } from '@/store/slices/userSlice';
+import { AppError } from '@/utils/AppError';
 import { applyCepMask, applyPhoneMask } from '@/utils/masks';
 
 type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
@@ -30,6 +33,8 @@ type PersonalInfoNavigationProp = NavigationProp<DiaristaRootStackParamList>;
 type Props = {
     email: string;
     fullName: string;
+    isToggled: string;
+    imageUrl: string;
     editable?: boolean;
     editPicker?: boolean;
     showEmailAndName?: boolean;
@@ -63,6 +68,8 @@ const validationSchema = Yup.object().shape({
 export function PersonalInfo({
     email,
     fullName,
+    isToggled,
+    imageUrl,
     editable = true,
     editPicker = false,
     showButtons = true,
@@ -75,6 +82,7 @@ export function PersonalInfo({
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+
     const today = new Date();
     const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     const minDate = new Date(1900, 0, 1);
@@ -84,6 +92,7 @@ export function PersonalInfo({
             initialValues={{
                 nome: fullName,
                 email,
+                isToggled,
                 telefone: user.telefone,
                 dataNascimento: user.dataNascimento,
                 cep: user.cep,
@@ -92,32 +101,101 @@ export function PersonalInfo({
                 ddd: user.ddd || '',
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-                const { telefone, ddd, dataNascimento, ...rest } = values;
+            onSubmit={async (values) => {
+                const {
+                    telefone,
+                    ddd,
+                    dataNascimento,
+                    cep,
+                    email,
+                    genero,
+                    isToggled,
+                    nome,
+                    nomeSocial,
+                } = values;
 
                 const dataNascimentoFormatted = new Date(dataNascimento).toISOString();
+                const dataFormated = format(new Date(dataNascimentoFormatted), 'dd/MM/yyyy');
 
-                const payload: UserState = {
-                    ...rest,
-                    ddd,
-                    imageUrl: user.imageUrl,
-                    telefone,
-                    dataNascimento: dataNascimentoFormatted,
-                    isAuthenticated: true,
-                };
+                try {
+                    const payload: UserState = {
+                        cep,
+                        email,
+                        genero,
+                        isToggled,
+                        nome,
+                        nomeSocial,
+                        ddd,
+                        imageUrl: user.imageUrl,
+                        telefone,
+                        dataNascimento: dataNascimentoFormatted,
+                        isAuthenticated: true,
+                    };
 
-                dispatch(setUser(payload));
-                console.log('Formulário submetido com sucesso!', payload);
+                    if (!profile) {
+                        const { data } = await api.post('/api/v2/usuario/cadastro', {
+                            tipo: isToggled,
+                            imageUrl,
+                            identificacaoGeneroForm: {
+                                nomeVisivel: nome,
+                                genero,
+                            },
+                            dadosPessoaisForm: {
+                                nome,
+                                nomeSocial,
+                                email,
+                                telefone: `55${ddd}${telefone}`,
+                                dataNascimento: dataFormated,
+                            },
+                            endereco: {
+                                cep,
+                            },
+                        });
 
-                if (handleOpenModal) {
-                    handleOpenModal();
-                } else {
-                    navigation.navigate('DiaristaTab', {
-                        screen: 'Home',
-                    });
-                }
-                if (handleDisableInputs) {
-                    handleDisableInputs();
+                        console.log('perfil criado com sucesso', data);
+                    } else {
+                        const { data } = await api.put('/api/v2/usuario', {
+                            email,
+                            tipo: isToggled,
+                            endereco: [
+                                {
+                                    cep,
+                                },
+                            ],
+                            identificacaoGeneroForm: {
+                                nomeVisivel: nome,
+                                genero,
+                            },
+                            dadosPessoaisForm: {
+                                nome,
+                                nomeSocial,
+                                telefone: `55${ddd}${telefone}`,
+                                dataNascimento: dataFormated,
+                            },
+                        });
+
+                        console.log('perfil atualizado com sucesso', data);
+                    }
+
+                    dispatch(setUser(payload));
+                    console.log('Formulário submetido com sucesso!', payload);
+
+                    if (handleOpenModal) {
+                        handleOpenModal();
+                    } else {
+                        navigation.navigate('DiaristaTab', {
+                            screen: 'Home',
+                        });
+                    }
+                    if (handleDisableInputs) {
+                        handleDisableInputs();
+                    }
+                } catch (error) {
+                    const isAppError = error instanceof AppError;
+
+                    const title = isAppError && error.message;
+
+                    console.log('erro ao cadastrar ====>', title);
                 }
             }}
         >

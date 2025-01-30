@@ -28,7 +28,7 @@ const schema = yup.object({
 });
 
 export function FeedbackInfo({ handleOpenModal, update = false }: Props) {
-    const [selected, setSelected] = useState('padrao');
+    const [selected, setSelected] = useState('PADRAO');
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
     const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
     const [formattedPrice, setFormattedPrice] = useState('');
@@ -180,20 +180,20 @@ export function FeedbackInfo({ handleOpenModal, update = false }: Props) {
                         <Pressable
                             style={[
                                 styles.toggleButton,
-                                selected === 'padrao' && {
+                                selected === 'PADRAO' && {
                                     backgroundColor: '#1D4ED8',
                                     borderWidth: 0,
                                 },
                             ]}
                             onPress={() => {
-                                setSelected('padrao');
-                                setFieldValue('typeService', 'padrao');
+                                setSelected('PADRAO');
+                                setFieldValue('typeService', 'PADRAO');
                             }}
                         >
                             <Text
                                 style={[
                                     styles.toggleText,
-                                    selected === 'padrao' && styles.activeText,
+                                    selected === 'PADRAO' && styles.activeText,
                                 ]}
                             >
                                 Limpeza Padrão
@@ -202,20 +202,20 @@ export function FeedbackInfo({ handleOpenModal, update = false }: Props) {
                         <Pressable
                             style={[
                                 styles.toggleButton,
-                                selected === 'pesado' && {
+                                selected === 'PESADO' && {
                                     backgroundColor: '#1D4ED8',
                                     borderWidth: 0,
                                 },
                             ]}
                             onPress={() => {
-                                setSelected('pesado');
-                                setFieldValue('typeService', 'pesado');
+                                setSelected('PESADO');
+                                setFieldValue('typeService', 'PESADO');
                             }}
                         >
                             <Text
                                 style={[
                                     styles.toggleText,
-                                    selected === 'pesado' && styles.activeText,
+                                    selected === 'PESADO' && styles.activeText,
                                 ]}
                             >
                                 Limpeza Pesada

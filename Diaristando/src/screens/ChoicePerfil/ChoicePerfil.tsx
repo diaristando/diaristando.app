@@ -1,23 +1,23 @@
-import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import diarista from '../../assets/icons/diarista.png';
 import cliente from '../../assets/icons/cliente.png';
-import { useState } from 'react';
-import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
+import diarista from '../../assets/icons/diarista.png';
 
 import { FocusAwareStatusBar } from '@/components/FocusAwareStatusBar';
+import { SignedOffRootStackParamList } from '@/navigation/visitante/signedOffNavigation';
 
 type SignupRouterProp = RouteProp<SignedOffRootStackParamList, 'choicePerfil'>;
 type SocialLoginNavigationProp = NavigationProp<SignedOffRootStackParamList, 'Signup'>;
 
 export function ChoicePerfil() {
     const route = useRoute<SignupRouterProp>();
-    const { email, fullName } = route.params || { email: '', fullName: '' };
+    const { email, fullName, imageUrl } = route.params || { email: '', fullName: '', imageUrl: '' };
     const { navigate } = useNavigation<SocialLoginNavigationProp>();
 
-    const [isToggled, setIsToggled] = useState('diarista');
+    const [isToggled, setIsToggled] = useState('DIARISTA');
 
     function handlePress(option: string) {
         setIsToggled(option);
@@ -28,6 +28,8 @@ export function ChoicePerfil() {
         navigate('Signup', {
             email,
             fullName,
+            imageUrl,
+            isToggled,
         });
     }
 
@@ -42,9 +44,9 @@ export function ChoicePerfil() {
                     <Pressable
                         style={[
                             styles.cardView,
-                            isToggled === 'diarista' && { borderWidth: 2, borderColor: '#1D4ED8' },
+                            isToggled === 'DIARISTA' && { borderWidth: 2, borderColor: '#1D4ED8' },
                         ]}
-                        onPress={() => handlePress('diarista')}
+                        onPress={() => handlePress('DIARISTA')}
                     >
                         <View style={styles.absolute}>
                             <Image source={diarista} />
@@ -54,9 +56,9 @@ export function ChoicePerfil() {
                     <Pressable
                         style={[
                             styles.cardView,
-                            isToggled === 'cliente' && { borderWidth: 2, borderColor: '#1D4ED8' },
+                            isToggled === 'CLIENTE' && { borderWidth: 2, borderColor: '#1D4ED8' },
                         ]}
-                        onPress={() => handlePress('cliente')}
+                        onPress={() => handlePress('CLIENTE')}
                     >
                         <View style={styles.absolute}>
                             <Image source={cliente} />

@@ -7,12 +7,14 @@ import * as Notifications from 'expo-notifications';
 import { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { ContentModal } from '@/components/ContentModal/ContentModal';
+import { Loading } from '@/components/Loading';
 import { CustomModal } from '@/components/Modal';
 import AppNavigation from '@/navigation/appNavigation';
 import tokenCache from '@/storage/token';
-import { store } from '@/store';
+import { persistor, store } from '@/store';
 
 import './config/translator';
 
@@ -93,12 +95,14 @@ export default function App() {
     return (
         <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
             <Provider store={store}>
-                <NavigationContainer>
-                    <CustomModal isOpen={confirmModal} onClose={() => {}} closable={false}>
-                        <ContentModal pressable={() => setConfirmModal(false)} />
-                    </CustomModal>
-                    <AppNavigation />
-                </NavigationContainer>
+                <PersistGate loading={<Loading />} persistor={persistor}>
+                    <NavigationContainer>
+                        <CustomModal isOpen={confirmModal} onClose={() => {}} closable={false}>
+                            <ContentModal pressable={() => setConfirmModal(false)} />
+                        </CustomModal>
+                        <AppNavigation />
+                    </NavigationContainer>
+                </PersistGate>
             </Provider>
         </ClerkProvider>
     );
